@@ -1103,6 +1103,66 @@ body {
     margin-top: 2px;
 }
 
+/* Rank Card Click to Expand Features */
+.rank-card {
+    cursor: pointer;
+}
+
+.rank-card .expand-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    background: hsl(var(--muted));
+    border-radius: 0.25rem;
+    transition: background 0.2s ease;
+}
+
+.rank-card:hover .expand-indicator {
+    background: hsl(var(--secondary));
+}
+
+.rank-card .expand-text {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 6px;
+    color: hsl(var(--muted-foreground));
+    letter-spacing: 0.05em;
+}
+
+.rank-card .expand-arrow {
+    font-size: 10px;
+    color: hsl(var(--primary));
+    transition: transform 0.3s ease;
+}
+
+/* Features hidden by default */
+.rank-card .features {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+    margin-bottom: 0;
+}
+
+/* Features shown when expanded */
+.rank-card.expanded .features {
+    max-height: 500px;
+    opacity: 1;
+    margin-bottom: 1rem;
+}
+
+/* Rotate arrow when expanded */
+.rank-card.expanded .expand-arrow {
+    transform: rotate(180deg);
+}
+
+/* Change indicator text when expanded */
+.rank-card.expanded .expand-text {
+    content: "Click to hide features";
+}
+
 /* Crate Section */
 .crate-section {
     padding: 5rem 1rem;
