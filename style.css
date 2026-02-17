@@ -422,7 +422,7 @@ body {
     
     font-family: 'Press Start 2P', cursive;
     font-size: 7px;
-    color: hsl(100 60% 90%);
+    color: hsla(101, 61%, 90%, 0);
     text-shadow: 0 0 8px hsl(100 60% 45%);
     animation: copied-pulse 0.3s ease;
 }
