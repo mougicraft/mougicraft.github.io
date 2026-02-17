@@ -52,6 +52,8 @@ body {
     color: hsl(var(--foreground));
     font-family: 'Inter', sans-serif;
     image-rendering: auto;
+    overflow-x: hidden;
+    max-width: 100vw;
 }
 
 /* Font classes */
@@ -204,69 +206,700 @@ body {
     }
 }
 
-/* Server Cards */
-.server-cards {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    justify-content: center;
-    margin-bottom: 2.5rem;
+/* =====================================================
+   SERVER SECTION - SWIPEABLE CARDS (MOBILE OPTIMIZED)
+   ===================================================== */
+
+/* Server Section Container */
+.server-section {
+    margin-bottom: 2rem;
+    width: 100%;
 }
 
-@media (min-width: 640px) {
-    .server-cards {
-        flex-direction: row;
+.server-cards-wrapper {
+    width: 100%;
+    overflow: hidden;
+}
+
+/* Swipeable Server Cards */
+.server-cards {
+    display: flex;
+    gap: 0.75rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding: 0.5rem;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.server-cards::-webkit-scrollbar {
+    display: none;
+}
+
+/* Individual Server Card - Minecraft GUI Style */
+.server-card {
+    flex: 0 0 auto;
+    width: 85%;
+    max-width: 320px;
+    min-width: 260px;
+    scroll-snap-align: center;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.875rem 1rem;
+    
+    /* Minecraft GUI Pixelated Style */
+    background: linear-gradient(180deg, hsl(30 8% 16%) 0%, hsl(30 8% 10%) 100%);
+    border: 3px solid;
+    border-color: hsl(30 15% 25%);
+    border-radius: 3px;
+    box-shadow: 
+        inset 0 1px 0 hsl(30 15% 35%),
+        inset 0 -2px 0 hsl(30 10% 6%),
+        0 4px 8px hsl(0 0% 0% / 0.5),
+        0 0 0 1px hsl(0 0% 0% / 0.3);
+    
+    cursor: pointer;
+    transition: all 0.15s ease;
+    image-rendering: pixelated;
+    font: inherit;
+    color: inherit;
+    position: relative;
+}
+
+/* Card border hover effect */
+.server-card:hover {
+    border-color: hsl(100 60% 45%);
+    transform: translateY(-2px);
+}
+
+.server-card:active {
+    transform: translateY(0);
+    box-shadow: 
+        inset 0 2px 0 hsl(30 10% 6%),
+        0 2px 4px hsl(0 0% 0% / 0.5);
+}
+
+/* Server Card Icon */
+.server-card-icon {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: hsl(var(--primary));
+    filter: drop-shadow(0 0 4px hsl(var(--primary) / 0.5));
+}
+
+.server-card-icon svg {
+    width: 28px;
+    height: 28px;
+}
+
+.server-card-icon.bedrock-icon {
+    color: hsl(var(--accent));
+    filter: drop-shadow(0 0 4px hsl(var(--accent) / 0.5));
+}
+
+/* Server Card Content */
+.server-card-content {
+    flex: 1;
+    text-align: left;
+    min-width: 0;
+}
+
+.server-edition-label {
+    display: block;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 7px;
+    color: hsl(var(--muted-foreground));
+    letter-spacing: 0.15em;
+    margin-bottom: 0.375rem;
+    text-transform: uppercase;
+}
+
+.server-ip {
+    display: block;
+    font-family: 'Inter', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    color: hsl(var(--primary));
+    word-break: break-all;
+    line-height: 1.3;
+}
+
+.server-card.bedrock .server-ip {
+    color: hsl(var(--accent));
+}
+
+.server-port {
+    display: block;
+    font-family: 'Inter', monospace;
+    font-size: 10px;
+    color: hsl(var(--muted-foreground));
+    margin-top: 0.25rem;
+}
+
+/* Modern Copy Button - Minecraft Style */
+.copy-btn {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    padding: 0.5rem 0.75rem;
+    min-width: 52px;
+    
+    /* Minecraft button style */
+    background: linear-gradient(180deg, hsl(30 12% 20%) 0%, hsl(30 10% 12%) 100%);
+    border: 2px solid;
+    border-color: hsl(30 15% 25%) hsl(30 15% 20%) hsl(30 10% 15%);
+    border-radius: 2px;
+    box-shadow: 
+        inset 0 1px 0 hsl(30 15% 30%),
+        inset 0 -1px 0 hsl(30 10% 8%),
+        0 2px 4px hsl(0 0% 0% / 0.4);
+    
+    cursor: pointer;
+    transition: all 0.1s ease;
+    image-rendering: pixelated;
+    position: relative;
+    overflow: hidden;
+}
+
+.copy-btn:hover {
+    border-color: hsl(100 60% 45%);
+    background: linear-gradient(180deg, hsl(100 60% 20%) 0%, hsl(100 60% 12%) 100%);
+}
+
+.copy-btn:active {
+    transform: scale(0.95);
+    box-shadow: inset 0 2px 0 hsl(30 10% 8%);
+}
+
+.copy-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.copy-icon svg {
+    width: 16px;
+    height: 16px;
+    color: hsl(var(--muted-foreground));
+    transition: color 0.15s ease;
+}
+
+.copy-btn:hover .copy-icon svg {
+    color: hsl(var(--primary));
+}
+
+.copy-text {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 6px;
+    color: hsl(var(--muted-foreground));
+    letter-spacing: 0.1em;
+    transition: color 0.15s ease;
+}
+
+.copy-btn:hover .copy-text {
+    color: hsl(var(--primary));
+}
+
+/* Copied Feedback Animation */
+.copied-feedback {
+    display: none;
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, hsl(100 60% 25%) 0%, hsl(100 60% 15%) 100%);
+    border: 2px solid hsl(100 60% 45%);
+    border-radius: 2px;
+    align-items: center;
+    justify-content: center;
+    
+    font-family: 'Press Start 2P', cursive;
+    font-size: 7px;
+    color: hsl(100 60% 90%);
+    text-shadow: 0 0 8px hsl(100 60% 45%);
+    animation: copied-pulse 0.3s ease;
+}
+
+@keyframes copied-pulse {
+    0% { transform: scale(0.8); opacity: 0; }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.copy-btn.copied .copied-feedback {
+    display: flex;
+}
+
+.copy-btn.copied .copy-icon,
+.copy-btn.copied .copy-text {
+    display: none;
+}
+
+/* =====================================================
+   AUTO GLOW ANIMATIONS
+   ===================================================== */
+
+/* Card glow animation */
+@keyframes mc-glow-pulse {
+    0%, 100% { 
+        box-shadow: 
+            inset 0 1px 0 hsl(30 15% 35%),
+            inset 0 -2px 0 hsl(30 10% 6%),
+            0 4px 8px hsl(0 0% 0% / 0.5),
+            0 0 0 1px hsl(0 0% 0% / 0.3),
+            0 0 12px hsl(100 60% 45% / 0.15);
+    }
+    50% { 
+        box-shadow: 
+            inset 0 1px 0 hsl(30 15% 35%),
+            inset 0 -2px 0 hsl(30 10% 6%),
+            0 4px 8px hsl(0 0% 0% / 0.5),
+            0 0 0 1px hsl(0 0% 0% / 0.3),
+            0 0 24px hsl(100 60% 45% / 0.35),
+            0 0 40px hsl(100 60% 45% / 0.15);
     }
 }
 
-.server-card {
+.server-card.mc-card-glow {
+    animation: mc-glow-pulse 3s ease-in-out infinite;
+}
+
+/* Bedrock card glow - golden/amber */
+@keyframes mc-glow-pulse-bedrock {
+    0%, 100% { 
+        box-shadow: 
+            inset 0 1px 0 hsl(30 15% 35%),
+            inset 0 -2px 0 hsl(30 10% 6%),
+            0 4px 8px hsl(0 0% 0% / 0.5),
+            0 0 0 1px hsl(0 0% 0% / 0.3),
+            0 0 12px hsl(45 100% 55% / 0.15);
+    }
+    50% { 
+        box-shadow: 
+            inset 0 1px 0 hsl(30 15% 35%),
+            inset 0 -2px 0 hsl(30 10% 6%),
+            0 4px 8px hsl(0 0% 0% / 0.5),
+            0 0 0 1px hsl(0 0% 0% / 0.3),
+            0 0 24px hsl(45 100% 55% / 0.35),
+            0 0 40px hsl(45 100% 55% / 0.15);
+    }
+}
+
+.server-card.mc-card-glow.bedrock {
+    animation: mc-glow-pulse-bedrock 3s ease-in-out infinite;
+}
+
+/* IP text glow on hover */
+.server-ip {
+    transition: text-shadow 0.2s ease;
+}
+
+.server-card:hover .server-ip {
+    text-shadow: 0 0 8px hsl(var(--primary) / 0.6);
+}
+
+.server-card.bedrock:hover .server-ip {
+    text-shadow: 0 0 8px hsl(var(--accent) / 0.6);
+}
+
+/* =====================================================
+   SWIPE INDICATOR
+   ===================================================== */
+.swipe-indicator {
     display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 1.25rem 1.5rem;
-    background: linear-gradient(180deg, hsl(30 8% 14%) 0%, hsl(30 8% 10%) 100%);
-    border: 2px solid hsl(30 15% 25%);
-    box-shadow: inset 0 1px 0 hsl(30 15% 30%), inset 0 -1px 0 hsl(30 10% 8%), 0 4px 12px hsl(0 0% 0% / 0.4);
-    border-radius: 0.5rem;
-    cursor: pointer;
-    transition: all 0.2s;
-    color: inherit;
-    font: inherit;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
 }
 
-.server-card:hover {
-    border-color: hsl(100 60% 45% / 0.5);
-    box-shadow: inset 0 1px 0 hsl(30 15% 30%), inset 0 -1px 0 hsl(30 10% 8%), 0 0 20px hsl(100 60% 45% / 0.15), 0 4px 12px hsl(0 0% 0% / 0.4);
-    transform: scale(1.02);
+.server-cards-wrapper:hover .swipe-indicator {
+    opacity: 1;
 }
 
-.server-card .shrink-0 {
-    flex-shrink: 0;
+.swipe-arrow {
+    font-size: 14px;
+    color: hsl(var(--muted-foreground));
+    animation: swipe-bounce 1.5s ease-in-out infinite;
 }
 
-.server-card .text-left {
-    text-align: left;
+.swipe-arrow:first-child {
+    animation-delay: 0s;
 }
 
-.server-card .block {
-    display: block;
+.swipe-arrow:last-child {
+    animation-delay: 0.75s;
 }
 
-.server-card .font-bold {
-    font-weight: 700;
+@keyframes swipe-bounce {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(-4px); }
 }
 
-.server-card svg {
-    transition: color 0.2s;
+.swipe-arrow:last-child {
+    animation-name: swipe-bounce-right;
 }
 
-.server-card:hover svg {
-    color: hsl(var(--primary)) !important;
+@keyframes swipe-bounce-right {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(4px); }
 }
 
-.copied-text {
-    font-family: 'Press Start 2P', cursive;
-    font-size: 10px;
+/* Hide swipe indicator on desktop */
+@media (min-width: 768px) {
+    .swipe-indicator {
+        display: none;
+    }
+}
+
+/* =====================================================
+   ULTRA-COMPACT MOBILE STYLES
+   ===================================================== */
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: clamp(1.75rem, 9vw, 2.5rem);
+        letter-spacing: 0.15em;
+        margin-bottom: 0.75rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 0.8rem;
+        margin-bottom: 1.5rem;
+        padding: 0 0.5rem;
+    }
+    
+    .hero-divider {
+        width: 8rem;
+        height: 3px;
+        margin-bottom: 1.25rem;
+    }
+    
+    .server-card {
+        width: 90%;
+        min-width: 240px;
+        padding: 0.75rem 0.875rem;
+        gap: 0.5rem;
+    }
+    
+    .server-card-icon {
+        width: 30px;
+        height: 30px;
+    }
+    
+    .server-card-icon svg {
+        width: 22px;
+        height: 22px;
+    }
+    
+    .server-edition-label {
+        font-size: 6px;
+        margin-bottom: 0.25rem;
+    }
+    
+    .server-ip {
+        font-size: 11px;
+    }
+    
+    .server-port {
+        font-size: 9px;
+    }
+    
+    .copy-btn {
+        padding: 0.375rem 0.5rem;
+        min-width: 44px;
+    }
+    
+    .copy-icon svg {
+        width: 14px;
+        height: 14px;
+    }
+    
+    .copy-text {
+        font-size: 5px;
+    }
+    
+    .copied-feedback {
+        font-size: 6px;
+    }
+}
+
+/* Even smaller screens */
+@media (max-width: 360px) {
+    .server-card {
+        width: 92%;
+        min-width: 220px;
+        padding: 0.625rem 0.75rem;
+    }
+    
+    .server-card-icon {
+        width: 26px;
+        height: 26px;
+    }
+    
+    .server-card-icon svg {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .server-ip {
+        font-size: 10px;
+    }
+}
+
+/* =====================================================
+   MOBILE RESPONSIVENESS - ADDITIONAL FIXES
+   ===================================================== */
+
+/* Very small screens (320px and below) */
+@media (max-width: 320px) {
+    .hero-title {
+        font-size: 1.5rem;
+        letter-spacing: 0.1em;
+    }
+    
+    .hero-subtitle {
+        font-size: 0.75rem;
+    }
+    
+    .hero-logo {
+        max-width: 150px;
+    }
+    
+    .server-card {
+        width: 94%;
+        min-width: 200px;
+        padding: 0.5rem 0.625rem;
+        gap: 0.375rem;
+    }
+    
+    .server-card-icon {
+        width: 24px;
+        height: 24px;
+    }
+    
+    .server-card-icon svg {
+        width: 18px;
+        height: 18px;
+    }
+    
+    .server-edition-label {
+        font-size: 5px;
+    }
+    
+    .server-ip {
+        font-size: 9px;
+    }
+    
+    .server-port {
+        font-size: 8px;
+    }
+    
+    .copy-btn {
+        padding: 0.25rem 0.375rem;
+        min-width: 38px;
+    }
+    
+    .copy-icon svg {
+        width: 12px;
+        height: 12px;
+    }
+    
+    .copy-text {
+        font-size: 4px;
+    }
+    
+    .copied-feedback {
+        font-size: 5px;
+    }
+    
+    .social-buttons {
+        gap: 0.5rem;
+    }
+    
+    .social-card {
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem;
+    }
+}
+
+/* =====================================================
+   MOBILE HOVER SCALE REDUCTION
+   ===================================================== */
+
+/* Reduce hover scale on mobile - Rank Cards */
+@media (max-width: 640px) {
+    .rank-card:hover {
+        transform: scale(1.02);
+    }
+    
+    .rank-card {
+        padding: 1rem;
+    }
+    
+    .rank-card h3 {
+        font-size: 0.625rem;
+    }
+    
+    .rank-card .price {
+        font-size: 1.25rem;
+    }
+    
+    .rank-card .features li {
+        font-size: 0.625rem;
+    }
+    
+    .rank-card .popular-badge {
+        font-size: 6px;
+        padding: 0.2rem 0.5rem;
+    }
+}
+
+/* Even smaller for rank cards */
+@media (max-width: 480px) {
+    .rank-card {
+        padding: 0.875rem;
+    }
+    
+    .rank-card h3 {
+        font-size: 0.5rem;
+    }
+    
+    .rank-card .price {
+        font-size: 1.125rem;
+        margin-bottom: 1rem;
+    }
+    
+    .rank-card .features li {
+        font-size: 0.5625rem;
+    }
+    
+    .rank-card .popular-badge {
+        font-size: 5px;
+    }
+}
+
+/* Reduce hover scale on mobile - Crate Cards */
+@media (max-width: 640px) {
+    .crate-card:hover {
+        transform: scale(1.02);
+    }
+    
+    .crate-card {
+        padding: 1.5rem;
+    }
+    
+    .crate-card h3 {
+        font-size: 0.625rem;
+        margin-bottom: 1rem;
+    }
+    
+    .crate-card p {
+        font-size: 1.5rem;
+    }
+}
+
+/* Even smaller for crate cards */
+@media (max-width: 480px) {
+    .crate-card {
+        padding: 1.25rem;
+    }
+    
+    .crate-card h3 {
+        font-size: 0.5rem;
+    }
+    
+    .crate-card p {
+        font-size: 1.25rem;
+    }
+}
+
+/* =====================================================
+   TOUCH-FRIENDLY STYLES
+   ===================================================== */
+
+/* Disable hover effects on touch devices or reduce them */
+@media (hover: none) and (pointer: coarse) {
+    /* Remove hover transform on touch devices */
+    .rank-card:hover,
+    .crate-card:hover,
+    .social-card:hover {
+        transform: none;
+    }
+    
+    /* Keep the border color change but remove scale */
+    .rank-card:hover {
+        border-color: hsl(100 60% 45% / 0.5);
+    }
+    
+    .crate-card:hover {
+        border-color: hsl(100 60% 45% / 0.5);
+        box-shadow: inset 0 1px 0 hsl(30 15% 30%), inset 0 -1px 0 hsl(30 10% 8%), 0 0 20px hsl(100 60% 45% / 0.15), 0 4px 12px hsl(0 0% 0% / 0.4);
+    }
+    
+    .social-card:hover {
+        transform: none;
+    }
+    
+    /* Make server cards more touch-friendly */
+    .server-card:hover {
+        transform: none;
+    }
+}
+
+/* =====================================================
+   ADDITIONAL MOBILE OPTIMIZATIONS
+   ===================================================== */
+
+/* Ensure all sections fit on mobile */
+@media (max-width: 480px) {
+    .rank-section,
+    .crate-section {
+        padding: 3rem 0.75rem;
+    }
+    
+    .rank-section .mb-12,
+    .crate-section .mb-12 {
+        margin-bottom: 2rem;
+    }
+    
+    .rank-divider,
+    .crate-divider {
+        width: 6rem;
+    }
+    
+    .font-pixel {
+        font-size: 80%;
+    }
+}
+
+/* Prevent horizontal overflow on all containers */
+.server-section,
+.rank-section,
+.crate-section,
+.hero-section {
+    max-width: 100vw;
+    overflow-x: hidden;
+}
+
+/* Desktop - side by side */
+@media (min-width: 640px) {
+    .server-cards {
+        justify-content: center;
+    }
+    
+    .server-card {
+        width: auto;
+        min-width: 300px;
+        flex: 0 1 auto;
+    }
 }
 
 /* Social Buttons */
@@ -274,6 +907,7 @@ body {
     display: flex;
     gap: 1rem;
     justify-content: center;
+    flex-wrap: wrap;
 }
 
 .social-card {
@@ -556,6 +1190,10 @@ body {
 .px-4 {
     padding-left: 1rem;
     padding-right: 1rem;
+}
+
+.mb-2 {
+    margin-bottom: 0.5rem;
 }
 
 .mb-4 {
@@ -869,157 +1507,5 @@ body {
 }
 
 .from-background\/60 {
-    --tw-gradient-from: hsl(var(--background) / 0.6);
-}
-
-.to-background {
-    --tw-gradient-to: hsl(var(--background));
-}
-
-.via-primary {
-    --tw-gradient-via: hsl(var(--primary));
-}
-
-.to-primary {
-    --tw-gradient-to: hsl(var(--primary));
-}
-
-.grid {
-    display: grid;
-}
-
-.grid-cols-1 {
-    grid-template-columns: repeat(1, minmax(0, 1fr));
-}
-
-@media (min-width: 640px) {
-    .sm\:grid-cols-2 {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-    
-    .sm\:grid-cols-3 {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-    
-    .sm\:flex-row {
-        flex-direction: row;
-    }
-}
-
-@media (min-width: 768px) {
-    .md\:text-2xl {
-        font-size: 1.5rem;
-    }
-    
-    .md\:text-lg {
-        font-size: 1.125rem;
-    }
-}
-
-@media (min-width: 1024px) {
-    .lg\:grid-cols-3 {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-    
-    .lg\:text-7xl {
-        font-size: 4.5rem;
-    }
-}
-
-@media (min-width: 1280px) {
-    .xl\:grid-cols-4 {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
-}
-
-
-/* =====================================================
-   MOBILE ULTRA-COMPACT + SWIPE (MOUGICRAFT)
-   Minecraft Pixel GUI Enhancement
-   ===================================================== */
-
-/* Pixel rendering for UI elements */
-.server-card,
-.mc-card,
-.copy-btn {
-    image-rendering: pixelated;
-}
-
-/* Auto glow animation */
-@keyframes mc-auto-glow {
-    0% { box-shadow: 0 0 6px hsl(var(--primary) / 0.35); }
-    50% { box-shadow: 0 0 16px hsl(var(--primary) / 0.6); }
-    100% { box-shadow: 0 0 6px hsl(var(--primary) / 0.35); }
-}
-
-.server-card {
-    animation: mc-auto-glow 3.5s ease-in-out infinite;
-}
-
-/* Copy button modern */
-.copy-btn {
-    margin-top: 0.5rem;
-    padding: 0.6rem 1rem;
-    font-family: 'Press Start 2P', cursive;
-    font-size: 9px;
-    letter-spacing: 0.1em;
-    background: linear-gradient(180deg, hsl(30 8% 18%), hsl(30 8% 10%));
-    border: 2px solid hsl(var(--border));
-    color: hsl(var(--primary));
-    cursor: pointer;
-    transition: transform 0.1s ease, box-shadow 0.1s ease;
-}
-
-.copy-btn:active {
-    transform: scale(0.92);
-    box-shadow: inset 0 2px 0 hsl(0 0% 0% / 0.6);
-}
-
-/* Swipeable server cards (mobile only) */
-@media (max-width: 768px) {
-    .server-cards {
-        flex-direction: row;
-        overflow-x: auto;
-        scroll-snap-type: x mandatory;
-        -webkit-overflow-scrolling: touch;
-        padding-bottom: 0.75rem;
-    }
-
-    .server-cards::-webkit-scrollbar {
-        display: none;
-    }
-
-    .server-card {
-        min-width: 85%;
-        scroll-snap-align: center;
-        padding: 1rem;
-    }
-
-    .server-card span,
-    .server-card p {
-        font-size: 0.75rem;
-    }
-
-    .hero-title {
-        font-size: clamp(2rem, 10vw, 3rem);
-        letter-spacing: 0.15em;
-    }
-
-    .hero-subtitle {
-        font-size: 0.85rem;
-        margin-bottom: 2rem;
-    }
-}
-
-/* IP text compact */
-.ip-text {
-    font-family: monospace;
-    font-size: 0.75rem;
-    word-break: break-all;
-}
-
-/* Copied feedback */
-.copied-text {
-    color: hsl(var(--primary));
-    text-shadow: 0 0 6px hsl(var(--primary) / 0.6);
+    --tw-gradient-from: hsl
 }
