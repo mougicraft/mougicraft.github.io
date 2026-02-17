@@ -16,7 +16,7 @@
         <div class="hero-bg"></div>
         <div class="hero-overlay"></div>
         
-<div class="hero-content">
+        <div class="hero-content">
             <!-- Logo Image -->
             <img src="mougicraftlogos.png" alt="MougiCraft Logo" class="hero-logo">
             
@@ -29,32 +29,53 @@
                 Join our Minecraft Survival server and start your adventure today!
             </p>
 
-            <!-- Server IP Cards -->
-            <div class="server-cards">
-                <button class="server-card" onclick="copyToClipboard('play.mougicraft.my.id', 'java')">
-                    <svg class="w-6 h-6 text-primary shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><path d="m12 18-4-4 4-4"/><path d="M8 18V5"/></svg>
-                    <div class="text-left">
-                        <span class="block text-[10px] text-muted-foreground font-pixel mb-1.5 tracking-wider">JAVA EDITION</span>
-                        <span class="block text-primary font-bold text-lg">play.mougicraft.my.id</span>
-                    </div>
-                    <div class="flex flex-col items-center gap-1 ml-2">
-                        <svg class="w-4 h-4 text-muted-foreground" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
-                        <span class="copied-text java-copied" style="display: none;">OK!</span>
-                    </div>
-                </button>
+            <!-- Server IP Cards - Swipeable -->
+            <div class="server-section">
+                <div class="server-cards-wrapper">
+                    <div class="server-cards">
+                        <!-- Java Edition Card -->
+                        <div class="server-card mc-card-glow" data-server="java">
+                            <div class="server-card-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><path d="m12 18-4-4 4-4"/><path d="M8 18V5"/></svg>
+                            </div>
+                            <div class="server-card-content">
+                                <span class="server-edition-label">JAVA EDITION</span>
+                                <span class="server-ip">play.mougicraft.my.id</span>
+                            </div>
+                            <button class="copy-btn mc-btn" onclick="copyToClipboard('play.mougicraft.my.id', 'java')">
+                                <span class="copy-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                                </span>
+                                <span class="copy-text">COPY</span>
+                                <span class="copied-feedback">COPIED!</span>
+                            </button>
+                        </div>
 
-                <button class="server-card" onclick="copyToClipboard('mougicraft.my.id', 'bedrock')">
-                    <svg class="w-6 h-6 text-accent shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                    <div class="text-left">
-                        <span class="block text-[10px] text-muted-foreground font-pixel mb-1.5 tracking-wider">BEDROCK EDITION</span>
-                        <span class="block text-accent font-bold text-lg">mougicraft.my.id</span>
-                        <span class="block text-xs text-muted-foreground mt-0.5">Port: 10050</span>
+                        <!-- Bedrock Edition Card -->
+                        <div class="server-card mc-card-glow bedrock" data-server="bedrock">
+                            <div class="server-card-icon bedrock-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                            </div>
+                            <div class="server-card-content">
+                                <span class="server-edition-label">BEDROCK EDITION</span>
+                                <span class="server-ip">mougicraft.my.id</span>
+                                <span class="server-port">Port: 10050</span>
+                            </div>
+                            <button class="copy-btn mc-btn" onclick="copyToClipboard('mougicraft.my.id', 'bedrock')">
+                                <span class="copy-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                                </span>
+                                <span class="copy-text">COPY</span>
+                                <span class="copied-feedback">COPIED!</span>
+                            </button>
+                        </div>
                     </div>
-                    <div class="flex flex-col items-center gap-1 ml-2">
-                        <svg class="w-4 h-4 text-muted-foreground" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
-                        <span class="copied-text bedrock-copied" style="display: none;">OK!</span>
-                    </div>
-                </button>
+                </div>
+                <!-- Swipe Indicator -->
+                <div class="swipe-indicator">
+                    <span class="swipe-arrow">‹</span>
+                    <span class="swipe-arrow">›</span>
+                </div>
             </div>
 
             <!-- Social buttons -->
