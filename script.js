@@ -40,19 +40,20 @@ const ranks = [
         price: "45K",
         features: ["Set Home 8 :/home", "Colour Chat", "Change Nick :/nick", "Afk :/afk", "Fly :/fly", "Limit Blok = 18.000"],
         nameColor: "text-primary",
-        popular: true,
     },
     {
         name: "MVP",
         price: "60K",
         features: ["Set Home 15 :/home", "Colour Chat", "Change Nick :/nick", "Afk :/afk", "Fly :/fly", "Ender Chest :/ec", "Limit Blok = 30.000"],
         nameColor: "text-gold",
+        popular: true,
     },
     {
         name: "MVP+",
         price: "180K",
         features: ["Set Home 20 :/home", "Colour Chat", "Change Nick :/nick", "Afk :/afk", "Fly :/fly", "Ender Chest :/ec", "Teleport Player :/tp", "Crafting :/craft", "Anvil :/anvil", "Stone Cutter :/stonecutter", "Limit Blok = 45.000"],
         nameColor: "text-gold",
+        popular: true,
     },
     {
         name: "LEGEND",
@@ -105,10 +106,19 @@ function generateRankCards() {
             <h3 class="${rank.nameColor}">${rank.name}</h3>
             <div class="rank-divider-line"></div>
             <p class="price">IDR <span class="${rank.nameColor}">${rank.price}</span></p>
+            <div class="expand-indicator">
+                <span class="expand-text">Click to see features</span>
+                <span class="expand-arrow">▼</span>
+            </div>
             <ul class="features">
                 ${featuresHTML}
             </ul>
         `;
+        
+        // Add click event listener to toggle features
+        card.addEventListener('click', function() {
+            this.classList.toggle('expanded');
+        });
         
         rankGrid.appendChild(card);
     });
