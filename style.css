@@ -934,62 +934,206 @@ body {
 
 
 /* ============================= */
-/* MOBILE OPTIMIZATION PATCH */
+/* MOBILE OPTIMIZATION PATCH - ENHANCED */
 /* ============================= */
 
 html, body {
     overflow-x: hidden;
     width: 100%;
+    max-width: 100vw;
+    -webkit-overflow-scrolling: touch;
 }
 
-/* Improve text wrapping */
+/* Prevent horizontal scroll on all elements */
+* {
+    max-width: 100vw;
+    box-sizing: border-box;
+}
+
+/* Improve text wrapping for server cards */
 .server-card .text-lg {
-    overflow-wrap: anywhere;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-all;
+    hyphens: auto;
 }
 
-/* Small devices */
+/* Small devices (phones) */
 @media (max-width: 480px) {
 
     .hero-title {
-        letter-spacing: 0.1em;
-        font-size: clamp(1.8rem, 10vw, 2.5rem);
+        letter-spacing: 0.05em;
+        font-size: clamp(1.5rem, 12vw, 2rem);
+        line-height: 1.3;
     }
 
     .hero-logo {
-        max-width: 140px;
+        max-width: 120px;
+        margin-bottom: 1rem;
+    }
+
+    .hero-subtitle {
+        font-size: 0.875rem;
+        padding: 0 0.5rem;
+    }
+
+    .hero-divider {
+        width: 8rem;
+        margin-bottom: 1rem;
+    }
+
+    /* Server Cards - Full width on mobile */
+    .server-cards {
+        width: 100%;
+        padding: 0 0.5rem;
     }
 
     .server-card {
-        padding: 1rem;
-        gap: 0.75rem;
+        width: 100%;
+        padding: 0.875rem;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        justify-content: center;
     }
 
-    .server-card span.text-lg {
-        font-size: 0.9rem;
+    .server-card svg.w-6.h-6 {
+        width: 1.25rem;
+        height: 1.25rem;
+    }
+
+    .server-card .text-left {
+        flex: 1 1 100%;
+        text-align: center;
+    }
+
+    .server-card .text-left span.text-lg {
+        font-size: 0.8rem;
+        display: block;
+        word-break: break-all;
+    }
+
+    .server-card .text-left span.text-\[10px\] {
+        font-size: 8px;
+    }
+
+    .server-card .text-left span.text-xs {
+        font-size: 7px;
+    }
+
+    .server-card .flex.flex-col.items-center.gap-1.ml-2 {
+        margin-left: 0;
+        margin-top: 0.5rem;
     }
 
     .copied-text {
-        font-size: 8px;
+        font-size: 7px;
     }
 
     .social-buttons {
         flex-direction: column;
         align-items: center;
+        width: 100%;
+        padding: 0 1rem;
     }
 
     .social-card {
         width: 100%;
         justify-content: center;
+        padding: 0.625rem 1rem;
+        font-size: 0.875rem;
+    }
+
+    .social-card svg.w-5.h-5 {
+        width: 1.125rem;
+        height: 1.125rem;
+    }
+
+    /* Adjust hero content spacing */
+    .mb-2 {
+        margin-bottom: 0.5rem;
+    }
+
+    .hero-content {
+        padding: 0 0.75rem;
     }
 
 }
 
-/* Medium-small devices */
+/* Medium-small devices (small tablets) */
 @media (max-width: 640px) {
 
     .rank-section,
     .crate-section {
-        padding: 3rem 1rem;
+        padding: 2.5rem 0.75rem;
+    }
+
+    .rank-section .text-center.mb-12 {
+        margin-bottom: 2rem;
+    }
+
+    .crate-section .text-center.mb-12 {
+        margin-bottom: 2rem;
+    }
+
+    .rank-section h2,
+    .crate-section h2 {
+        font-size: 1rem !important;
+    }
+
+    /* Rank cards */
+    .rank-card {
+        padding: 1rem;
+    }
+
+    .rank-card h3 {
+        font-size: 0.625rem;
+    }
+
+    .rank-card .price {
+        font-size: 1.25rem;
+    }
+
+    .rank-card .features li {
+        font-size: 0.625rem;
+    }
+
+    /* Crate cards */
+    .crate-card {
+        padding: 1.25rem;
+    }
+
+    .crate-card h3 {
+        font-size: 0.625rem;
+    }
+
+    .crate-card p {
+        font-size: 1.25rem;
+    }
+
+    /* Footer */
+    .footer {
+        padding: 1.5rem 0.75rem;
+    }
+
+}
+
+/* Extra small devices */
+@media (max-width: 360px) {
+
+    .hero-title {
+        font-size: clamp(1.25rem, 14vw, 1.75rem);
+    }
+
+    .hero-logo {
+        max-width: 100px;
+    }
+
+    .server-card span.text-lg {
+        font-size: 0.75rem;
+    }
+
+    .font-pixel.text-xs {
+        font-size: 6px;
     }
 
 }
@@ -1007,12 +1151,65 @@ html, body {
 /* Improve short screen spacing */
 @media (max-height: 700px) {
     .hero-section {
-        padding-top: 2rem;
-        padding-bottom: 2rem;
+        padding-top: 1.5rem;
+        padding-bottom: 1.5rem;
+        min-height: auto;
+        min-height: 100dvh;
     }
 
     .hero-subtitle {
-        margin-bottom: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .hero-logo {
+        max-width: 100px;
+        margin-bottom: 0.75rem;
+    }
+}
+
+/* Very tall phones - ensure content fits */
+@media (min-height: 800px) and (max-width: 480px) {
+    .hero-section {
+        padding-top: 3rem;
+        padding-bottom: 3rem;
+    }
+}
+
+/* Ensure images don't overflow */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Prevent text selection on buttons (better touch experience) */
+.server-card,
+.social-card,
+.rank-card,
+.crate-card {
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Improve button active states on mobile */
+@media (hover: none) and (pointer: coarse) {
+    .server-card:active,
+    .social-card:active,
+    .rank-card:active,
+    .crate-card:active {
+        transform: scale(0.98);
+    }
+}
+
+/* Ensure proper viewport behavior on iOS */
+@supports (-webkit-touch-callout: none) {
+    body {
+        min-height: -webkit-fill-available;
+    }
+    
+    .hero-section {
+        min-height: -webkit-fill-available;
+        min-height: 100dvh;
     }
 }
 
