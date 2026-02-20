@@ -955,6 +955,10 @@ body {
     border-color: hsl(235 70% 55%);
 }
 
+.social-card.map {
+    border-color: hsl(200 70% 55%);
+}
+
 .social-card.whatsapp {
     border-color: hsl(142 60% 40%);
 }
