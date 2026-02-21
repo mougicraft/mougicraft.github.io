@@ -1,6 +1,11 @@
-// Copy to clipboard functionality
+// Copy to clipboard functionality with sound
 function copyToClipboard(text, type) {
     navigator.clipboard.writeText(text).then(() => {
+        // Play coin sound for successful copy
+        if (typeof playSound === 'function') {
+            playSound('coin');
+        }
+
         if (type === 'java') {
             const copiedText = document.querySelector('.java-copied');
             if (copiedText) {
@@ -87,14 +92,15 @@ const ranks = [
     },
 ];
 
-// Generate rank cards
+// Generate rank cards with retro animations
 function generateRankCards() {
     const rankGrid = document.querySelector('.rank-grid');
     if (!rankGrid) return;
 
-    ranks.forEach(rank => {
+    ranks.forEach((rank, index) => {
         const card = document.createElement('div');
-        card.className = `rank-card ${rank.popular ? 'popular' : ''}`;
+        card.className = `rank-card ${rank.popular ? 'popular' : ''} pixel-bounce-card`;
+        card.style.animationDelay = `${index * 0.1}s`;
         
         let featuresHTML = '';
         rank.features.forEach(feature => {
@@ -102,8 +108,8 @@ function generateRankCards() {
         });
 
         card.innerHTML = `
-            ${rank.popular ? '<span class="popular-badge">⭐ POPULAR</span>' : ''}
-            <h3 class="${rank.nameColor}">${rank.name}</h3>
+            ${rank.popular ? '<span class="popular-badge pixel-bounce">⭐ POPULAR</span>' : ''}
+            <h3 class="${rank.nameColor} glitch-text-effect">${rank.name}</h3>
             <div class="rank-divider-line"></div>
             <p class="price">IDR <span class="${rank.nameColor}">${rank.price}</span></p>
             <div class="expand-indicator">
@@ -115,16 +121,77 @@ function generateRankCards() {
             </ul>
         `;
         
-        // Add click event listener to toggle features
+        // Add click event listener to toggle features with sound
         card.addEventListener('click', function() {
             this.classList.toggle('expanded');
+            // Play select sound on rank card click
+            if (typeof playSound === 'function') {
+                playSound('select');
+            }
+        });
+
+        // Add hover sound effect
+        card.addEventListener('mouseenter', function() {
+            if (typeof playSound === 'function') {
+                playSound('beep');
+            }
         });
         
         rankGrid.appendChild(card);
     });
 }
 
+// Initialize page animations
+function initPageAnimations() {
+    // Add animation to hero content elements
+    const heroElements = document.querySelectorAll('.hero-logo, .hero-title, .hero-subtitle, .server-card, .social-card');
+    heroElements.forEach((el, index) => {
+        el.style.opacity = '0';
+        el.style.animation = `fadeInUp 0.6s ease-out forwards`;
+        el.style.animationDelay = `${index * 0.1}s`;
+    });
+
+    // Add click effects to interactive elements (excluding social cards)
+    document.querySelectorAll('.retro-button:not(.social-card), .pixel-card, .rank-card').forEach(el => {
+        el.addEventListener('click', () => {
+            el.style.animation = 'none';
+            setTimeout(() => {
+                el.style.animation = '';
+            }, 10);
+        });
+    });
+}
+
+// Fade in up animation for elements
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .rank-card {
+        animation: pulse-ring 3s infinite;
+    }
+
+    .rank-card:nth-child(1) { animation-delay: 0s; }
+    .rank-card:nth-child(2) { animation-delay: 0.1s; }
+    .rank-card:nth-child(3) { animation-delay: 0.2s; }
+    .rank-card:nth-child(4) { animation-delay: 0.3s; }
+    .rank-card:nth-child(5) { animation-delay: 0.4s; }
+    .rank-card:nth-child(n+6) { animation-delay: calc((var(--index, 0) - 5) * 0.1s); }
+`;
+document.head.appendChild(style);
+
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
     generateRankCards();
+    initPageAnimations();
 });
+
