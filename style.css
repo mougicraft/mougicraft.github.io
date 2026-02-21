@@ -577,7 +577,7 @@ body {
 
 .hero-title {
     font-family: 'Press Start 2P', cursive;
-    font-size: clamp(0.875rem, 4vw, 3rem);
+    font-size: clamp(0.625rem, 5vw, 3rem);
     color: hsl(var(--primary));
     text-shadow: 0 0 10px hsl(100 60% 45% / 0.6), 0 0 40px hsl(100 60% 45% / 0.25), 0 2px 0 hsl(100 40% 25%),
                  -2px 0 hsl(45 100% 55% / 0.4), 2px 0 hsl(280 60% 55% / 0.4);
@@ -586,6 +586,10 @@ body {
     line-height: 1.25;
     letter-spacing: 0.15em;
     position: relative;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    max-width: 100%;
+    padding: 0 0.5rem;
 }
 
 @keyframes float {
