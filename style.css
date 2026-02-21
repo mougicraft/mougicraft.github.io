@@ -1657,15 +1657,15 @@ body {
 
 .rank-card .popular-badge {
     position: absolute;
-    top: -0.75rem;
-    left: 50%;
-    transform: translateX(-50%);
+    top: 0.5rem;
+    right: 0.5rem;
     background: hsl(var(--primary));
     color: hsl(var(--primary-foreground));
     font-family: 'Press Start 2P', cursive;
     font-size: 8px;
-    padding: 0.25rem 0.75rem;
-    border-radius: 0.25rem;
+    padding: 0.4rem 0.6rem;
+    border: 2px solid hsl(var(--primary-foreground));
+    border-radius: 2px;
     animation: pixel-bounce 1.5s ease-in-out infinite;
     z-index: 10;
 }
