@@ -1670,6 +1670,7 @@ body {
     z-index: 10;
 }
 
+
 .rank-card h3 {
     font-family: 'Press Start 2P', cursive;
     font-size: 0.65rem;
@@ -2218,4 +2219,5 @@ body {
 .from-background\/60 {
     --tw-gradient-from: hsl
 }
+
 
