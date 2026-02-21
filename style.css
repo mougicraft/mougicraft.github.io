@@ -2322,16 +2322,41 @@ body {
 /* Responsive breakpoints */
 @media (max-width: 640px) {
     .text-4xl {
-        font-size: 1.5rem;
+        font-size: 1.25rem;
     }
     
     .text-5xl {
-        font-size: 1.875rem;
+        font-size: 1.5rem;
     }
     
     .retro-title {
-        font-size: 1.5rem;
-        letter-spacing: 2px;
+        font-size: 1.25rem !important;
+        letter-spacing: 1px;
+    }
+    
+    .retro-title-container {
+        margin: 0.5rem 0;
+    }
+    
+    .retro-decor,
+    .retro-decor-gold {
+        font-size: 0.75rem;
+    }
+    
+    .section-title .text-\[10px\] {
+        font-size: 6px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .retro-title {
+        font-size: 1rem !important;
+        letter-spacing: 1px;
+    }
+    
+    .text-4xl,
+    .text-5xl {
+        font-size: 1rem;
     }
 }
 
