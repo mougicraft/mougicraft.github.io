@@ -305,6 +305,12 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    /* simple outline to highlight the embedded area */
+    padding: 1rem;
+    border: 2px solid hsl(var(--primary) / 0.5);
+    border-radius: 0.5rem;
+    /* glowing primary color backdrop */
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.4), 0 0 40px hsl(var(--primary) / 0.2);
 }
 
 .iframe-container {
@@ -314,6 +320,11 @@ body {
     /* maintain aspect ratio (16:9) for responsiveness */
     aspect-ratio: 16 / 9;
     overflow: hidden;
+    /* subtle border around the iframe itself */
+    border: 1px solid hsl(var(--primary));
+    border-radius: 0.25rem;
+    /* gentle glow around iframe */
+    box-shadow: 0 0 15px hsl(var(--primary) / 0.3);
 }
 
 .iframe-container iframe {
