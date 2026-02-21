@@ -168,21 +168,23 @@ function initPageAnimations() {
 
     // Observe rank cards for scroll-triggered animation
     document.querySelectorAll('.rank-card').forEach((card, index) => {
-        card.style.opacity = '0';
+        card.style.opacity = '1'; // Keep visible
         card.style.animationDelay = `${index * 0.1}s`;
+        card.classList.add('animate-in'); // Add animation immediately
         animationObserver.observe(card);
     });
 
-    // Observe section titles
+    // Observe section titles (keep them visible, don't hide with opacity:0)
     document.querySelectorAll('.section-title').forEach(title => {
-        title.style.opacity = '0';
+        title.classList.add('animate-in'); // Add animate-in immediately for visibility
         animationObserver.observe(title);
     });
 
     // Observe crate cards
     document.querySelectorAll('.pixel-card').forEach((card, index) => {
-        card.style.opacity = '0';
+        card.style.opacity = '1'; // Keep visible
         card.style.animationDelay = `${index * 0.1}s`;
+        card.classList.add('animate-in'); // Add animation immediately
         animationObserver.observe(card);
     });
 
@@ -229,11 +231,15 @@ style.textContent = `
     }
 
     .section-title span {
-        opacity: 0;
+        opacity: 1 !important;
+        display: inline-block;
+        animation: fadeInUp 0.6s ease-out forwards;
     }
 
     .section-title h2 {
-        opacity: 0;
+        opacity: 1 !important;
+        display: block;
+        animation: fadeInUp 0.6s ease-out forwards;
     }
 
     .pixel-card.animate-in {
