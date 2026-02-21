@@ -997,6 +997,7 @@ body {
 
 .social-card.map {
     border-color: hsl(299, 100%, 50%);
+    color: hsl(230, 100%, 50%);
 }
 
 .social-card.whatsapp {
@@ -1637,4 +1638,5 @@ body {
 .from-background\/60 {
     --tw-gradient-from: hsl
 }
+
 
