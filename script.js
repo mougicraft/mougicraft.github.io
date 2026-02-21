@@ -141,15 +141,57 @@ function generateRankCards() {
     });
 }
 
+// Intersection Observer for scroll-triggered animations
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+};
+
+const animationObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('animate-in');
+            animationObserver.unobserve(entry.target);
+        }
+    });
+}, observerOptions);
+
 // Initialize page animations
 function initPageAnimations() {
-    // Add animation to hero content elements
+    // Add animation to hero content elements (immediate for hero since it's visible on load)
     const heroElements = document.querySelectorAll('.hero-logo, .hero-title, .hero-subtitle, .server-card, .social-card');
     heroElements.forEach((el, index) => {
         el.style.opacity = '0';
         el.style.animation = `fadeInUp 0.6s ease-out forwards`;
         el.style.animationDelay = `${index * 0.1}s`;
     });
+
+    // Observe rank cards for scroll-triggered animation
+    document.querySelectorAll('.rank-card').forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.animationDelay = `${index * 0.1}s`;
+        animationObserver.observe(card);
+    });
+
+    // Observe section titles
+    document.querySelectorAll('.section-title').forEach(title => {
+        title.style.opacity = '0';
+        animationObserver.observe(title);
+    });
+
+    // Observe crate cards
+    document.querySelectorAll('.pixel-card').forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.animationDelay = `${index * 0.1}s`;
+        animationObserver.observe(card);
+    });
+
+    // Observe iframe container
+    const iframeContainer = document.querySelector('.iframe-container');
+    if (iframeContainer) {
+        iframeContainer.style.opacity = '0';
+        animationObserver.observe(iframeContainer);
+    }
 
     // Add click effects to interactive elements (excluding social cards)
     document.querySelectorAll('.retro-button:not(.social-card), .pixel-card, .rank-card').forEach(el => {
@@ -176,16 +218,42 @@ style.textContent = `
         }
     }
 
-    .rank-card {
-        animation: pulse-ring 3s infinite;
+    /* Apply animation when element enters viewport */
+    .rank-card.animate-in {
+        animation: fadeInUp 0.6s ease-out forwards;
     }
 
-    .rank-card:nth-child(1) { animation-delay: 0s; }
-    .rank-card:nth-child(2) { animation-delay: 0.1s; }
-    .rank-card:nth-child(3) { animation-delay: 0.2s; }
-    .rank-card:nth-child(4) { animation-delay: 0.3s; }
-    .rank-card:nth-child(5) { animation-delay: 0.4s; }
-    .rank-card:nth-child(n+6) { animation-delay: calc((var(--index, 0) - 5) * 0.1s); }
+    .section-title.animate-in span,
+    .section-title.animate-in h2 {
+        animation: fadeInUp 0.6s ease-out forwards;
+    }
+
+    .section-title span {
+        opacity: 0;
+    }
+
+    .section-title h2 {
+        opacity: 0;
+    }
+
+    .pixel-card.animate-in {
+        animation: fadeInUp 0.6s ease-out forwards;
+    }
+
+    .iframe-container.animate-in {
+        animation: fadeInUp 0.6s ease-out forwards;
+    }
+
+    .rank-card:nth-child(1).animate-in { animation-delay: 0s; }
+    .rank-card:nth-child(2).animate-in { animation-delay: 0.1s; }
+    .rank-card:nth-child(3).animate-in { animation-delay: 0.2s; }
+    .rank-card:nth-child(4).animate-in { animation-delay: 0.3s; }
+    .rank-card:nth-child(5).animate-in { animation-delay: 0.4s; }
+    .rank-card:nth-child(n+6).animate-in { animation-delay: calc((var(--index, 0) - 5) * 0.1s); }
+
+    .pixel-card:nth-child(1).animate-in { animation-delay: 0s; }
+    .pixel-card:nth-child(2).animate-in { animation-delay: 0.1s; }
+    .pixel-card:nth-child(3).animate-in { animation-delay: 0.2s; }
 `;
 document.head.appendChild(style);
 
