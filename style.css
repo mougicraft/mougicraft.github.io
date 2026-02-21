@@ -1560,6 +1560,16 @@ body {
                 0 8px 20px hsl(270 60% 50% / 0.3), 0 0 20px hsl(270 60% 50% / 0.15);
 }
 
+.social-card.vote-server {
+    border-color: hsl(40 100% 50%);
+}
+
+.social-card.vote-server:hover {
+    border-color: hsl(40 100% 60%);
+    box-shadow: inset 0 1px 0 hsl(30 15% 30%), inset 0 -1px 0 hsl(30 10% 8%), 
+                0 8px 20px hsl(40 100% 50% / 0.3), 0 0 20px hsl(40 100% 50% / 0.15);
+}
+
 /* Grass Transition */
 .grass-transition {
     position: absolute;
