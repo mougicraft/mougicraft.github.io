@@ -1001,6 +1001,7 @@ body {
 
 .social-card.whatsapp {
     border-color: hsl(142 60% 40%);
+    color: hsl(230, 100%, 50%);
 }
 
 /* Grass Transition */
@@ -1636,3 +1637,4 @@ body {
 .from-background\/60 {
     --tw-gradient-from: hsl
 }
+
