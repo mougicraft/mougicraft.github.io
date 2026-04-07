@@ -4,6 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MOUGICRAFT - Survival Server</title>
+    <meta name="description" content="Join MOUGICRAFT survival server for Java and Bedrock. Copy IP fast, check live status, and explore ranks and crate rewards.">
+    <meta name="theme-color" content="#1f2814">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="MOUGICRAFT - Survival Server">
+    <meta property="og:description" content="Survival vibes, fun chaos, and blocky adventures. Java + Bedrock ready.">
+    <meta property="og:image" content="https://mougicraft.github.io/mougicraftlogos.webp">
+    <meta property="og:url" content="https://mougicraft.github.io/">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="MOUGICRAFT - Survival Server">
+    <meta name="twitter:description" content="Survival vibes, fun chaos, and blocky adventures. Java + Bedrock ready.">
+    <meta name="twitter:image" content="https://mougicraft.github.io/mougicraftlogos.webp">
+    <link rel="canonical" href="https://mougicraft.github.io/">
     <link rel="icon" type="image/png" href="mougicraftlogos.webp">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -218,6 +230,16 @@
             background: linear-gradient(180deg, hsl(30 8% 14% / 0.8), hsl(30 8% 10% / 0.65));
             display: grid;
             gap: 0.45rem;
+            transition: border-color 180ms ease, box-shadow 180ms ease;
+        }
+
+        .status-card.is-loading {
+            border-color: hsl(var(--accent) / 0.55);
+            box-shadow: 0 0 0 1px hsl(var(--accent) / 0.2), 0 0 20px hsl(var(--accent) / 0.15);
+        }
+
+        .status-card.is-loading .status-dot {
+            animation-duration: 0.9s;
         }
 
         .status-label {
@@ -286,6 +308,81 @@
 
         .shuffle-btn:active {
             transform: translateY(0) scale(0.98);
+        }
+
+        .proof-strip {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+            margin: 6px 0 14px;
+        }
+
+        .proof-chip {
+            border: 1px solid hsl(30 15% 25% / 0.9);
+            border-radius: 12px;
+            background: linear-gradient(180deg, hsl(30 10% 16% / 0.92), hsl(30 10% 11% / 0.9));
+            padding: 0.56rem 0.62rem;
+            display: grid;
+            gap: 0.2rem;
+            text-align: center;
+        }
+
+        .proof-value {
+            font-family: 'Silkscreen', cursive;
+            font-size: 0.9rem;
+            color: hsl(var(--accent));
+            letter-spacing: 0.05em;
+        }
+
+        .proof-label {
+            font-size: 0.86rem;
+            color: hsl(var(--muted-foreground));
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .quick-join {
+            border: 1px solid hsl(var(--primary) / 0.42);
+            border-radius: var(--radius-md);
+            background: linear-gradient(180deg, hsl(30 8% 14% / 0.84), hsl(30 8% 10% / 0.7));
+            padding: 0.9rem;
+            margin-top: 12px;
+            display: grid;
+            gap: 0.52rem;
+        }
+
+        .quick-join-title {
+            font-family: 'Silkscreen', cursive;
+            font-size: 0.68rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: hsl(var(--primary));
+        }
+
+        .quick-join-steps {
+            list-style: none;
+            display: grid;
+            gap: 0.42rem;
+            counter-reset: joinstep;
+        }
+
+        .quick-join-steps li {
+            font-size: 1.04rem;
+            line-height: 1.12;
+            color: hsl(var(--foreground) / 0.95);
+            display: flex;
+            align-items: baseline;
+            gap: 0.45rem;
+        }
+
+        .quick-join-steps li::before {
+            counter-increment: joinstep;
+            content: counter(joinstep) '.';
+            color: hsl(var(--accent));
+            font-family: 'Silkscreen', cursive;
+            font-size: 0.68rem;
+            min-width: 1.35rem;
+            text-align: right;
         }
 
         .server-grid {
@@ -865,6 +962,11 @@
             color: hsl(var(--foreground));
         }
 
+        .crate-result.is-loading {
+            color: hsl(var(--muted-foreground));
+            animation: breatheText 1.1s ease-in-out infinite;
+        }
+
         .crate-result strong {
             color: hsl(var(--accent));
         }
@@ -917,6 +1019,11 @@
             100% { transform: translate(var(--dx), var(--dy)) scale(0.4); opacity: 0; }
         }
 
+        @keyframes breatheText {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.52; }
+        }
+
         @media (max-width: 980px) {
             .social-grid {
                 grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -924,8 +1031,33 @@
         }
 
         @media (max-width: 760px) {
+            .site-shell {
+                width: 94vw;
+                gap: 18px;
+                padding-top: 16px;
+            }
+
+            .hero-panel {
+                padding: 14px;
+            }
+
+            .hero-top {
+                gap: 12px;
+                margin-bottom: 16px;
+            }
+
+            .hero-title {
+                line-height: 1.3;
+            }
+
+            .hero-subtitle {
+                font-size: 1.14rem;
+                line-height: 1.26;
+            }
+
             .hero-flex {
                 grid-template-columns: 1fr;
+                gap: 10px;
             }
 
             .shuffle-btn {
@@ -933,8 +1065,39 @@
                 width: 100%;
             }
 
+            .proof-strip {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+
+            .proof-chip {
+                padding: 0.62rem;
+            }
+
             .server-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .server-card {
+                padding: 0.78rem;
+                gap: 0.5rem;
+            }
+
+            .server-ip {
+                font-size: clamp(1.25rem, 6vw, 1.7rem);
+            }
+
+            .copy-btn,
+            .crate-btn,
+            .perk-toggle,
+            .shuffle-btn,
+            .social-btn {
+                min-height: 44px;
+            }
+
+            .quick-join {
+                margin-top: 10px;
+                padding: 0.75rem;
             }
 
             .social-grid {
@@ -943,45 +1106,95 @@
         }
 
         @media (max-width: 480px) {
-            .site-shell {
-                width: 94vw;
-                gap: 16px;
-                padding-top: 18px;
-            }
-
-            .hero-panel {
-                padding: 14px;
-            }
-
             .hero-subtitle {
-                font-size: 1.18rem;
+                font-size: 1.06rem;
+                line-height: 1.3;
+            }
+
+            .proof-value {
+                font-size: 0.84rem;
+            }
+
+            .quick-join-steps li {
+                font-size: 0.97rem;
             }
 
             .social-btn {
-                font-size: 0.56rem;
-                padding: 0.58rem 0.56rem;
+                font-size: 0.54rem;
+                padding: 0.6rem 0.5rem;
             }
 
             .section-panel {
                 padding: 12px;
             }
 
+            .rank-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .rank-card {
+                padding: 0.78rem;
+            }
+
+            .spin-window {
+                width: 100%;
+                border-radius: 14px;
+            }
+
             .spin-slot {
-                min-width: 98px;
+                min-width: 86px;
+                padding: 0.38rem;
             }
 
             .spin-track {
+                gap: 0.46rem;
+                padding: 0.56rem;
                 min-height: 110px;
             }
 
             .spin-slot-icon-wrap {
-                width: 46px;
-                height: 46px;
+                width: 42px;
+                height: 42px;
             }
 
             .spin-slot-icon-img {
-                width: 40px;
-                height: 40px;
+                width: 36px;
+                height: 36px;
+            }
+
+            .spin-slot-name {
+                font-size: 0.5rem;
+                min-height: 2.1em;
+            }
+
+            .crate-result {
+                font-size: 1.05rem;
+            }
+
+            .footer {
+                font-size: 0.5rem;
+            }
+        }
+
+        @media (pointer: coarse) {
+            .blob {
+                animation-duration: 18s;
+                filter: blur(44px);
+            }
+
+            .scanline-overlay {
+                opacity: 0.22;
+            }
+
+            .shuffle-btn:hover,
+            .copy-btn:hover,
+            .social-btn:hover,
+            .crate-btn:hover,
+            .rank-card:hover,
+            .server-card:hover {
+                transform: none;
+                box-shadow: none;
             }
         }
     </style>
@@ -1005,7 +1218,7 @@
             </div>
 
             <div class="hero-flex">
-                <article class="status-card" aria-live="polite">
+                <article class="status-card" id="statusCard" aria-live="polite">
                     <p class="status-label">Server Status</p>
                     <div class="status-row">
                         <span class="status-dot" id="statusDot"></span>
@@ -1014,6 +1227,17 @@
                     <p class="players-online"><strong id="onlinePlayers">0</strong> players online</p>
                 </article>
                 <button type="button" class="shuffle-btn" id="shuffleMoodBtn">Shuffle Mood</button>
+            </div>
+
+            <div class="proof-strip" aria-label="Server highlights">
+                <article class="proof-chip">
+                    <span class="proof-value" id="proofOnline">0</span>
+                    <span class="proof-label">Live Players</span>
+                </article>
+                <article class="proof-chip">
+                    <span class="proof-value" id="proofRanks">0</span>
+                    <span class="proof-label">Rank Tiers</span>
+                </article>
             </div>
 
             <div class="server-grid">
@@ -1036,6 +1260,15 @@
                     </button>
                 </article>
             </div>
+
+            <section class="quick-join" aria-label="Cara join cepat">
+                <p class="quick-join-title">Cara Join Cepat</p>
+                <ol class="quick-join-steps">
+                    <li>Buka Minecraft dan pilih Multiplayer.</li>
+                    <li>Java: pakai PLAY.MOUGICRAFT.MY.ID, Bedrock: MOUGICRAFT.MY.ID port 25128.</li>
+                    <li>Masuk server, claim starter, lalu mulai survival bareng komunitas.</li>
+                </ol>
+            </section>
 
             <nav class="social-grid" aria-label="Community Links">
                 <a href="https://www.tiktok.com/@mougiii_" target="_blank" rel="noopener noreferrer" class="social-btn tiktok">
@@ -1106,7 +1339,10 @@
     <script>
         const statusDot = document.getElementById('statusDot');
         const statusText = document.getElementById('statusText');
+        const statusCard = document.getElementById('statusCard');
         const onlinePlayers = document.getElementById('onlinePlayers');
+        const proofOnline = document.getElementById('proofOnline');
+        const proofRanks = document.getElementById('proofRanks');
         const heroSubtitle = document.getElementById('heroSubtitle');
         const perkModalOverlay = document.getElementById('perkModalOverlay');
         const perkModal = document.getElementById('perkModal');
@@ -1291,7 +1527,7 @@
             }
         ];
 
-        const spinAssetBase = 'mougicraft.github.io/public/assets/spin';
+        const spinAssetBase = './public/assets/spin';
 
         // Curated rewards only (not all assets in folder).
         const crateRewardPool = [
@@ -1393,12 +1629,16 @@
         }
 
         function setOfflineState() {
+            statusCard && statusCard.classList.remove('is-loading');
             statusDot.className = 'status-dot offline';
             statusText.textContent = 'Offline';
             onlinePlayers.textContent = '0';
+            if (proofOnline) proofOnline.textContent = '0';
         }
 
         async function checkServerStatus() {
+            statusCard && statusCard.classList.add('is-loading');
+            statusText.textContent = 'Checking...';
             try {
                 const response = await fetch('https://api.mcsrvstat.us/2/play.mougicraft.my.id', { cache: 'no-store' });
                 if (!response.ok) {
@@ -1408,15 +1648,22 @@
 
                 const data = await response.json();
                 if (data.online) {
+                    statusCard && statusCard.classList.remove('is-loading');
                     statusDot.className = 'status-dot online';
                     statusText.textContent = 'Online';
-                    onlinePlayers.textContent = data.players && typeof data.players.online === 'number' ? String(data.players.online) : '0';
+                    const currentOnline = data.players && typeof data.players.online === 'number' ? String(data.players.online) : '0';
+                    onlinePlayers.textContent = currentOnline;
+                    if (proofOnline) proofOnline.textContent = currentOnline;
                 } else {
                     setOfflineState();
                 }
             } catch (error) {
                 setOfflineState();
             }
+        }
+
+        function initProofStats() {
+            if (proofRanks) proofRanks.textContent = String(ranks.length);
         }
 
         async function copyText(value, stateElement, button) {
@@ -1670,6 +1917,8 @@
             if (!crateBtn || !crateResult || !spinTrack) return;
 
             renderSpinSkeleton();
+            crateResult.classList.add('is-loading');
+            crateResult.textContent = 'Preparing crate...';
 
             preloadSpinTextures()
                 .then(() => {
@@ -1681,9 +1930,11 @@
                     // Keep idle state anchored and visible in the center container.
                     spinTrack.style.transition = 'none';
                     spinTrack.style.transform = 'translate3d(0px, 0, 0)';
+                    crateResult.classList.remove('is-loading');
                     crateResult.textContent = 'Ready. Press Spin Crate.';
                 })
                 .catch(() => {
+                    crateResult.classList.remove('is-loading');
                     crateResult.textContent = 'Texture item belum siap.';
                 });
 
@@ -1693,6 +1944,7 @@
                 crateSpinState.spinning = true;
                 crateBtn.disabled = true;
                 crateBtn.textContent = 'Spinning...';
+                crateResult.classList.add('is-loading');
                 crateResult.textContent = 'Loading local item textures...';
 
                 try {
@@ -1706,9 +1958,11 @@
                     await animateSpin(stopIndex);
 
                     const reward = crateRewardPool[sequence[stopIndex]];
+                    crateResult.classList.remove('is-loading');
                     crateResult.innerHTML = `You got: <strong>${reward.label}</strong> [${reward.rarity.toUpperCase()}]`;
                     throwSparks();
                 } catch (error) {
+                    crateResult.classList.remove('is-loading');
                     crateResult.textContent = 'Spin gagal. Coba klik lagi.';
                     renderSpinSkeleton();
                 } finally {
@@ -1733,6 +1987,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            initProofStats();
             renderRanks();
             wirePerkModalEvents();
             wireCopyButtons();
