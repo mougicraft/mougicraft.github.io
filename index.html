@@ -136,6 +136,12 @@
         .hero-panel {
             padding: clamp(18px, 2.8vw, 34px);
             isolation: isolate;
+            background-image:
+                linear-gradient(160deg, hsl(30 8% 10% / 0.72), hsl(30 8% 8% / 0.76)),
+                url('hero-bg.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
         }
 
         .hero-panel::before {
@@ -494,13 +500,13 @@
         }
 
         .rank-price {
-            font-size: 1rem;
+            font-size: 1.02rem;
             color: hsl(var(--foreground));
         }
 
         .rank-price strong {
             color: hsl(var(--accent));
-            font-size: 1.08rem;
+            font-size: 1.04rem;
         }
 
         .perk-toggle {
