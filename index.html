@@ -7,207 +7,1736 @@
     <link rel="icon" type="image/png" href="mougicraftlogos.webp">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Silkscreen:wght@400;700&family=VT323&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --background: 30 10% 8%;
+            --foreground: 40 20% 90%;
+            --primary: 100 60% 45%;
+            --accent: 45 100% 55%;
+            --muted: 30 10% 16%;
+            --muted-foreground: 30 10% 58%;
+            --gold: 42 100% 50%;
+            --mythic: 280 60% 55%;
+            --legend: 25 85% 50%;
+            --sultan: 0 70% 50%;
+            --donator: 195 80% 50%;
+            --king: 42 100% 55%;
+            --radius-lg: 24px;
+            --radius-md: 16px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            min-height: 100%;
+        }
+
+        body {
+            font-family: 'VT323', monospace;
+            color: hsl(var(--foreground));
+            background: hsl(var(--background));
+            overflow-x: hidden;
+            line-height: 1;
+        }
+
+        .bg-blobs {
+            position: fixed;
+            inset: 0;
+            z-index: -3;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .blob {
+            position: absolute;
+            border-radius: 999px;
+            filter: blur(50px);
+            opacity: 0.26;
+            animation: floatBlob 12s ease-in-out infinite;
+        }
+
+        .blob.b1 {
+            width: 340px;
+            height: 340px;
+            background: hsl(var(--primary));
+            top: -80px;
+            left: -80px;
+        }
+
+        .blob.b2 {
+            width: 320px;
+            height: 320px;
+            background: hsl(var(--accent));
+            top: 30%;
+            right: -100px;
+            animation-delay: -4s;
+        }
+
+        .blob.b3 {
+            width: 380px;
+            height: 380px;
+            background: hsl(var(--mythic));
+            bottom: -140px;
+            left: 35%;
+            animation-delay: -8s;
+        }
+
+        .grid-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            pointer-events: none;
+            background:
+                linear-gradient(hsl(0 0% 100% / 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, hsl(0 0% 100% / 0.02) 1px, transparent 1px);
+            background-size: 22px 22px;
+            mask-image: radial-gradient(circle at center, black, transparent 85%);
+        }
+
+        .scanline-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent 0,
+                transparent 2px,
+                hsl(0 0% 0% / 0.12) 2px,
+                hsl(0 0% 0% / 0.12) 3px
+            );
+            opacity: 0.35;
+        }
+
+        .site-shell {
+            width: min(1120px, 92vw);
+            margin: 0 auto;
+            padding: 28px 0 48px;
+            display: grid;
+            gap: 24px;
+        }
+
+        .glass-panel {
+            position: relative;
+            border-radius: var(--radius-lg);
+            border: 1px solid hsl(30 15% 25% / 0.9);
+            background: linear-gradient(160deg, hsl(30 8% 16% / 0.94), hsl(30 8% 10% / 0.92));
+            box-shadow:
+                0 20px 50px hsl(0 0% 0% / 0.42),
+                inset 0 1px 0 hsl(0 0% 100% / 0.06);
+            overflow: hidden;
+        }
+
+        .hero-panel {
+            padding: clamp(18px, 2.8vw, 34px);
+            isolation: isolate;
+        }
+
+        .hero-panel::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at var(--mx, 50%) var(--my, 30%), hsl(var(--primary) / 0.18), transparent 35%);
+            pointer-events: none;
+            z-index: -1;
+            transition: background-position 120ms linear;
+        }
+
+        .hero-top {
+            display: grid;
+            place-items: center;
+            text-align: center;
+            gap: 14px;
+            margin-bottom: 22px;
+        }
+
+        .hero-logo {
+            width: clamp(130px, 17vw, 210px);
+            height: auto;
+            filter: drop-shadow(0 0 16px hsl(var(--primary) / 0.5));
+            animation: logoPulse 2.6s ease-in-out infinite;
+        }
+
+        .hero-badge {
+            font-family: 'Silkscreen', cursive;
+            font-size: clamp(0.58rem, 1.25vw, 0.8rem);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: hsl(var(--accent));
+            border: 1px dashed hsl(var(--accent) / 0.7);
+            border-radius: 999px;
+            padding: 0.45rem 0.95rem;
+            background: hsl(var(--accent) / 0.08);
+        }
+
+        .hero-title {
+            font-family: 'Press Start 2P', cursive;
+            font-size: clamp(1.2rem, 5vw, 3rem);
+            color: hsl(var(--primary));
+            text-align: center;
+            line-height: 1.22;
+            letter-spacing: 0.08em;
+            text-shadow:
+                0 0 14px hsl(var(--primary) / 0.65),
+                0 0 38px hsl(var(--primary) / 0.28),
+                2px 2px 0 hsl(var(--accent) / 0.32);
+        }
+
+        .hero-subtitle {
+            width: min(740px, 100%);
+            font-size: clamp(1.25rem, 2.2vw, 1.9rem);
+            color: hsl(var(--foreground) / 0.92);
+            letter-spacing: 0.03em;
+            line-height: 1.15;
+            text-shadow: 0 0 10px hsl(0 0% 0% / 0.35);
+        }
+
+        .hero-flex {
+            display: grid;
+            gap: 14px;
+            margin-bottom: 18px;
+            grid-template-columns: 1fr auto;
+            align-items: stretch;
+        }
+
+        .status-card {
+            border: 1px solid hsl(var(--primary) / 0.4);
+            border-radius: var(--radius-md);
+            padding: 0.8rem 0.9rem;
+            background: linear-gradient(180deg, hsl(30 8% 14% / 0.8), hsl(30 8% 10% / 0.65));
+            display: grid;
+            gap: 0.45rem;
+        }
+
+        .status-label {
+            font-family: 'Silkscreen', cursive;
+            font-size: 0.68rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: hsl(var(--muted-foreground));
+        }
+
+        .status-row {
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+            font-size: 1.25rem;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            box-shadow: 0 0 10px hsl(var(--accent) / 0.8);
+            background: hsl(var(--accent));
+            animation: pulseDot 1.5s ease-in-out infinite;
+        }
+
+        .status-dot.online {
+            background: hsl(var(--primary));
+            box-shadow: 0 0 12px hsl(var(--primary) / 0.9);
+        }
+
+        .status-dot.offline {
+            background: hsl(0 84% 60%);
+            box-shadow: 0 0 12px hsl(0 84% 60% / 0.9);
+        }
+
+        .players-online {
+            font-size: 1.15rem;
+            color: hsl(var(--foreground) / 0.9);
+        }
+
+        .players-online strong {
+            color: hsl(var(--accent));
+            font-size: 1.35rem;
+        }
+
+        .shuffle-btn {
+            border: 1px solid hsl(var(--accent) / 0.55);
+            border-radius: var(--radius-md);
+            background: linear-gradient(180deg, hsl(45 100% 55% / 0.22), hsl(45 100% 55% / 0.1));
+            color: hsl(var(--accent));
+            font-family: 'Silkscreen', cursive;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            transition: transform 160ms ease, box-shadow 160ms ease;
+            min-width: 180px;
+        }
+
+        .shuffle-btn:hover {
+            transform: translateY(-2px) rotate(-1deg);
+            box-shadow: 0 10px 20px hsl(45 100% 55% / 0.2);
+        }
+
+        .shuffle-btn:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        .server-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .server-card {
+            border: 1px solid hsl(30 15% 25% / 0.95);
+            border-radius: var(--radius-md);
+            background: linear-gradient(180deg, hsl(30 8% 16%), hsl(30 8% 10%));
+            padding: 0.9rem;
+            display: grid;
+            gap: 0.6rem;
+            transition: transform 170ms ease, border-color 170ms ease, box-shadow 170ms ease;
+            box-shadow: 0 12px 22px hsl(0 0% 0% / 0.24);
+        }
+
+        .server-card:hover {
+            transform: translateY(-3px);
+            border-color: hsl(var(--primary) / 0.65);
+            box-shadow: 0 16px 28px hsl(0 0% 0% / 0.36);
+        }
+
+        .server-card.bedrock:hover {
+            border-color: hsl(var(--accent) / 0.7);
+        }
+
+        .edition {
+            font-family: 'Silkscreen', cursive;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-size: 0.62rem;
+            color: hsl(var(--muted-foreground));
+        }
+
+        .server-ip {
+            font-size: clamp(1.45rem, 3.2vw, 2.1rem);
+            color: hsl(var(--primary));
+            line-height: 0.95;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+            white-space: normal;
+            overflow-wrap: anywhere;
+            word-break: break-word;
+            text-shadow: 0 0 12px hsl(var(--primary) / 0.35);
+        }
+
+        .server-card.bedrock .server-ip {
+            color: hsl(var(--accent));
+            text-shadow: 0 0 12px hsl(var(--accent) / 0.35);
+        }
+
+        .server-port {
+            font-size: 1.08rem;
+            color: hsl(var(--muted-foreground));
+        }
+
+        .copy-btn {
+            width: 100%;
+            border: 1px solid hsl(30 15% 28%);
+            border-radius: 12px;
+            background: linear-gradient(180deg, hsl(30 12% 20%), hsl(30 10% 12%));
+            color: hsl(var(--foreground));
+            font-family: 'Silkscreen', cursive;
+            font-size: 0.68rem;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+            padding: 0.66rem 0.75rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+            transition: transform 140ms ease, border-color 140ms ease, box-shadow 140ms ease;
+        }
+
+        .copy-btn small {
+            font-family: 'VT323', monospace;
+            font-size: 1rem;
+            color: hsl(var(--muted-foreground));
+        }
+
+        .copy-btn:hover {
+            border-color: hsl(var(--primary) / 0.8);
+            transform: translateY(-1px);
+            box-shadow: 0 8px 18px hsl(var(--primary) / 0.2);
+        }
+
+        .copy-btn.copied {
+            border-color: hsl(var(--primary));
+            background: linear-gradient(180deg, hsl(100 60% 22%), hsl(100 60% 14%));
+        }
+
+        .social-grid {
+            margin-top: 12px;
+            display: grid;
+            gap: 10px;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+        }
+
+        .social-btn {
+            border: 1px solid hsl(30 15% 26%);
+            border-radius: 999px;
+            background: linear-gradient(180deg, hsl(30 8% 14%), hsl(30 8% 10%));
+            text-decoration: none;
+            color: hsl(var(--foreground));
+            padding: 0.65rem 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            font-family: 'Silkscreen', cursive;
+            font-size: 0.62rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            transition: transform 150ms ease, border-color 150ms ease, box-shadow 150ms ease;
+        }
+
+        .social-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 18px hsl(0 0% 0% / 0.28);
+        }
+
+        .social-btn svg {
+            width: 14px;
+            height: 14px;
+            flex-shrink: 0;
+        }
+
+        .social-btn.tiktok {
+            border-color: #25f4ee;
+        }
+
+        .social-btn.vote {
+            border-color: hsl(40 100% 50%);
+        }
+
+        .social-btn.discord {
+            border-color: hsl(235 70% 55%);
+        }
+
+        .social-btn.whatsapp {
+            border-color: hsl(142 60% 42%);
+        }
+
+        .section-panel {
+            padding: clamp(16px, 2vw, 24px);
+        }
+
+        .section-head {
+            text-align: center;
+            margin-bottom: 16px;
+            display: grid;
+            gap: 8px;
+        }
+
+        .section-head p {
+            font-family: 'Silkscreen', cursive;
+            font-size: 0.62rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: hsl(var(--muted-foreground));
+        }
+
+        .section-head h2 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: clamp(0.95rem, 2.4vw, 1.7rem);
+            color: hsl(var(--primary));
+            line-height: 1.3;
+            text-shadow: 0 0 14px hsl(var(--primary) / 0.4);
+        }
+
+        .rank-panel .section-head h2 {
+            color: hsl(var(--primary));
+        }
+
+        .crate-panel .section-head h2 {
+            color: hsl(var(--accent));
+            text-shadow: 0 0 14px hsl(var(--accent) / 0.4);
+        }
+
+        .rank-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+            gap: 12px;
+        }
+
+        .rank-card {
+            border: 1px solid hsl(30 15% 26%);
+            border-radius: 14px;
+            background: linear-gradient(180deg, hsl(30 8% 15%), hsl(30 8% 11%));
+            padding: 0.85rem;
+            display: grid;
+            gap: 0.55rem;
+            transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+        }
+
+        .rank-card:hover {
+            transform: translateY(-3px);
+            border-color: hsl(var(--primary) / 0.65);
+            box-shadow: 0 12px 24px hsl(0 0% 0% / 0.26);
+        }
+
+        .rank-name {
+            font-family: 'Silkscreen', cursive;
+            font-size: clamp(1.05rem, 2.4vw, 1.45rem);
+            font-weight: 700;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+        }
+
+        .rank-price {
+            font-size: 1rem;
+            color: hsl(var(--foreground));
+        }
+
+        .rank-price strong {
+            color: hsl(var(--accent));
+            font-size: 1.08rem;
+        }
+
+        .perk-toggle {
+            border: 1px solid hsl(30 15% 28%);
+            border-radius: 10px;
+            background: hsl(30 8% 13%);
+            color: hsl(var(--muted-foreground));
+            font-family: 'Silkscreen', cursive;
+            font-size: 0.55rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            padding: 0.45rem 0.5rem;
+            cursor: pointer;
+            transition: border-color 120ms ease, color 120ms ease;
+        }
+
+        .perk-toggle:hover {
+            border-color: hsl(var(--primary) / 0.65);
+            color: hsl(var(--foreground));
+        }
+
+        body.modal-open {
+            overflow: hidden;
+        }
+
+        .perk-modal-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 120;
+            display: grid;
+            place-items: center;
+            padding: 20px;
+            background: hsl(0 0% 0% / 0.62);
+            backdrop-filter: blur(4px);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 180ms ease;
+        }
+
+        .perk-modal-overlay.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .perk-modal {
+            --rank-glow: hsl(var(--primary));
+            --rank-glow-soft: hsl(var(--primary) / 0.35);
+            width: min(560px, 95vw);
+            max-height: min(80vh, 780px);
+            border-radius: 18px;
+            border: 1px solid var(--rank-glow);
+            background: linear-gradient(165deg, hsl(30 8% 16% / 0.96), hsl(30 8% 10% / 0.96));
+            box-shadow:
+                0 0 30px var(--rank-glow-soft),
+                0 20px 42px hsl(0 0% 0% / 0.55),
+                inset 0 1px 0 hsl(0 0% 100% / 0.08);
+            padding: 1rem 1rem 0.95rem;
+            display: grid;
+            gap: 0.6rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .perk-modal-close {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            border: 1px solid hsl(30 15% 28%);
+            background: hsl(30 8% 13%);
+            color: hsl(var(--foreground));
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
+            font-family: 'Silkscreen', cursive;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: transform 120ms ease, border-color 120ms ease, box-shadow 120ms ease;
+        }
+
+        .perk-modal-close:hover {
+            border-color: var(--rank-glow);
+            transform: translateY(-1px);
+            box-shadow: 0 8px 16px var(--rank-glow-soft);
+        }
+
+        .perk-modal-rank {
+            margin-top: 2px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: clamp(0.9rem, 2.7vw, 1.25rem);
+            color: var(--rank-glow);
+            line-height: 1.3;
+            letter-spacing: 0.06em;
+            text-shadow: 0 0 14px var(--rank-glow-soft);
+            padding-right: 38px;
+        }
+
+        .perk-modal-price {
+            font-family: 'Silkscreen', cursive;
+            font-size: 0.72rem;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+            color: hsl(var(--accent));
+        }
+
+        .perk-modal-label {
+            font-family: 'Silkscreen', cursive;
+            font-size: 0.62rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: hsl(var(--muted-foreground));
+            margin-top: 0.2rem;
+        }
+
+        .perk-modal-list {
+            list-style: none;
+            display: grid;
+            gap: 0.32rem;
+            max-height: min(50vh, 420px);
+            overflow: auto;
+            padding-right: 0.35rem;
+        }
+
+        .perk-modal-list li {
+            font-size: 1.05rem;
+            color: hsl(var(--foreground) / 0.9);
+            border-left: 2px solid var(--rank-glow-soft);
+            padding-left: 0.45rem;
+            line-height: 1.1;
+        }
+
+        .crate-box {
+            border: 1px solid hsl(var(--accent) / 0.55);
+            border-radius: var(--radius-md);
+            background: linear-gradient(160deg, hsl(30 8% 14%), hsl(30 8% 10%));
+            padding: 1rem;
+            display: grid;
+            gap: 0.8rem;
+            justify-items: center;
+            align-items: center;
+            text-align: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .crate-box p {
+            font-size: 1.15rem;
+            color: hsl(var(--foreground) / 0.9);
+        }
+
+        .spin-machine {
+            width: 100%;
+            max-width: 640px;
+            position: relative;
+            isolation: isolate;
+            padding: 0.28rem 0;
+            margin-inline: auto;
+            display: grid;
+            justify-items: center;
+        }
+
+        .spin-window {
+            width: min(620px, 92vw);
+            margin-inline: auto;
+            overflow: hidden;
+            border: 1px solid hsl(var(--accent) / 0.5);
+            border-radius: 16px;
+            background: linear-gradient(180deg, hsl(30 10% 17% / 0.96), hsl(30 10% 9% / 0.96));
+            box-shadow: inset 0 1px 0 hsl(0 0% 100% / 0.1), 0 14px 30px hsl(0 0% 0% / 0.36);
+            position: relative;
+        }
+
+        .spin-window::before,
+        .spin-window::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 56px;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .spin-window::before {
+            left: 0;
+            background: linear-gradient(90deg, hsl(30 9% 10% / 0.92), hsl(30 9% 10% / 0));
+        }
+
+        .spin-window::after {
+            right: 0;
+            background: linear-gradient(270deg, hsl(30 9% 10% / 0.92), hsl(30 9% 10% / 0));
+        }
+
+        .spin-track {
+            display: flex;
+            gap: 0.62rem;
+            padding: 0.76rem;
+            min-height: 126px;
+            min-width: max-content;
+            transform: translateX(0);
+            will-change: transform;
+            position: relative;
+            z-index: 0;
+        }
+
+        .spin-track.is-spinning .spin-slot {
+            filter: saturate(0.9) brightness(0.95);
+        }
+
+        .spin-slot {
+            min-width: 118px;
+            border: 1px solid hsl(30 15% 28%);
+            border-radius: 14px;
+            padding: 0.46rem;
+            background: linear-gradient(180deg, hsl(30 8% 20%), hsl(30 8% 12%));
+            display: grid;
+            gap: 0.36rem;
+            justify-items: center;
+            align-content: center;
+            transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+            box-shadow: inset 0 1px 0 hsl(0 0% 100% / 0.06);
+        }
+
+        .spin-slot.rarity-common {
+            border-color: hsl(190 30% 38% / 0.72);
+            box-shadow: inset 0 0 0 1px hsl(190 30% 38% / 0.24);
+        }
+
+        .spin-slot.rarity-rare {
+            border-color: hsl(var(--primary) / 0.72);
+            box-shadow: inset 0 0 0 1px hsl(var(--primary) / 0.24);
+        }
+
+        .spin-slot.rarity-epic {
+            border-color: hsl(var(--legend) / 0.72);
+            box-shadow: inset 0 0 0 1px hsl(var(--legend) / 0.24);
+        }
+
+        .spin-slot.rarity-legend {
+            border-color: hsl(var(--accent) / 0.82);
+            box-shadow: 0 0 12px hsl(var(--accent) / 0.34), inset 0 0 0 1px hsl(var(--accent) / 0.24);
+        }
+
+        .spin-slot.selected {
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 0 18px hsl(var(--accent) / 0.55), 0 10px 20px hsl(0 0% 0% / 0.35);
+            border-color: hsl(var(--accent));
+        }
+
+        .spin-slot-icon-wrap {
+            width: 58px;
+            height: 58px;
+            display: grid;
+            place-items: center;
+            border-radius: 12px;
+            border: 1px solid hsl(30 15% 26%);
+            background: radial-gradient(circle at 30% 22%, hsl(0 0% 100% / 0.12), hsl(0 0% 100% / 0));
+        }
+
+        .spin-slot-icon-img {
+            width: 52px;
+            height: 52px;
+            image-rendering: pixelated;
+            filter: drop-shadow(0 0 10px hsl(0 0% 0% / 0.42));
+        }
+
+        .spin-track.is-spinning .spin-slot-icon-img {
+            filter: blur(0.45px) drop-shadow(0 0 10px hsl(0 0% 0% / 0.42));
+        }
+
+        .spin-slot-name {
+            font-family: 'Silkscreen', cursive;
+            font-size: 0.56rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: hsl(var(--muted-foreground));
+            line-height: 1.2;
+            min-height: 2.35em;
+            display: grid;
+            align-items: center;
+        }
+
+        .spin-slot-rarity {
+            font-family: 'Silkscreen', cursive;
+            font-size: 0.48rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: hsl(var(--muted-foreground));
+            opacity: 0.82;
+        }
+
+        .spin-pointer {
+            position: absolute;
+            top: 6px;
+            bottom: 6px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            background: linear-gradient(180deg, hsl(var(--accent)), hsl(var(--accent) / 0.22));
+            box-shadow: 0 0 14px hsl(var(--accent) / 0.6);
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .spin-pointer::before,
+        .spin-pointer::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            border-left: 7px solid transparent;
+            border-right: 7px solid transparent;
+        }
+
+        .spin-pointer::before {
+            top: -6px;
+            border-top: 0;
+            border-bottom: 8px solid hsl(var(--accent));
+        }
+
+        .spin-pointer::after {
+            bottom: -6px;
+            border-bottom: 0;
+            border-top: 8px solid hsl(var(--accent));
+        }
+
+        .crate-btn {
+            border: 1px solid hsl(var(--accent) / 0.6);
+            border-radius: 12px;
+            background: linear-gradient(180deg, hsl(45 100% 55% / 0.25), hsl(45 100% 55% / 0.11));
+            color: hsl(var(--accent));
+            font-family: 'Silkscreen', cursive;
+            font-size: 0.72rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            transition: transform 160ms ease, box-shadow 160ms ease;
+            justify-self: center;
+        }
+
+        .crate-btn:hover {
+            transform: translateY(-3px) rotate(-1deg);
+            box-shadow: 0 12px 24px hsl(var(--accent) / 0.22);
+        }
+
+        .crate-btn:disabled {
+            opacity: 0.58;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .crate-result {
+            min-height: 26px;
+            font-size: 1.2rem;
+            color: hsl(var(--foreground));
+        }
+
+        .crate-result strong {
+            color: hsl(var(--accent));
+        }
+
+        .spark-tray {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .spark {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            animation: sparkFly 900ms ease-out forwards;
+        }
+
+        .footer {
+            text-align: center;
+            color: hsl(var(--muted-foreground));
+            font-family: 'Silkscreen', cursive;
+            font-size: 0.55rem;
+            letter-spacing: 0.06em;
+            padding: 12px 0 2px;
+        }
+
+        .footer strong {
+            color: hsl(var(--primary));
+        }
+
+        @keyframes floatBlob {
+            0%, 100% { transform: translateY(0) translateX(0) scale(1); }
+            50% { transform: translateY(-14px) translateX(10px) scale(1.08); }
+        }
+
+        @keyframes pulseDot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(0.82); }
+        }
+
+        @keyframes logoPulse {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
+        }
+
+        @keyframes sparkFly {
+            0% { transform: translate(0, 0) scale(1); opacity: 1; }
+            100% { transform: translate(var(--dx), var(--dy)) scale(0.4); opacity: 0; }
+        }
+
+        @media (max-width: 980px) {
+            .social-grid {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 760px) {
+            .hero-flex {
+                grid-template-columns: 1fr;
+            }
+
+            .shuffle-btn {
+                min-width: 0;
+                width: 100%;
+            }
+
+            .server-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .social-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 480px) {
+            .site-shell {
+                width: 94vw;
+                gap: 16px;
+                padding-top: 18px;
+            }
+
+            .hero-panel {
+                padding: 14px;
+            }
+
+            .hero-subtitle {
+                font-size: 1.18rem;
+            }
+
+            .social-btn {
+                font-size: 0.56rem;
+                padding: 0.58rem 0.56rem;
+            }
+
+            .section-panel {
+                padding: 12px;
+            }
+
+            .spin-slot {
+                min-width: 98px;
+            }
+
+            .spin-track {
+                min-height: 110px;
+            }
+
+            .spin-slot-icon-wrap {
+                width: 46px;
+                height: 46px;
+            }
+
+            .spin-slot-icon-img {
+                width: 40px;
+                height: 40px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- Scanline Overlay Effect -->
-    <div class="scanlines"></div>
-    
-    <!-- Retro Game UI Elements -->
-    <div class="crt-effect"></div>
-    <div class="game-overlay"></div>
-    
-    <!-- TV Power Indicator Light -->
-    <div class="tv-indicator"></div>
-    
-    <!-- Hero Section -->
-    <section class="hero-section">
-        <div class="hero-bg"></div>
-        <div class="hero-overlay"></div>
-        <!-- Pixel glitch effect layers -->
-        <div class="glitch-layer"></div>
-        
-        <div class="hero-content">
-            <!-- Logo Image with glitch effect -->
-            <div class="logo-container">
+    <div class="bg-blobs" aria-hidden="true">
+        <span class="blob b1"></span>
+        <span class="blob b2"></span>
+        <span class="blob b3"></span>
+    </div>
+    <div class="grid-overlay" aria-hidden="true"></div>
+    <div class="scanline-overlay" aria-hidden="true"></div>
+
+    <main class="site-shell">
+        <section class="hero-panel glass-panel" id="heroPanel">
+            <div class="hero-top">
                 <img src="mougicraftlogos.webp" alt="MougiCraft Logo" class="hero-logo">
-                <div class="logo-glow"></div>
+                <p class="hero-badge">Survival Server</p>
+                <h1 class="hero-title">MOUGICRAFT</h1>
+                <p class="hero-subtitle" id="heroSubtitle">A server that feels like a chaotic party with blocks. Build weird, grind hard, and have fun.</p>
             </div>
-            
-            <div class="mb-2 retro-badge">
-                <span class="text-xs font-pixel text-accent tracking-widest pixel-bounce">⚔ SURVIVAL SERVER ⚔</span>
+
+            <div class="hero-flex">
+                <article class="status-card" aria-live="polite">
+                    <p class="status-label">Server Status</p>
+                    <div class="status-row">
+                        <span class="status-dot" id="statusDot"></span>
+                        <span id="statusText">Checking...</span>
+                    </div>
+                    <p class="players-online"><strong id="onlinePlayers">0</strong> players online</p>
+                </article>
+                <button type="button" class="shuffle-btn" id="shuffleMoodBtn">Shuffle Mood</button>
             </div>
-            <h1 class="hero-title">MOUGICRAFT</h1>
-            <div class="hero-divider pixel-divider"></div>
-            <p class="hero-subtitle">
-                Join our Minecraft Survival server and start your adventure today!
-            </p>
 
-            <!-- Server IP Cards - Swipeable with Sound -->
-            <div class="server-section pulse-container">
-                <div class="server-cards-wrapper">
-                    <div class="server-cards">
-                        <!-- Java Edition Card -->
-                        <div class="server-card mc-card-glow pixel-bounce-card" data-server="java" onclick="playSound('select')">
-                            <div class="server-card-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><path d="m12 18-4-4 4-4"/><path d="M8 18V5"/></svg>
-                            </div>
-                            <div class="server-card-content">
-                                <span class="server-edition-label">JAVA EDITION</span>
-                                <span class="server-ip">play.mougicraft.my.id</span>
-                            </div>
-                            <button class="copy-btn mc-btn retro-button" onclick="copyToClipboard('play.mougicraft.my.id', 'java'); playSound('coin')">
-                                <span class="copy-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
-                                </span>
-                                <span class="copy-text">COPY</span>
-                                <span class="copied-feedback">COPIED!</span>
-                            </button>
-                        </div>
+            <div class="server-grid">
+                <article class="server-card java">
+                    <p class="edition">Java Edition</p>
+                    <p class="server-ip">PLAY.MOUGICRAFT.MY.ID</p>
+                    <button class="copy-btn" type="button" data-copy="play.mougicraft.my.id" data-state-id="javaCopyState">
+                        <span>Copy IP</span>
+                        <small id="javaCopyState">ready</small>
+                    </button>
+                </article>
 
-                        <!-- Bedrock Edition Card -->
-                        <div class="server-card mc-card-glow bedrock pixel-bounce-card" data-server="bedrock" onclick="playSound('select')">
-                            <div class="server-card-icon bedrock-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                            </div>
-                            <div class="server-card-content">
-                                <span class="server-edition-label">BEDROCK EDITION</span>
-                                <span class="server-ip">mougicraft.my.id</span>
-                                <span class="server-port">Port: 25128</span>
-                            </div>
-                            <button class="copy-btn mc-btn retro-button" onclick="copyToClipboard('mougicraft.my.id', 'bedrock'); playSound('coin')">
-                                <span class="copy-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
-                                </span>
-                                <span class="copy-text">COPY</span>
-                                <span class="copied-feedback">COPIED!</span>
-                            </button>
-                        </div>
+                <article class="server-card bedrock">
+                    <p class="edition">Bedrock Edition</p>
+                    <p class="server-ip">MOUGICRAFT.MY.ID</p>
+                    <p class="server-port">PORT: 25128</p>
+                    <button class="copy-btn" type="button" data-copy="mougicraft.my.id" data-state-id="bedrockCopyState">
+                        <span>Copy IP</span>
+                        <small id="bedrockCopyState">ready</small>
+                    </button>
+                </article>
+            </div>
+
+            <nav class="social-grid" aria-label="Community Links">
+                <a href="https://www.tiktok.com/@mougiii_" target="_blank" rel="noopener noreferrer" class="social-btn tiktok">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.88 2.88 0 0 1 .88.13V9.4a5.77 5.77 0 0 0-1-.08A5.77 5.77 0 0 0 6.59 21a5.77 5.77 0 0 0 5.77-5.77V9.8a7.63 7.63 0 0 0 4.23 1.26V7.93a7.1 7.1 0 0 1-.59-.04z"/></svg>
+                    Mougi
+                </a>
+                <a href="https://www.tiktok.com/@imougi1" target="_blank" rel="noopener noreferrer" class="social-btn tiktok">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.88 2.88 0 0 1 .88.13V9.4a5.77 5.77 0 0 0-1-.08A5.77 5.77 0 0 0 6.59 21a5.77 5.77 0 0 0 5.77-5.77V9.8a7.63 7.63 0 0 0 4.23 1.26V7.93a7.1 7.1 0 0 1-.59-.04z"/></svg>
+                    MougiCraft
+                </a>
+                <a href="https://minecraft-mp.com/server/350180/vote/" target="_blank" rel="noopener noreferrer" class="social-btn vote">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2L15.09 8.26H22L17.45 12.52L19.54 18.78L12 14.3L4.46 18.78L6.55 12.52L2 8.26H8.91L12 2z"/></svg>
+                    Vote
+                </a>
+                <a href="https://discord.com/invite/AWJ6eTKskY" target="_blank" rel="noopener noreferrer" class="social-btn discord">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.317 4.37a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.211.375-.445.865-.608 1.249a18.27 18.27 0 0 0-5.487 0 12.52 12.52 0 0 0-.618-1.249.077.077 0 0 0-.079-.037 19.74 19.74 0 0 0-4.885 1.515.07.07 0 0 0-.032.028C.533 9.046-.319 13.58.099 18.058a.082.082 0 0 0 .031.056c2.053 1.508 4.041 2.423 5.993 3.03a.078.078 0 0 0 .084-.028 13.4 13.4 0 0 0 1.226-1.994.076.076 0 0 0-.042-.106 12.24 12.24 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .078-.011c3.928 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.099.246.198.373.292a.077.077 0 0 1-.007.128 12.3 12.3 0 0 1-1.873.891.076.076 0 0 0-.041.107c.36.698.772 1.363 1.225 1.993a.076.076 0 0 0 .084.029c1.961-.607 3.95-1.522 6.002-3.03a.077.077 0 0 0 .031-.055c.5-5.177-.838-9.674-3.548-13.66a.062.062 0 0 0-.031-.029z"/></svg>
+                    Discord
+                </a>
+                <a href="https://chat.whatsapp.com/CjEZL6rm9bgE6xIXqshlBK" target="_blank" rel="noopener noreferrer" class="social-btn whatsapp">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.52 3.48A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.9c0 2.1.55 4.14 1.59 5.94L.06 24l6.3-1.65a11.9 11.9 0 0 0 5.69 1.45h.01c6.55 0 11.89-5.34 11.9-11.9 0-3.17-1.24-6.16-3.44-8.42zm-8.47 18.3h-.01a9.86 9.86 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26C2.17 6.44 6.61 2 12.05 2c2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.89 7c0 5.45-4.44 9.88-9.88 9.88z"/></svg>
+                    WhatsApp
+                </a>
+            </nav>
+        </section>
+
+        <section class="section-panel glass-panel rank-panel">
+            <div class="section-head">
+                <p>Upgrade Your Game</p>
+                <h2>Rank Prices</h2>
+            </div>
+            <div class="rank-grid" id="rankGrid"></div>
+        </section>
+
+        <div class="perk-modal-overlay" id="perkModalOverlay" aria-hidden="true">
+            <article class="perk-modal" id="perkModal" role="dialog" aria-modal="true" aria-labelledby="perkModalRank" aria-describedby="perkModalLabel">
+                <button type="button" class="perk-modal-close" id="perkModalClose" aria-label="Close popup">X</button>
+                <h3 class="perk-modal-rank" id="perkModalRank">RANK: -</h3>
+                <p class="perk-modal-price" id="perkModalPrice">HARGA: -</p>
+                <p class="perk-modal-label" id="perkModalLabel">COMMAND LIST:</p>
+                <ul class="perk-modal-list" id="perkModalList"></ul>
+            </article>
+        </div>
+
+        <section class="section-panel glass-panel crate-panel">
+            <div class="section-head">
+                <p>Try Your Luck</p>
+                <h2>TRY YOUR LUCK</h2>
+            </div>
+            <div class="crate-box">
+                <p>Gacha all you want, but you dont get anything on server.</p>
+                <div class="spin-machine" id="spinMachine" aria-live="polite">
+                    <span class="spin-pointer" aria-hidden="true"></span>
+                    <div class="spin-window">
+                        <div class="spin-track" id="spinTrack"></div>
                     </div>
                 </div>
-                <!-- Swipe Indicator -->
-                <div class="swipe-indicator pulse-element">
-                    <span class="swipe-arrow">‹</span>
-                    <span class="swipe-arrow">›</span>
-                </div>
+                <button type="button" class="crate-btn" id="crateBtn">Spin Crate</button>
+                <p class="crate-result" id="crateResult">Ready for chaos.</p>
+                <div class="spark-tray" id="sparkTray" aria-hidden="true"></div>
             </div>
+        </section>
 
-            <!-- Social buttons -->
-            <div class="social-buttons">
-    
-                <a href="https://www.tiktok.com/@mougiii_" target="_blank" rel="noopener noreferrer" class="social-card tiktok retro-button pixel-hover" onclick="playSound('beep')">
-                    <svg class="w-5 h-5" style="color: #25f4ee" fill="currentColor" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.88 2.88 0 0 1 .88.13V9.4a5.77 5.77 0 0 0-1-.08A5.77 5.77 0 0 0 6.59 21a5.77 5.77 0 0 0 5.77-5.77V9.8a7.63 7.63 0 0 0 4.23 1.26V7.93a7.1 7.1 0 0 1-.59-.04z"/></svg>
-                    <span style="color: #25f4ee">Mougi</span>
-                </a>
-                <a href="https://www.tiktok.com/@imougi1" target="_blank" rel="noopener noreferrer" class="social-card tiktok-craft retro-button pixel-hover" onclick="playSound('beep')">
-                    <svg class="w-5 h-5" style="color: #25f4ee" fill="currentColor" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.88 2.88 0 0 1 .88.13V9.4a5.77 5.77 0 0 0-1-.08A5.77 5.77 0 0 0 6.59 21a5.77 5.77 0 0 0 5.77-5.77V9.8a7.63 7.63 0 0 0 4.23 1.26V7.93a7.1 7.1 0 0 1-.59-.04z"/></svg>
-                    <span style="color: #25f4ee">MougiCraft</span>
-                </a>
-                <a href="https://map.mougicraft.my.id/" target="_blank" rel="noopener noreferrer" class="social-card web-map retro-button pixel-hover" onclick="playSound('beep')">
-                    <svg class="w-5 h-5" style="color: hsl(100 60% 45%)" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5.41L6.41 9 10 12.59 17.59 5 19 6.41 12 13z"/></svg>
-                    <span style="color: hsl(100 60% 45%)">Web Map</span>
-                </a>
-                <a href="https://voice.mougicraft.my.id/" target="_blank" rel="noopener noreferrer" class="social-card bedrock-voice retro-button pixel-hover" onclick="playSound('beep')">
-                    <svg class="w-5 h-5" style="color: hsl(270 60% 50%)" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 7v6h-2V7h2zM1 7v6h2V7H1zm15-2v8c0 2.21-1.79 4-4 4s-4-1.79-4-4V5c0-2.21 1.79-4 4-4s4 1.79 4 4z"/></svg>
-                    <span style="color: hsl(270 60% 50%)">Voice</span>
-                </a>
-                <a href="https://minecraft-mp.com/server/350180/vote/" target="_blank" rel="noopener noreferrer" class="social-card vote-server retro-button pixel-hover" onclick="playSound('beep')">
-                    <svg class="w-5 h-5" style="color: hsl(40 100% 50%)" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L15.09 8.26H22L17.45 12.52L19.54 18.78L12 14.3L4.46 18.78L6.55 12.52L2 8.26H8.91L12 2Z"/></svg>
-                    <span style="color: hsl(40 100% 50%)">Vote</span>
-                </a>
+        <footer class="footer">
+            <p><strong>MOUGICRAFT</strong> - Survival vibes, fun chaos, and blocky adventures.</p>
+        </footer>
+    </main>
 
-                <a href="https://discord.com/invite/AWJ6eTKskY" target="_blank" rel="noopener noreferrer" class="social-card discord retro-button pixel-hover" onclick="playSound('beep')">
-                    <svg class="w-5 h-5" style="color: hsl(235, 70%, 65%)" fill="currentColor" viewBox="0 0 24 24"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189z"/></svg>
-                    <span style="color: hsl(235, 70%, 65%)">Discord</span>
-                </a>
-                <a href="https://chat.whatsapp.com/CjEZL6rm9bgE6xIXqshlBK" target="_blank" rel="noopener noreferrer" class="social-card whatsapp retro-button pixel-hover" onclick="playSound('beep')">
-                    <svg class="w-5 h-5" style="color: hsl(142, 60%, 50%)" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                    <span style="color: hsl(142, 60%, 50%)">WhatsApp</span>
-                </a>
-            </div>
-        </div>
+    <script>
+        const statusDot = document.getElementById('statusDot');
+        const statusText = document.getElementById('statusText');
+        const onlinePlayers = document.getElementById('onlinePlayers');
+        const heroSubtitle = document.getElementById('heroSubtitle');
+        const perkModalOverlay = document.getElementById('perkModalOverlay');
+        const perkModal = document.getElementById('perkModal');
+        const perkModalRank = document.getElementById('perkModalRank');
+        const perkModalPrice = document.getElementById('perkModalPrice');
+        const perkModalList = document.getElementById('perkModalList');
+        const perkModalClose = document.getElementById('perkModalClose');
 
-    </section>
+        const moodLines = [
+            'A server that feels like a chaotic party with blocks. Build weird, grind hard, and have fun.',
+            'Your cozy survival home plus absolute gremlin energy. This server has both.',
+            'Bring your friends, steal the spotlight, and make your most cursed but legendary base.',
+            'Relaxed survival with extra sparkle. Farm, flex, and accidentally start side quests.'
+        ];
 
-    <!-- Rank Section -->
-    <section class="rank-section retro-section">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-12 section-title">
-                <span class="text-[10px] font-pixel text-muted-foreground tracking-widest pixel-bounce">💎 UPGRADE YOUR GAME 💎</span>
-                <div class="retro-title-container">
-                    <div class="retro-title-border"></div>
-                    <h2 class="retro-title rank-title font-pixel text-4xl md:text-5xl text-primary text-glow mt-3 mb-3">
-                        <span class="retro-decor">◆</span> RANK PRICES <span class="retro-decor">◆</span>
-                    </h2>
-                    <div class="retro-title-border"></div>
-                </div>
-                <div class="rank-divider"></div>
-                <p class="text-muted-foreground text-sm retro-subtitle">Choose your rank and unlock powerful features</p>
-            </div>
-            <div class="rank-grid">
-                <!-- Rank Cards will be generated by JS -->
-            </div>
-        </div>
-    </section>
+        const ranks = [
+            {
+                name: 'ELITE',
+                price: '15K',
+                color: 'var(--primary)',
+                perks: [
+                    'Terbang/fly = fly',
+                    'DURASI 1 BULAN'
+                ]
+            },
+            {
+                name: 'VIP',
+                price: '30K',
+                color: 'var(--primary)',
+                perks: [
+                    'Set Home 4 :/home',
+                    'Terbang/fly = fly',
+                    'Colour Chat',
+                    'Limit Blok = 13.000'
+                ]
+            },
+            {
+                name: 'VIP+',
+                price: '45K',
+                color: 'var(--primary)',
+                perks: [
+                    'Set Home 8 :/home',
+                    'Colour Chat',
+                    'Change Nick :/nick',
+                    'Afk :/afk',
+                    'Fly :/fly',
+                    'Limit Blok = 18.000'
+                ]
+            },
+            {
+                name: 'MVP',
+                price: '60K',
+                color: 'var(--gold)',
+                perks: [
+                    'Set Home 15 :/home',
+                    'Colour Chat',
+                    'Change Nick :/nick',
+                    'Afk :/afk',
+                    'Fly :/fly',
+                    'Ender Chest :/ec',
+                    'Limit Blok = 30.000'
+                ]
+            },
+            {
+                name: 'MVP+',
+                price: '180K',
+                color: 'var(--gold)',
+                perks: [
+                    'Set Home 20 :/home',
+                    'Colour Chat',
+                    'Change Nick :/nick',
+                    'Afk :/afk',
+                    'Fly :/fly',
+                    'Ender Chest :/ec',
+                    'Teleport Player :/tp',
+                    'Crafting :/craft',
+                    'Anvil :/anvil',
+                    'Stone Cutter :/stonecutter',
+                    'Limit Blok = 45.000'
+                ]
+            },
+            {
+                name: 'LEGEND',
+                price: '220K',
+                color: 'var(--legend)',
+                perks: [
+                    'Set Home 25 :/home',
+                    'Colour Chat',
+                    'Change Nick :/nick',
+                    'Afk :/afk',
+                    'Fly :/fly',
+                    'Ender Chest :/ec',
+                    'Teleport Player :/tp',
+                    'Crafting :/craft',
+                    'Anvil :/anvil',
+                    'Stone Cutter :/stonecutter',
+                    'Feed :/feed',
+                    'Smiting Table :/smitingtable',
+                    'Limit Blok = 75.000'
+                ]
+            },
+            {
+                name: 'SULTAN',
+                price: '260K',
+                color: 'var(--sultan)',
+                perks: [
+                    'Set Home 30 :/home',
+                    'Colour Chat',
+                    'Change Nick :/nick',
+                    'Afk :/afk',
+                    'Fly :/fly',
+                    'Ender Chest :/ec',
+                    'Teleport Player :/tp',
+                    'Crafting :/craft',
+                    'Anvil :/anvil',
+                    'Stone Cutter :/stonecutter',
+                    'Repair :/erepair',
+                    'Feed :/feed',
+                    'Smiting Table :/smitingtable',
+                    'Heal :/heal',
+                    'Limit Blok = 110.000'
+                ]
+            },
+            {
+                name: 'MYTIC',
+                price: '380K',
+                color: 'var(--mythic)',
+                perks: [
+                    'Set Home ∞ :/home',
+                    'Colour Chat',
+                    'Change Nick :/nick',
+                    'Afk :/afk',
+                    'Fly :/fly',
+                    'Ender Chest :/ec',
+                    'Teleport Player :/tp',
+                    'Crafting :/craft',
+                    'Anvil :/anvil',
+                    'Stone Cutter :/stonecutter',
+                    'Repair :/erepair',
+                    'Feed :/feed',
+                    'Smiting Table :/smitingtable',
+                    'Heal :/heal',
+                    'Enchant :/enchant /essentials:enchant',
+                    'Limit Blok = 150.000'
+                ]
+            },
+            {
+                name: 'DONATOR',
+                price: '720K',
+                color: 'var(--donator)',
+                perks: [
+                    'Set Home ∞ :/home',
+                    'Colour Chat',
+                    'Change Nick :/nick',
+                    'Afk :/afk',
+                    'Fly :/fly',
+                    'Ender Chest :/ec',
+                    'Teleport Player :/tp',
+                    'Crafting :/craft',
+                    'Anvil :/anvil',
+                    'Stone Cutter :/stonecutter',
+                    'Repair :/erepair',
+                    'Feed :/feed',
+                    'Smiting Table :/smitingtable',
+                    'Heal :/heal',
+                    'Godmode :/godmode',
+                    'Enchant :/enchant /essentials:enchant',
+                    'Time Set :/time set',
+                    'Weather Set :/weather set*',
+                    'Lighting/Petir :/lighting',
+                    'Limit Blok = 200.000'
+                ]
+            },
+            {
+                name: 'KING DONATOR',
+                price: '1.600K',
+                color: 'var(--king)',
+                perks: [
+                    'All Donator features',
+                    'Ultimate rank privileges'
+                ]
+            }
+        ];
 
-    <!-- Crate Section -->
-    <section class="crate-section retro-section">
-        <div class="max-w-4xl mx-auto">
-            <div class="text-center mb-12 section-title">
-                <span class="text-[10px] font-pixel text-muted-foreground tracking-widest pixel-bounce">🎁 TRY YOUR LUCK 🎁</span>
-                <div class="retro-title-container crate-title-container">
-                    <div class="retro-title-border crate-title-border"></div>
-                    <h2 class="retro-title crate-title font-pixel text-4xl md:text-5xl text-accent text-glow-gold mt-3 mb-3">
-                        <span class="retro-decor-gold">★</span> CRATE KEYS <span class="retro-decor-gold">★</span>
-                    </h2>
-                    <div class="retro-title-border crate-title-border"></div>
-                </div>
-                <div class="crate-divider"></div>
-                <p class="text-muted-foreground text-sm retro-subtitle">Open crates for rare items and loot!</p>
-            </div>
-            <div class="crate-grid">
-                <div class="mc-card mc-card-hover rounded p-8 text-center transition-all hover:scale-105 pixel-card retro-button pixel-hover" onclick="playSound('success')">
-                    <h3 class="font-pixel text-xs text-mythic mb-5 tracking-wider">Mythic Crate</h3>
-                    <p class="text-3xl font-bold text-foreground">
-                        IDR <span class="text-mythic">5.000</span>
-                    </p>
-                </div>
-                <div class="mc-card mc-card-hover rounded p-8 text-center transition-all hover:scale-105 pixel-card retro-button pixel-hover" onclick="playSound('success')">
-                    <h3 class="font-pixel text-xs text-primary mb-5 tracking-wider">Rank Crate</h3>
-                    <p class="text-3xl font-bold text-foreground">
-                        IDR <span class="text-primary">8.000</span>
-                    </p>
-                </div>
-                <div class="mc-card mc-card-hover rounded p-8 text-center transition-all hover:scale-105 pixel-card retro-button pixel-hover" onclick="playSound('success')">
-                    <h3 class="font-pixel text-xs text-gold mb-5 tracking-wider">Golden Crate</h3>
-                    <p class="text-3xl font-bold text-foreground">
-                        IDR <span class="text-gold">10.000</span>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
+        const spinAssetBase = './public/assets/spin';
 
-    <!-- Embedded iframe section -->
-    <section class="embed-section retro-section">
-        <div class="iframe-container">
-            <iframe src="https://map.mougicraft.my.id" title="Embedded Map"></iframe>
-        </div>        <!-- fullscreen button below iframe -->
-        <div class="map-fullscreen-action" style="text-align:center; margin-top:1rem;">
-            <a href="https://map.mougicraft.my.id" target="_blank" rel="noopener noreferrer" class="social-card map retro-button pixel-hover" onclick="playSound('select')">
-                Fullscreen Map
-            </a>
-        </div>    </section>
+        // Curated rewards only (not all assets in folder).
+        const crateRewardPool = [
+            { label: 'Coal Bundle x64', file: 'coal.png', rarity: 'common', weight: 38 },
+            { label: 'Iron Ingot x24', file: 'iron_ingot.png', rarity: 'common', weight: 28 },
+            { label: 'Redstone Dust x48', file: 'redstone.png', rarity: 'common', weight: 24 },
+            { label: 'Lapis Lazuli x32', file: 'lapis_lazuli.png', rarity: 'common', weight: 20 },
+            { label: 'Ender Pearl x16', file: 'ender_pearl.png', rarity: 'rare', weight: 14 },
+            { label: 'Diamond Cache x4', file: 'diamond.png', rarity: 'rare', weight: 10 },
+            { label: 'Emerald Stack x8', file: 'emerald.png', rarity: 'rare', weight: 8 },
+            { label: 'Golden Apple x3', file: 'golden_apple.png', rarity: 'epic', weight: 6 },
+            { label: 'Enchanted Book x1', file: 'enchanted_book.png', rarity: 'epic', weight: 4 },
+            { label: 'Netherite Ingot x2', file: 'netherite_ingot.png', rarity: 'epic', weight: 3 },
+            { label: 'Totem Of Undying x1', file: 'totem_of_undying.png', rarity: 'legend', weight: 2 },
+            { label: 'Nether Star x1', file: 'nether_star.png', rarity: 'legend', weight: 1 },
+            { label: 'Trident x1', file: 'trident.png', rarity: 'legend', weight: 1 }
+        ];
 
-    <!-- Footer -->
-    <footer class="footer retro-footer">
-        <p class="font-pixel text-[10px] text-primary/50 tracking-widest pixel-bounce">⛏ MOUGICRAFT ⛏</p>
-        <p class="mt-3 text-muted-foreground text-xs">© 2025 MougiCraft. All rights reserved.</p>
-    </footer>
+        const crateSpinConfig = {
+            stripLength: 88,
+            stopPadding: 16,
+            baseDurationMs: 4300,
+            durationJitterMs: 650
+        };
 
-    <!-- Sound Manager and Script -->
-    <script src="retro-sounds.js"></script>
-    <script src="script.js"></script>
+        const crateSpinState = {
+            texturesPromise: null,
+            spinning: false
+        };
+
+        function getCrateTexturePath(fileName) {
+            return `${spinAssetBase}/${fileName}`;
+        }
+
+        function renderRanks() {
+            const rankGrid = document.getElementById('rankGrid');
+            if (!rankGrid) return;
+
+            rankGrid.innerHTML = ranks.map((rank, index) => `
+                <article class="rank-card" data-rank-index="${index}">
+                    <p class="rank-name" style="color: hsl(${rank.color});">${rank.name}</p>
+                    <p class="rank-price">IDR <strong>${rank.price}</strong></p>
+                    <button class="perk-toggle" type="button">Show perks</button>
+                </article>
+            `).join('');
+
+            rankGrid.querySelectorAll('.rank-card').forEach(card => {
+                const toggle = card.querySelector('.perk-toggle');
+                toggle.addEventListener('click', () => {
+                    const rankIndex = Number(card.getAttribute('data-rank-index'));
+                    const rank = ranks[rankIndex];
+                    if (rank) {
+                        openPerkPopup(rank);
+                    }
+                });
+            });
+        }
+
+        function openPerkPopup(rank) {
+            if (!perkModalOverlay || !perkModal || !perkModalRank || !perkModalPrice || !perkModalList) return;
+
+            const glowColor = `hsl(${rank.color})`;
+            const glowSoft = `hsl(${rank.color} / 0.35)`;
+
+            perkModal.style.setProperty('--rank-glow', glowColor);
+            perkModal.style.setProperty('--rank-glow-soft', glowSoft);
+            perkModalRank.textContent = `RANK: ${rank.name}`;
+            perkModalPrice.textContent = `HARGA: IDR ${rank.price}`;
+            perkModalList.innerHTML = rank.perks.map(command => `<li>${command}</li>`).join('');
+
+            perkModalOverlay.classList.add('show');
+            perkModalOverlay.setAttribute('aria-hidden', 'false');
+            document.body.classList.add('modal-open');
+        }
+
+        function closePerkPopup() {
+            if (!perkModalOverlay) return;
+            perkModalOverlay.classList.remove('show');
+            perkModalOverlay.setAttribute('aria-hidden', 'true');
+            document.body.classList.remove('modal-open');
+        }
+
+        function wirePerkModalEvents() {
+            if (!perkModalOverlay || !perkModalClose) return;
+
+            perkModalClose.addEventListener('click', closePerkPopup);
+
+            perkModalOverlay.addEventListener('click', (event) => {
+                if (event.target === perkModalOverlay) {
+                    closePerkPopup();
+                }
+            });
+
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape' && perkModalOverlay.classList.contains('show')) {
+                    closePerkPopup();
+                }
+            });
+        }
+
+        function setOfflineState() {
+            statusDot.className = 'status-dot offline';
+            statusText.textContent = 'Offline';
+            onlinePlayers.textContent = '0';
+        }
+
+        async function checkServerStatus() {
+            try {
+                const response = await fetch('https://api.mcsrvstat.us/2/play.mougicraft.my.id', { cache: 'no-store' });
+                if (!response.ok) {
+                    setOfflineState();
+                    return;
+                }
+
+                const data = await response.json();
+                if (data.online) {
+                    statusDot.className = 'status-dot online';
+                    statusText.textContent = 'Online';
+                    onlinePlayers.textContent = data.players && typeof data.players.online === 'number' ? String(data.players.online) : '0';
+                } else {
+                    setOfflineState();
+                }
+            } catch (error) {
+                setOfflineState();
+            }
+        }
+
+        async function copyText(value, stateElement, button) {
+            try {
+                await navigator.clipboard.writeText(value);
+            } catch (error) {
+                const textArea = document.createElement('textarea');
+                textArea.value = value;
+                textArea.style.position = 'fixed';
+                textArea.style.left = '-9999px';
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+            }
+
+            button.classList.add('copied');
+            stateElement.textContent = 'copied';
+            setTimeout(() => {
+                button.classList.remove('copied');
+                stateElement.textContent = 'ready';
+            }, 1300);
+        }
+
+        function wireCopyButtons() {
+            document.querySelectorAll('.copy-btn').forEach(button => {
+                button.addEventListener('click', () => {
+                    const copyValue = button.getAttribute('data-copy');
+                    const stateId = button.getAttribute('data-state-id');
+                    const stateElement = document.getElementById(stateId);
+                    if (copyValue && stateElement) {
+                        copyText(copyValue, stateElement, button);
+                    }
+                });
+            });
+        }
+
+        function wireMoodButton() {
+            const moodButton = document.getElementById('shuffleMoodBtn');
+            if (!moodButton) return;
+
+            moodButton.addEventListener('click', () => {
+                const next = moodLines[Math.floor(Math.random() * moodLines.length)];
+                heroSubtitle.textContent = next;
+                moodButton.textContent = 'Mood Updated';
+
+                setTimeout(() => {
+                    moodButton.textContent = 'Shuffle Mood';
+                }, 850);
+            });
+        }
+
+        function renderSpinSkeleton() {
+            const spinTrack = document.getElementById('spinTrack');
+            if (!spinTrack) return;
+
+            spinTrack.innerHTML = '';
+
+            for (let i = 0; i < 12; i += 1) {
+                const slot = document.createElement('div');
+                slot.className = 'spin-slot rarity-common';
+                slot.innerHTML = '<div class="spin-slot-icon-wrap"><span class="spin-slot-icon-img">?</span></div><p class="spin-slot-name">Loading</p><span class="spin-slot-rarity">...</span>';
+                spinTrack.appendChild(slot);
+            }
+        }
+
+        function preloadSpinTextures() {
+            if (crateSpinState.texturesPromise) {
+                return crateSpinState.texturesPromise;
+            }
+
+            const uniqueTextures = [...new Set(crateRewardPool.map(reward => getCrateTexturePath(reward.file)))];
+            crateSpinState.texturesPromise = Promise.all(
+                uniqueTextures.map(textureUrl => new Promise(resolve => {
+                    const img = new Image();
+                    img.onload = () => resolve(textureUrl);
+                    // Keep spin usable even if one texture file is missing.
+                    img.onerror = () => resolve(textureUrl);
+                    img.src = textureUrl;
+                }))
+            );
+
+            return crateSpinState.texturesPromise;
+        }
+
+        function pickWeightedRewardIndex() {
+            const totalWeight = crateRewardPool.reduce((sum, reward) => sum + reward.weight, 0);
+            let roll = Math.random() * totalWeight;
+
+            for (let index = 0; index < crateRewardPool.length; index += 1) {
+                roll -= crateRewardPool[index].weight;
+                if (roll <= 0) {
+                    return index;
+                }
+            }
+
+            return crateRewardPool.length - 1;
+        }
+
+        function createSpinSequence(winnerIndex, totalSlots = crateSpinConfig.stripLength) {
+            const sequence = [];
+            for (let i = 0; i < totalSlots; i += 1) {
+                sequence.push(pickWeightedRewardIndex());
+            }
+
+            const stopIndex = totalSlots - crateSpinConfig.stopPadding;
+            sequence[stopIndex] = winnerIndex;
+            return { sequence, stopIndex };
+        }
+
+        function highlightWinner(stopIndex) {
+            const spinTrack = document.getElementById('spinTrack');
+            if (!spinTrack) return;
+
+            const slots = spinTrack.querySelectorAll('.spin-slot');
+            slots.forEach(slot => slot.classList.remove('selected'));
+
+            if (slots[stopIndex]) {
+                slots[stopIndex].classList.add('selected');
+            }
+        }
+
+        function createSpinSlot(reward, slotIndex) {
+            const slot = document.createElement('article');
+            slot.className = `spin-slot rarity-${reward.rarity}`;
+            slot.dataset.slotIndex = String(slotIndex);
+
+            const iconWrap = document.createElement('div');
+            iconWrap.className = 'spin-slot-icon-wrap';
+
+            const icon = document.createElement('img');
+            icon.className = 'spin-slot-icon-img';
+            icon.src = getCrateTexturePath(reward.file);
+            icon.alt = reward.label;
+            icon.loading = 'eager';
+            icon.decoding = 'async';
+            icon.addEventListener('error', () => {
+                icon.src = './public/placeholder.svg';
+            });
+
+            const label = document.createElement('p');
+            label.className = 'spin-slot-name';
+            label.textContent = reward.label;
+
+            const rarityTag = document.createElement('span');
+            rarityTag.className = 'spin-slot-rarity';
+            rarityTag.textContent = reward.rarity;
+
+            iconWrap.appendChild(icon);
+            slot.appendChild(iconWrap);
+            slot.appendChild(label);
+            slot.appendChild(rarityTag);
+
+            return slot;
+        }
+
+        function renderSpinTrack(sequence) {
+            const spinTrack = document.getElementById('spinTrack');
+            if (!spinTrack) return;
+
+            spinTrack.innerHTML = '';
+
+            sequence.forEach((rewardIndex, slotIndex) => {
+                const reward = crateRewardPool[rewardIndex];
+                spinTrack.appendChild(createSpinSlot(reward, slotIndex));
+            });
+
+            spinTrack.classList.remove('is-spinning');
+            spinTrack.style.transition = 'none';
+            spinTrack.style.transform = 'translate3d(0px, 0, 0)';
+        }
+
+        function computeSpinOffset(stopIndex) {
+            const spinTrack = document.getElementById('spinTrack');
+            const spinWindow = document.querySelector('.spin-window');
+            if (!spinTrack || !spinWindow) return 0;
+
+            const targetSlot = spinTrack.querySelector(`.spin-slot[data-slot-index="${stopIndex}"]`);
+            if (!targetSlot) return 0;
+
+            const slotCenter = targetSlot.offsetLeft + (targetSlot.offsetWidth / 2);
+            const viewportCenter = spinWindow.clientWidth / 2;
+            const jitter = Math.random() * 4 - 2;
+            const rawOffset = slotCenter - viewportCenter + jitter;
+
+            const maxOffset = Math.max(0, spinTrack.scrollWidth - spinWindow.clientWidth);
+            return Math.min(Math.max(0, rawOffset), maxOffset);
+        }
+
+        function setTrackPositionByIndex(index, useTransition = false) {
+            const spinTrack = document.getElementById('spinTrack');
+            if (!spinTrack) return;
+
+            const offset = computeSpinOffset(index);
+            spinTrack.style.transition = useTransition ? 'transform 240ms ease' : 'none';
+            spinTrack.style.transform = `translate3d(${-offset}px, 0, 0)`;
+        }
+
+        function animateSpin(stopIndex) {
+            const spinTrack = document.getElementById('spinTrack');
+            const spinWindow = document.querySelector('.spin-window');
+            if (!spinTrack || !spinWindow) {
+                return Promise.resolve();
+            }
+
+            const finalOffset = computeSpinOffset(stopIndex);
+            const duration = crateSpinConfig.baseDurationMs + Math.floor(Math.random() * crateSpinConfig.durationJitterMs);
+
+            return new Promise(resolve => {
+                spinTrack.classList.add('is-spinning');
+
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        spinTrack.style.transition = `transform ${duration}ms cubic-bezier(0.07, 0.78, 0.1, 1)`;
+                        spinTrack.style.transform = `translate3d(${-finalOffset}px, 0, 0)`;
+                    });
+                });
+
+                setTimeout(() => {
+                    spinTrack.classList.remove('is-spinning');
+                    highlightWinner(stopIndex);
+                    resolve();
+                }, duration + 80);
+            });
+        }
+
+        function throwSparks() {
+            const tray = document.getElementById('sparkTray');
+            if (!tray) return;
+
+            for (let i = 0; i < 24; i += 1) {
+                const spark = document.createElement('span');
+                spark.className = 'spark';
+                spark.style.left = `${50 + (Math.random() * 24 - 12)}%`;
+                spark.style.top = `${48 + (Math.random() * 20 - 10)}%`;
+                spark.style.setProperty('--dx', `${Math.random() * 180 - 90}px`);
+                spark.style.setProperty('--dy', `${Math.random() * 140 - 70}px`);
+                spark.style.background = Math.random() > 0.5 ? 'hsl(var(--accent))' : 'hsl(var(--primary))';
+                tray.appendChild(spark);
+
+                setTimeout(() => {
+                    spark.remove();
+                }, 940);
+            }
+        }
+
+        function wireCrateButton() {
+            const crateBtn = document.getElementById('crateBtn');
+            const crateResult = document.getElementById('crateResult');
+            const spinTrack = document.getElementById('spinTrack');
+            if (!crateBtn || !crateResult || !spinTrack) return;
+
+            renderSpinSkeleton();
+
+            preloadSpinTextures()
+                .then(() => {
+                    const previewStrip = [];
+                    for (let i = 0; i < 20; i += 1) {
+                        previewStrip.push(i % crateRewardPool.length);
+                    }
+                    renderSpinTrack(previewStrip);
+                    // Keep idle state anchored and visible in the center container.
+                    spinTrack.style.transition = 'none';
+                    spinTrack.style.transform = 'translate3d(0px, 0, 0)';
+                    crateResult.textContent = 'Ready. Press Spin Crate.';
+                })
+                .catch(() => {
+                    crateResult.textContent = 'Texture item belum siap.';
+                });
+
+            crateBtn.addEventListener('click', async () => {
+                if (crateSpinState.spinning) return;
+
+                crateSpinState.spinning = true;
+                crateBtn.disabled = true;
+                crateBtn.textContent = 'Spinning...';
+                crateResult.textContent = 'Loading local item textures...';
+
+                try {
+                    await preloadSpinTextures();
+                    const winnerIndex = pickWeightedRewardIndex();
+                    const { sequence, stopIndex } = createSpinSequence(winnerIndex);
+
+                    renderSpinTrack(sequence);
+                    crateResult.textContent = 'Crate is spinning...';
+
+                    await animateSpin(stopIndex);
+
+                    const reward = crateRewardPool[sequence[stopIndex]];
+                    crateResult.innerHTML = `You got: <strong>${reward.label}</strong> [${reward.rarity.toUpperCase()}]`;
+                    throwSparks();
+                } catch (error) {
+                    crateResult.textContent = 'Spin gagal. Coba klik lagi.';
+                    renderSpinSkeleton();
+                } finally {
+                    crateSpinState.spinning = false;
+                    crateBtn.disabled = false;
+                    crateBtn.textContent = 'Spin Crate';
+                }
+            });
+        }
+
+        function wireHeroMouseGlow() {
+            const hero = document.getElementById('heroPanel');
+            if (!hero) return;
+
+            hero.addEventListener('pointermove', (event) => {
+                const rect = hero.getBoundingClientRect();
+                const x = ((event.clientX - rect.left) / rect.width) * 100;
+                const y = ((event.clientY - rect.top) / rect.height) * 100;
+                hero.style.setProperty('--mx', `${x}%`);
+                hero.style.setProperty('--my', `${y}%`);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderRanks();
+            wirePerkModalEvents();
+            wireCopyButtons();
+            wireMoodButton();
+            wireCrateButton();
+            wireHeroMouseGlow();
+
+            checkServerStatus();
+            setInterval(checkServerStatus, 30000);
+        });
+    </script>
 </body>
 </html>
