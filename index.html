@@ -838,17 +838,191 @@
         }
 
         const ranksData = [
-            { id: 1, category: 'vip', name: 'ELITE', price: '15K IDR', color: '#00f0ff', perks: ['Mode Terbang (/fly)', 'Durasi 30 Hari', 'Prefix Chat Khusus'] },
-            { id: 2, category: 'vip', name: 'VIP', price: '30K IDR', color: '#39ff14', perks: ['Set Home 4 (/home)', 'Mode Terbang (/fly)', 'Perks Chat Warna-Warni', 'Batas Klaim = 13.000 Blok'] },
-            { id: 3, category: 'vip', name: 'VIP+', price: '45K IDR', color: '#39ff14', perks: ['Set Home 8 (/home)', 'Warna Chat', 'Command Nick (/nick)', 'Mode AFK (/afk)', 'Batas Klaim = 18.000 Blok'] },
-            { id: 4, category: 'legend', name: 'MVP', price: '60K IDR', color: '#ffcc00', popular: true, perks: ['Set Home 15 (/home)', 'Enderchest Dimana Saja (/ec)', 'Chat Warna & Nick', 'Batas Klaim = 30.000 Blok'] },
-            { id: 5, category: 'legend', name: 'MVP+', price: '180K IDR', color: '#ffcc00', popular: true, perks: ['Set Home 20 (/home)', 'Virtual Crafting Table (/craft)', 'Anvil Portable (/anvil)', 'Teleportasi Kilat (/tp)', 'Batas Klaim = 45.000 Blok'] },
-            { id: 6, category: 'legend', name: 'LEGEND', price: '220K IDR', color: '#ff6600', perks: ['Set Home 25 (/home)', 'Perintah Makan (/feed)', 'Stonecutter Portable', 'Virtual Smithing Table', 'Batas Klaim = 75.000 Blok'] },
-            { id: 7, category: 'donator', name: 'SULTAN', price: '260K IDR', color: '#ff007f', perks: ['Set Home 30 (/home)', 'Auto-Repair Alat (/erepair)', 'Command Penyembuhan (/heal)', 'Badge Sultan Spesial', 'Batas Klaim = 110.000 Blok'] },
-            { id: 8, category: 'donator', name: 'MYTHIC', price: '380K IDR', color: '#b800ff', perks: ['Set Home Tanpa Batas', 'Virtual Enchanting Table', 'Semua Fitur Sultan & Legend', 'Batas Klaim = 150.000 Blok'] },
-            { id: 9, category: 'donator', name: 'DONATOR', price: '720K IDR', color: '#00f0ff', perks: ['Godmode Toggle (/godmode)', 'Kontrol Cuaca & Waktu', 'Efek Petir Spesial', 'Batas Klaim = 200.000 Blok'] },
-            { id: 10, category: 'donator', name: 'KING DONATOR', price: '1.600K IDR', color: '#ffcc00', popular: true, perks: ['Semua Fitur Donator & Mythic', 'Crown Mahkota & Gelar Raja Exclusive', 'Batas Klaim Lahan Unlimited', 'Prioritas Support & Akses VIP Lounge', 'Custom Particle Trails'] }
-        ];
+  {
+    id: 1,
+    category: 'vip',
+    name: 'ELITE',
+    price: '15K IDR',
+    color: '#00f0ff',
+    perks: ['Mode Terbang (/fly)', 'Durasi 30 Hari']
+  },
+  {
+    id: 2,
+    category: 'vip',
+    name: 'VIP',
+    price: '30K IDR',
+    color: '#00ff22',
+    perks: [
+      'Set Home 4 (/home)',
+      'Mode Terbang (/fly)',
+      'Colour Chat',
+      'Limit Blok = 13.000'
+    ]
+  },
+  {
+    id: 3,
+    category: 'vip',
+    name: 'VIP+',
+    price: '45K IDR',
+    color: '#11ff00',
+    perks: [
+      'Set Home 8 (/home)',
+      'Colour Chat',
+      'Change Nick (/nick)',
+      'Afk (/afk)',
+      'Mode Terbang (/fly)',
+      'Limit Blok = 18.000'
+    ]
+  },
+  {
+    id: 4,
+    category: 'legend',
+    name: 'MVP',
+    price: '60K IDR',
+    color: '#ffaa00',
+    perks: [
+      'Set Home 15 (/home)',
+      'Colour Chat',
+      'Change Nick (/nick)',
+      'Afk (/afk)',
+      'Mode Terbang (/fly)',
+      'Ender Chest (/ec)',
+      'Limit Blok = 30.000'
+    ]
+  },
+  {
+    id: 5,
+    category: 'legend',
+    name: 'MVP+',
+    price: '180K IDR',
+    color: '#ffaa00',
+    perks: [
+      'Set Home 20 (/home)',
+      'Colour Chat',
+      'Change Nick (/nick)',
+      'Afk (/afk)',
+      'Mode Terbang (/fly)',
+      'Ender Chest (/ec)',
+      'Teleport Player (/tp)',
+      'Crafting (/craft)',
+      'Anvil (/anvil)',
+      'Stone Cutter (/stonecutter)',
+      'Limit Blok = 45.000'
+    ]
+  },
+  {
+    id: 6,
+    category: 'legend',
+    name: 'LEGEND',
+    price: '220K IDR',
+    color: '#ff5500',
+    perks: [
+      'Set Home 25 (/home)',
+      'Colour Chat',
+      'Change Nick (/nick)',
+      'Afk (/afk)',
+      'Mode Terbang (/fly)',
+      'Ender Chest (/ec)',
+      'Teleport Player (/tp)',
+      'Crafting (/craft)',
+      'Anvil (/anvil)',
+      'Stone Cutter (/stonecutter)',
+      'Feed (/feed)',
+      'Smithing Table (/smitingtable)',
+      'Limit Blok = 75.000'
+    ]
+  },
+  {
+    id: 7,
+    category: 'donator',
+    name: 'SULTAN',
+    price: '260K IDR',
+    color: '#ff00aa',
+    perks: [
+      'Set Home 30 (/home)',
+      'Colour Chat',
+      'Change Nick (/nick)',
+      'Afk (/afk)',
+      'Mode Terbang (/fly)',
+      'Ender Chest (/ec)',
+      'Teleport Player (/tp)',
+      'Crafting (/craft)',
+      'Anvil (/anvil)',
+      'Stone Cutter (/stonecutter)',
+      'Repair (/erepair)',
+      'Feed (/feed)',
+      'Smithing Table (/smitingtable)',
+      'Heal (/heal)',
+      'Limit Blok = 110.000'
+    ]
+  },
+  {
+    id: 8,
+    category: 'donator',
+    name: 'MYTHIC',
+    price: '380K IDR',
+    color: '#a800ff',
+    perks: [
+      'Set Home ∞ (/home)',
+      'Colour Chat',
+      'Change Nick (/nick)',
+      'Afk (/afk)',
+      'Mode Terbang (/fly)',
+      'Ender Chest (/ec)',
+      'Teleport Player (/tp)',
+      'Crafting (/craft)',
+      'Anvil (/anvil)',
+      'Stone Cutter (/stonecutter)',
+      'Repair (/erepair)',
+      'Feed (/feed)',
+      'Smithing Table (/smitingtable)',
+      'Heal (/heal)',
+      'Enchant (/enchant /essentials:enchant)',
+      'Limit Blok = 150.000'
+    ]
+  },
+  {
+    id: 9,
+    category: 'donator',
+    name: 'DONATOR',
+    price: '720K IDR',
+    color: '#00ffff',
+    perks: [
+      'Set Home ∞ (/home)',
+      'Colour Chat',
+      'Change Nick (/nick)',
+      'Afk (/afk)',
+      'Mode Terbang (/fly)',
+      'Ender Chest (/ec)',
+      'Teleport Player (/tp)',
+      'Crafting (/craft)',
+      'Anvil (/anvil)',
+      'Stone Cutter (/stonecutter)',
+      'Repair (/erepair)',
+      'Feed (/feed)',
+      'Smithing Table (/smitingtable)',
+      'Heal (/heal)',
+      'Godmode (/godmode)',
+      'Enchant (/enchant /essentials:enchant)',
+      'Time Set (/time set)',
+      'Weather Set (/weather set)',
+      'Lighting/Petir (/lighthing)',
+      'Limit Blok = 200.000'
+    ]
+  },
+  {
+    id: 10,
+    category: 'donator',
+    name: 'KING DONATOR',
+    price: '1.600K IDR',
+    color: '#ffd700',
+    perks: [
+      'Semua Perk Rank Donator',
+      'Fitur Eksklusif King',
+      'Limit Blok Maksimal'
+    ]
+  }
+];
 
         function renderRanks(filter = 'all') {
             const grid = document.getElementById('ranksGrid');
