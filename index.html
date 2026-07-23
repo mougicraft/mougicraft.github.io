@@ -90,16 +90,11 @@
             transition: all 0.15s ease-in-out;
         }
 
-        .retro-card-gold {
-            background: #251d10;
-            border: 4px solid #ffcc00;
-            box-shadow: 6px 6px 0px #000;
-        }
-
-        .retro-card-cyan {
-            background: #0d2230;
-            border: 4px solid #00f0ff;
-            box-shadow: 6px 6px 0px #000;
+        /* Gradient Text Helper Class */
+        .gradient-text {
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            display: inline-block;
         }
 
         /* Retro 3D Arcade Buttons */
@@ -449,7 +444,7 @@
                 </div>
             </div>
 
-            <!-- Ranks Grid (10 Retro Cards - 2 cols on Mobile) -->
+            <!-- Ranks Grid -->
             <div id="ranksGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 sm:gap-4">
                 <!-- Injected via JavaScript -->
             </div>
@@ -752,7 +747,7 @@
             particles.push({
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height,
-                size: Math.floor(Math.random() * 4) + 4, // Pixel size blocks
+                size: Math.floor(Math.random() * 4) + 4,
                 speedY: -(Math.random() * 0.5 + 0.2),
                 speedX: (Math.random() - 0.5) * 0.2,
                 color: ['#ffcc00', '#39ff14', '#00f0ff', '#ff007f'][Math.floor(Math.random() * 4)],
@@ -771,7 +766,7 @@
                 }
                 ctx.fillStyle = p.color;
                 ctx.globalAlpha = p.opacity;
-                ctx.fillRect(Math.floor(p.x), Math.floor(p.y), p.size, p.size); // Pixel alignment
+                ctx.fillRect(Math.floor(p.x), Math.floor(p.y), p.size, p.size);
             });
             requestAnimationFrame(animateParticles);
         }
@@ -826,34 +821,10 @@
 
         const pitches = [
             "\"Server survival ramah di mana ide gokilmu jadi bangunan legendaris!\"",
-  "\"Komunitas hangat, petualangan seru. Buat klaim wilayahmu & kuasai pasar!\"",
-  "\"Kumpulkan squad kamu, claim lahan impian, dan tunjukkan item langkamu!\"",
-  "\"Tempat terbaik untuk pulang setelah seharian lelah bertualang.\"",
-  "\"Di Mougicraft, setiap blok yang kamu pasang adalah awal dari sejarah baru!\"",
-  "\"Temukan sahabat baru, bangun kerajaanmu, dan ukir namamu di server ini.\"",
-  "\"Rasakan pengalaman survival yang nyaman, aman, dan penuh kejutan setiap hari!\"",
-  "\"Dari sekadar rumah kayu kecil hingga istana megah, imajinasimu penentunya.\"",
-  "\"Suasana hangat, player ramah, dan admin yang selalu siap membantu petualanganmu.\"",
-  "\"Bukan sekadar server Minecraft, ini adalah rumah kedua untuk kita semua.\"",
-  "\"Tak perlu sendirian, ajak teman-temanmu dan bangun komunitas impian kalian!\"",
-  "\"Jelajahi dunia tanpa batas, temukan rahasia tersembunyi, dan jadilah yang terkuat!\"",
-  "\"Ekonomi yang seimbang dan seru, siap-siap jadi pebisnis sukses di Mougicraft!\"",
-  "\"Lindungi wilayahmu dengan fitur claim, bangun dengan tenang tanpa rasa cemas.\"",
-  "\"Satu blok untuk impianmu, jutaan momen manis untuk dikenang bersama.\"",
-  "\"Bikinbase kerenmu, undang teman-teman, dan nikmati sore hari yang santai di sini.\"",
-  "\"Tantangan seru dan event menarik selalu menunggumu setiap minggunya!\"",
-  "\"Di sini, keahlian membangun dan kerja sama timmu sangat dihargai.\"",
-  "\"Mougicraft: Tempat di mana keajaiban Minecraft benar-benar terasa nyata.\"",
-  "\"Nikmati kebebasan berkreasi tanpa gangguan, ramah untuk player pemula maupun pro!\"",
-  "\"Setiap player punya cerita, mari tulis cerita paling seru milikmu di Mougicraft!\"",
-  "\"Punya koleksi item langka? Pamerkan ke anggotamu dan jadilah kolektor nomor satu!\"",
-  "\"Gabung sekarang dan rasakan hangatnya kebersamaan komunitas Mougicraft.\"",
-  "\"Bangun kota impianmu sendiri dan ajak player lain untuk jadi warga pertamamu!\"",
-  "\"Setiap hari adalah petualangan baru yang siap mewarnai waktu luangmu.\"",
-  "\"Survival santai, grinding makin seru, dan obrolan chat yang tak pernah sepi!\"",
-  "\"Ayo gabung, jadilah legenda baru dan beri jejak karya terbaikmu di Mougicraft!\"",
-  "\"Dunia luas menunggu untuk dijelajahi, bawa perlengkapanmu dan mulai sekarang!\"",
-  "\"Di Mougicraft, kreativitasmu adalah batas satu-satunya. Selamat bertualang!\""
+            "\"Komunitas hangat, petualangan seru. Buat klaim wilayahmu & kuasai pasar!\"",
+            "\"Kumpulkan squad kamu, claim lahan impian, dan tunjukkan item langkamu!\"",
+            "\"Tempat terbaik untuk pulang setelah seharian lelah bertualang.\"",
+            "\"Di Mougicraft, setiap blok yang kamu pasang adalah awal dari sejarah baru!\""
         ];
         function shuffleMoodPitch() {
             SoundFX.playClick();
@@ -862,195 +833,231 @@
             el.textContent = next;
         }
 
+        /* DATA RANK TERBARU & WARNA GRADIENT/CHAR MATCHING EXAKT DARI JSON/HEX KANONIK */
         const ranksData = [
-  {
-    id: 1,
-    category: 'vip',
-    name: 'ELITE',
-    price: '15K IDR',
-    color: '#00f0ff',
-    perks: ['Mode Terbang (/fly)', 'Durasi 30 Hari']
-  },
-  {
-    id: 2,
-    category: 'vip',
-    name: 'VIP',
-    price: '30K IDR',
-    color: '#00ff22',
-    perks: [
-      'Set Home 4 (/home)',
-      'Mode Terbang (/fly)',
-      'Colour Chat',
-      'Limit Blok = 13.000'
-    ]
-  },
-  {
-    id: 3,
-    category: 'vip',
-    name: 'VIP+',
-    price: '45K IDR',
-    color: '#11ff00',
-    perks: [
-      'Set Home 8 (/home)',
-      'Colour Chat',
-      'Change Nick (/nick)',
-      'Afk (/afk)',
-      'Mode Terbang (/fly)',
-      'Limit Blok = 18.000'
-    ]
-  },
-  {
-    id: 4,
-    category: 'legend',
-    name: 'MVP',
-    price: '60K IDR',
-    color: '#ffaa00',
-    perks: [
-      'Set Home 15 (/home)',
-      'Colour Chat',
-      'Change Nick (/nick)',
-      'Afk (/afk)',
-      'Mode Terbang (/fly)',
-      'Ender Chest (/ec)',
-      'Limit Blok = 30.000'
-    ]
-  },
-  {
-    id: 5,
-    category: 'legend',
-    name: 'MVP+',
-    price: '180K IDR',
-    color: '#ffaa00',
-    perks: [
-      'Set Home 20 (/home)',
-      'Colour Chat',
-      'Change Nick (/nick)',
-      'Afk (/afk)',
-      'Mode Terbang (/fly)',
-      'Ender Chest (/ec)',
-      'Teleport Player (/tp)',
-      'Crafting (/craft)',
-      'Anvil (/anvil)',
-      'Stone Cutter (/stonecutter)',
-      'Limit Blok = 45.000'
-    ]
-  },
-  {
-    id: 6,
-    category: 'legend',
-    name: 'LEGEND',
-    price: '220K IDR',
-    color: '#ff5500',
-    perks: [
-      'Set Home 25 (/home)',
-      'Colour Chat',
-      'Change Nick (/nick)',
-      'Afk (/afk)',
-      'Mode Terbang (/fly)',
-      'Ender Chest (/ec)',
-      'Teleport Player (/tp)',
-      'Crafting (/craft)',
-      'Anvil (/anvil)',
-      'Stone Cutter (/stonecutter)',
-      'Feed (/feed)',
-      'Smithing Table (/smitingtable)',
-      'Limit Blok = 75.000'
-    ]
-  },
-  {
-    id: 7,
-    category: 'donator',
-    name: 'SULTAN',
-    price: '260K IDR',
-    color: '#ff00aa',
-    perks: [
-      'Set Home 30 (/home)',
-      'Colour Chat',
-      'Change Nick (/nick)',
-      'Afk (/afk)',
-      'Mode Terbang (/fly)',
-      'Ender Chest (/ec)',
-      'Teleport Player (/tp)',
-      'Crafting (/craft)',
-      'Anvil (/anvil)',
-      'Stone Cutter (/stonecutter)',
-      'Repair (/erepair)',
-      'Feed (/feed)',
-      'Smithing Table (/smitingtable)',
-      'Heal (/heal)',
-      'Limit Blok = 110.000'
-    ]
-  },
-  {
-    id: 8,
-    category: 'donator',
-    name: 'MYTHIC',
-    price: '380K IDR',
-    color: '#a800ff',
-    perks: [
-      'Set Home ∞ (/home)',
-      'Colour Chat',
-      'Change Nick (/nick)',
-      'Afk (/afk)',
-      'Mode Terbang (/fly)',
-      'Ender Chest (/ec)',
-      'Teleport Player (/tp)',
-      'Crafting (/craft)',
-      'Anvil (/anvil)',
-      'Stone Cutter (/stonecutter)',
-      'Repair (/erepair)',
-      'Feed (/feed)',
-      'Smithing Table (/smitingtable)',
-      'Heal (/heal)',
-      'Enchant (/enchant /essentials:enchant)',
-      'Limit Blok = 150.000'
-    ]
-  },
-  {
-    id: 9,
-    category: 'donator',
-    name: 'DONATOR',
-    price: '720K IDR',
-    color: '#00ffff',
-    perks: [
-      'Set Home ∞ (/home)',
-      'Colour Chat',
-      'Change Nick (/nick)',
-      'Afk (/afk)',
-      'Mode Terbang (/fly)',
-      'Ender Chest (/ec)',
-      'Teleport Player (/tp)',
-      'Crafting (/craft)',
-      'Anvil (/anvil)',
-      'Stone Cutter (/stonecutter)',
-      'Repair (/erepair)',
-      'Feed (/feed)',
-      'Smithing Table (/smitingtable)',
-      'Heal (/heal)',
-      'Godmode (/godmode)',
-      'Enchant (/enchant /essentials:enchant)',
-      'Time Set (/time set)',
-      'Weather Set (/weather set)',
-      'Lighting/Petir (/lighthing)',
-      'Limit Blok = 200.000'
-    ]
-  },
-  {
-    id: 10,
-  category: 'donator',
-  name: 'KING DONATOR',
-  price: '1.600K IDR',
-  color: '#ff0000',
-  perks: [
-    'Set Home ∞ (/home)',
-    'Semua Perk Rank Donator',
-    'Fitur Hilang/Gaib (/vanish)',
-    'Akses Nick RGB & Text Format (/nick)',
-    'Prefix Chat Eksklusif KING DONATOR',
-    'Limit Blok = 250.000'
-    ]
-  }
-];
+          {
+            id: 1,
+            category: 'vip',
+            name: 'VIP',
+            type: 'char-color',
+            chars: [
+              { c: 'V', color: '#00ff64' },
+              { c: 'I', color: '#97ffbc' },
+              { c: 'P', color: '#e7e7e7' }
+            ],
+            price: '30K IDR',
+            perks: [
+              'Set Home 4 (/home)',
+              'Mode Terbang (/fly)',
+              'Colour Chat',
+              'Limit Blok = 13.000'
+            ]
+          },
+          {
+            id: 2,
+            category: 'vip',
+            name: 'VIP+',
+            type: 'char-color',
+            chars: [
+              { c: 'V', color: '#00ff64' },
+              { c: 'I', color: '#97ffbc' },
+              { c: 'P', color: '#e7e7e7' },
+              { c: '+', color: '#a1efa9' }
+            ],
+            price: '45K IDR',
+            perks: [
+              'Set Home 8 (/home)',
+              'Colour Chat',
+              'Change Nick (/nick)',
+              'Afk (/afk)',
+              'Mode Terbang (/fly)',
+              'Limit Blok = 18.000'
+            ]
+          },
+          {
+            id: 3,
+            category: 'legend',
+            name: 'MVP',
+            type: 'char-color',
+            chars: [
+              { c: 'M', color: '#0097ff' },
+              { c: 'V', color: '#7fc1f6' },
+              { c: 'P', color: '#7bb5ff' }
+            ],
+            price: '60K IDR',
+            perks: [
+              'Set Home 15 (/home)',
+              'Colour Chat',
+              'Change Nick (/nick)',
+              'Afk (/afk)',
+              'Mode Terbang (/fly)',
+              'Ender Chest (/ec)',
+              'Limit Blok = 30.000'
+            ]
+          },
+          {
+            id: 4,
+            category: 'legend',
+            name: 'MVP+',
+            type: 'char-color',
+            chars: [
+              { c: 'M', color: '#0097ff' },
+              { c: 'V', color: '#7fc1f6' },
+              { c: 'P', color: '#7bb5ff' },
+              { c: '+', color: '#d1e2fd' }
+            ],
+            price: '180K IDR',
+            perks: [
+              'Set Home 20 (/home)',
+              'Colour Chat',
+              'Change Nick (/nick)',
+              'Afk (/afk)',
+              'Mode Terbang (/fly)',
+              'Ender Chest (/ec)',
+              'Teleport Player (/tp)',
+              'Crafting (/craft)',
+              'Anvil (/anvil)',
+              'Stone Cutter (/stonecutter)',
+              'Limit Blok = 45.000'
+            ]
+          },
+          {
+            id: 5,
+            category: 'legend',
+            name: 'LEGEND',
+            type: 'gradient',
+            text: 'LEGEND',
+            gradient: 'linear-gradient(90deg, #ff2900 0%, #fcff00 100%)',
+            price: '220K IDR',
+            perks: [
+              'Set Home 25 (/home)',
+              'Colour Chat',
+              'Change Nick (/nick)',
+              'Afk (/afk)',
+              'Mode Terbang (/fly)',
+              'Ender Chest (/ec)',
+              'Teleport Player (/tp)',
+              'Crafting (/craft)',
+              'Anvil (/anvil)',
+              'Stone Cutter (/stonecutter)',
+              'Feed (/feed)',
+              'Smithing Table (/smitingtable)',
+              'Limit Blok = 75.000'
+            ]
+          },
+          {
+            id: 6,
+            category: 'donator',
+            name: 'SULTAN',
+            type: 'gradient',
+            text: 'SULTAN',
+            gradient: 'linear-gradient(90deg, #00ffea 0%, #66db8c 40%, #99c95e 60%, #ccb72f 80%, #ffa500 100%)',
+            price: '260K IDR',
+            perks: [
+              'Set Home 30 (/home)',
+              'Colour Chat',
+              'Change Nick (/nick)',
+              'Afk (/afk)',
+              'Mode Terbang (/fly)',
+              'Ender Chest (/ec)',
+              'Teleport Player (/tp)',
+              'Crafting (/craft)',
+              'Anvil (/anvil)',
+              'Stone Cutter (/stonecutter)',
+              'Repair (/erepair)',
+              'Feed (/feed)',
+              'Smithing Table (/smitingtable)',
+              'Heal (/heal)',
+              'Limit Blok = 110.000'
+            ]
+          },
+          {
+            id: 7,
+            category: 'donator',
+            name: 'MYTHIC',
+            type: 'gradient',
+            text: 'MYTHIC',
+            gradient: 'linear-gradient(90deg, #ff007c 0%, #ff6332 60%, #ffa500 100%)',
+            price: '380K IDR',
+            perks: [
+              'Set Home ∞ (/home)',
+              'Colour Chat',
+              'Change Nick (/nick)',
+              'Afk (/afk)',
+              'Mode Terbang (/fly)',
+              'Ender Chest (/ec)',
+              'Teleport Player (/tp)',
+              'Crafting (/craft)',
+              'Anvil (/anvil)',
+              'Stone Cutter (/stonecutter)',
+              'Repair (/erepair)',
+              'Feed (/feed)',
+              'Smithing Table (/smitingtable)',
+              'Heal (/heal)',
+              'Enchant (/enchant /essentials:enchant)',
+              'Limit Blok = 150.000'
+            ]
+          },
+          {
+            id: 8,
+            category: 'donator',
+            name: 'DONATOR',
+            type: 'gradient',
+            text: 'DONATOR',
+            gradient: 'linear-gradient(90deg, #ffa500 0%, #FFECCA 100%)',
+            price: '720K IDR',
+            perks: [
+              'Set Home ∞ (/home)',
+              'Colour Chat',
+              'Change Nick (/nick)',
+              'Afk (/afk)',
+              'Mode Terbang (/fly)',
+              'Ender Chest (/ec)',
+              'Teleport Player (/tp)',
+              'Crafting (/craft)',
+              'Anvil (/anvil)',
+              'Stone Cutter (/stonecutter)',
+              'Repair (/erepair)',
+              'Feed (/feed)',
+              'Smithing Table (/smitingtable)',
+              'Heal (/heal)',
+              'Godmode (/godmode)',
+              'Enchant (/enchant /essentials:enchant)',
+              'Time Set (/time set)',
+              'Weather Set (/weather set)',
+              'Lighting/Petir (/lighthing)',
+              'Limit Blok = 200.000'
+            ]
+          },
+          {
+            id: 9,
+            category: 'donator',
+            name: 'KING DONATOR',
+            type: 'gradient',
+            text: 'KING DONATOR',
+            gradient: 'linear-gradient(90deg, #ff0000 0%, #ffffff 100%)',
+            price: '1.600K IDR',
+            popular: true,
+            perks: [
+              'Semua Perk Rank Donator',
+              'Fitur Hilang/Gaib (/vanish)',
+              'Ajak Player Ke Lokasimu (/tpahere)',
+              'Akses Nick RGB & Text Format (/nick)',
+              'Prefix Chat Eksklusif KING DONATOR',
+              'Limit Blok = 250.000'
+            ]
+          }
+        ];
+
+        /* Helper Renderer Nama Rank untuk HTML (Mendukung Gradasi CSS Maupun Multi-Color Char) */
+        function renderRankNameHTML(rank) {
+            if (rank.type === 'gradient') {
+                return `<span class="gradient-text" style="background: ${rank.gradient};">${rank.text}</span>`;
+            } else if (rank.type === 'char-color') {
+                return rank.chars.map(ch => `<span style="color: ${ch.color};">${ch.c}</span>`).join('');
+            }
+            return rank.name;
+        }
 
         function renderRanks(filter = 'all') {
             const grid = document.getElementById('ranksGrid');
@@ -1067,7 +1074,7 @@
                     ${rank.popular ? '<span class="absolute top-1.5 right-1.5 bg-retro-yellow text-black font-pixel text-[6px] sm:text-[7px] px-1 sm:px-1.5 py-0.5 border border-black">HOT</span>' : ''}
                     <div>
                         <span class="font-pixel text-[7px] sm:text-[8px] text-slate-400 uppercase">${rank.category} RANK</span>
-                        <h4 class="font-pixel text-xs sm:text-sm uppercase mt-0.5 sm:mt-1 truncate" style="color: ${rank.color}">${rank.name}</h4>
+                        <h4 class="font-pixel text-xs sm:text-sm uppercase mt-0.5 sm:mt-1 truncate">${renderRankNameHTML(rank)}</h4>
                         <p class="font-mono text-sm sm:text-lg font-bold text-white mt-0.5 sm:mt-1">IDR ${rank.price.replace(' IDR', '')}</p>
                     </div>
                     <button type="button" class="retro-btn btn-retro-cyan w-full py-1.5 sm:py-2 text-[7px] sm:text-[8px] uppercase">
@@ -1095,8 +1102,9 @@
             selectedRankObj = ranksData.find(r => r.id === id);
             if (!selectedRankObj) return;
 
-            document.getElementById('modalRankName').textContent = selectedRankObj.name;
-            document.getElementById('modalRankName').style.color = selectedRankObj.color;
+            const modalTitleEl = document.getElementById('modalRankName');
+            modalTitleEl.innerHTML = renderRankNameHTML(selectedRankObj);
+
             document.getElementById('modalRankPrice').textContent = selectedRankObj.price;
             document.getElementById('modalCategoryBadge').textContent = selectedRankObj.category + ' RANK PERKS';
 
