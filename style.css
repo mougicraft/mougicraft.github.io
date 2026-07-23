@@ -1,4 +1,4 @@
-/* CSS Variables - Same as Tailwind config */
+/* CSS Variables */
 :root {
     --background: 30 10% 8%;
     --foreground: 40 20% 90%;
@@ -41,10 +41,46 @@
 }
 
 /* ====================================
-   RETRO GAME THEME - ANIMATIONS
+   1. STRICT MOBILE RESET & BASE FIXES
    ==================================== */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
 
-/* Scanlines effect - CRT monitor style (Optimized for mobile performance) */
+html, body {
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden !important;
+    position: relative;
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-family: 'Inter', sans-serif;
+}
+
+/* Typography Overflow Fixes for Retro Pixel Fonts */
+.font-pixel, 
+.hero-title, 
+.retro-title, 
+.server-edition-label, 
+.copy-text, 
+.rank-card h3, 
+.crate-card h3 {
+    font-family: 'Press Start 2P', cursive;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto;
+}
+
+.font-sans {
+    font-family: 'Inter', sans-serif;
+}
+
+/* ====================================
+   2. RETRO GAME EFFECTS (OPTIMIZED)
+   ==================================== */
 @keyframes scanlines-animation {
     0% { transform: translateY(0); }
     100% { transform: translateY(8px); }
@@ -60,16 +96,15 @@
     z-index: 9999;
     background: repeating-linear-gradient(
         0deg,
-        rgba(0, 0, 0, 0.15),
-        rgba(0, 0, 0, 0.15) 1px,
+        rgba(0, 0, 0, 0.12),
+        rgba(0, 0, 0, 0.12) 1px,
         transparent 1px,
         transparent 2px
     );
     animation: scanlines-animation 8s linear infinite;
-    opacity: 0.2; /* Slightly reduced for mobile readability */
+    opacity: 0.25;
 }
 
-/* CRT Curve effect */
 .crt-effect {
     position: fixed;
     top: 0;
@@ -78,60 +113,26 @@
     height: 100%;
     pointer-events: none;
     z-index: 9998;
-    box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.3);
-    border-radius: 0;
+    box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.4);
 }
 
-/* Game overlay for retro feel */
-.game-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 1;
-    background: radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.3) 100%);
-}
-
-body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: 
-        repeating-linear-gradient(0deg,
-            transparent,
-            transparent 2px,
-            rgba(100, 60, 45, 0.05) 2px,
-            rgba(100, 60, 45, 0.05) 4px
-        );
-    z-index: 0;
-    pointer-events: none;
-}
-
-/* TV Power indicator light */
 @keyframes tv-light-pulse {
-    0%, 100% { background-color: hsl(0, 100%, 50%); box-shadow: 0 0 15px hsl(0, 100%, 50% / 0.8); }
-    50% { background-color: hsl(0, 80%, 40%); box-shadow: 0 0 8px hsl(0, 100%, 50% / 0.4); }
+    0%, 100% { background-color: hsl(0, 100%, 50%); box-shadow: 0 0 10px hsl(0, 100%, 50% / 0.8); }
+    50% { background-color: hsl(0, 80%, 40%); box-shadow: 0 0 4px hsl(0, 100%, 50% / 0.4); }
 }
 
 .tv-indicator {
     position: fixed;
-    bottom: 1rem;
-    right: 1rem;
-    width: 10px;
-    height: 10px;
+    bottom: 0.75rem;
+    right: 0.75rem;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
     background-color: hsl(0, 100%, 50%);
-    box-shadow: 0 0 15px hsl(0, 100%, 50% / 0.8);
     animation: tv-light-pulse 1s ease-in-out infinite;
     z-index: 1000;
 }
 
-/* Pixel bounce animation */
 @keyframes pixel-bounce {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-3px); }
@@ -140,145 +141,21 @@ body::before {
 .pixel-bounce {
     display: inline-block;
     animation: pixel-bounce 1.5s ease-in-out infinite;
-    text-shadow: 
-        -1px -1px 0 rgba(0, 0, 0, 0.5),
-        1px 1px 0 hsl(100 60% 45% / 0.3);
 }
 
-/* Retro button press effect */
-.retro-button:active {
-    transform: translateY(2px) scale(0.98);
-}
-
-.retro-button {
-    transition: all 0.1s ease;
-}
-
-/* Logo & Hero mobile adjustments */
-.logo-container {
-    position: relative;
-    margin-bottom: 1rem;
-}
-
-.logo-glow {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 160px;
-    height: 160px;
-    background: radial-gradient(circle, hsl(100 60% 45% / 0.3) 0%, transparent 70%);
-    border-radius: 50%;
-    z-index: -1;
-}
-
-.hero-logo {
-    max-width: 150px;
-    width: 100%;
-    height: auto;
-    margin: 0 auto;
-    display: block;
-    filter: drop-shadow(0 0 8px hsl(100 60% 45% / 0.4));
-    animation: pixel-bounce 2s ease-in-out infinite;
-}
-
-/* Retro Title Styles */
-@keyframes retro-flicker {
-    0%, 100% { 
-        text-shadow: 
-            0 0 8px hsl(100 60% 45%),
-            2px 2px 0 hsl(280 60% 55% / 0.8);
-        filter: brightness(1.2) contrast(1.3);
-    }
-    50% { 
-        text-shadow: 
-            0 0 4px hsl(100 60% 45%),
-            2px 2px 0 hsl(280 60% 55% / 0.4);
-        filter: brightness(1) contrast(1.1);
-    }
-}
-
-.retro-title {
-    position: relative;
-    font-weight: 900;
-    letter-spacing: 2px;
-    animation: retro-flicker 0.6s infinite;
-    text-transform: uppercase;
-    text-shadow: 
-        0 0 8px hsl(100 60% 45%),
-        2px 2px 0 hsl(280 60% 55% / 0.8);
-}
-
-.rank-title {
-    color: hsl(100 60% 45%) !important;
-}
-
-.crate-title {
-    color: hsl(45 100% 55%) !important;
-}
-
-/* Reset & Base */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
-}
-
-body {
-    background-color: hsl(var(--background));
-    color: hsl(var(--foreground));
-    font-family: 'Inter', sans-serif;
-    overflow-x: hidden;
-    max-width: 100vw;
-}
-
-/* Font classes */
-.font-pixel {
-    font-family: 'Press Start 2P', cursive;
-}
-
-.font-sans {
-    font-family: 'Inter', sans-serif;
-}
-
-/* Color classes */
-.text-primary { color: hsl(var(--primary)); }
-.text-accent { color: hsl(var(--accent)); }
-.text-muted-foreground { color: hsl(var(--muted-foreground)); }
-.text-foreground { color: hsl(var(--foreground)); }
-.text-gold { color: hsl(var(--gold)); }
-
-.bg-background { background-color: hsl(var(--background)); }
-.bg-primary { background-color: hsl(var(--primary)); }
-.bg-muted { background-color: hsl(var(--muted)); }
-
-/* Text glow effects */
-.text-glow {
-    text-shadow: 0 0 8px hsl(100 60% 45% / 0.6), 0 2px 0 hsl(100 40% 25%);
-}
-
-.text-glow-gold {
-    text-shadow: 0 0 8px hsl(42 100% 50% / 0.6), 0 2px 0 hsl(42 70% 30%);
-}
-
-/* Minecraft card styles */
-.mc-card {
-    background: linear-gradient(180deg, hsl(30 8% 14%) 0%, hsl(30 8% 10%) 100%);
-    border: 3px solid hsl(30 15% 25%);
-    box-shadow: inset 0 1px 0 hsl(30 15% 30%), inset 0 -1px 0 hsl(30 10% 8%), 0 4px 10px hsl(0 0% 0% / 0.5);
-    border-radius: 0px;
-}
-
-/* Hero Section */
+/* ====================================
+   3. HERO SECTION (FIT TO SCREEN)
+   ==================================== */
 .hero-section {
     position: relative;
-    min-height: 90vh;
+    width: 100%;
+    max-width: 100%;
+    min-height: 85vh;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    padding: 2rem 1rem;
+    padding: 1.5rem 0.75rem;
 }
 
 .hero-bg {
@@ -287,122 +164,120 @@ body {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    transform: scale(1.05);
+    transform: scale(1.02);
 }
 
 .hero-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to bottom, hsl(30 10% 8% / 0.7), hsl(30 10% 8% / 0.6), hsl(30 10% 8%));
+    background: linear-gradient(to bottom, hsl(30 10% 8% / 0.75), hsl(30 10% 8% / 0.65), hsl(30 10% 8%));
 }
 
 .hero-content {
     position: relative;
     z-index: 10;
     text-align: center;
-    padding: 0 0.5rem;
+    width: 100%;
     max-width: 100%;
+    min-width: 0;
+    padding: 0;
+}
+
+.logo-container {
+    position: relative;
+    margin-bottom: 0.75rem;
+}
+
+.hero-logo {
+    max-width: 130px;
+    width: 100%;
+    height: auto;
     margin: 0 auto;
+    display: block;
+    filter: drop-shadow(0 0 6px hsl(100 60% 45% / 0.4));
+    animation: pixel-bounce 2s ease-in-out infinite;
 }
 
 .hero-title {
-    font-family: 'Press Start 2P', cursive;
-    font-size: clamp(1.1rem, 6vw, 2.2rem);
+    font-size: clamp(1rem, 5.5vw, 2rem);
     color: hsl(var(--primary));
-    text-shadow: 0 0 8px hsl(100 60% 45% / 0.6), 2px 2px 0 hsl(100 40% 25%);
+    text-shadow: 0 0 8px hsl(100 60% 45% / 0.5), 2px 2px 0 hsl(100 40% 25%);
     margin-bottom: 0.75rem;
     line-height: 1.3;
-    letter-spacing: 0.08em;
-    word-break: break-word;
+    letter-spacing: 0.05em;
+    padding: 0 0.25rem;
 }
 
 .hero-divider {
-    width: 10rem;
-    max-width: 80%;
-    height: 6px;
-    background: 
-        repeating-linear-gradient(90deg, 
-            hsl(var(--primary)) 0px,
-            hsl(var(--primary)) 6px,
-            transparent 6px,
-            transparent 10px
-        );
-    margin: 0 auto 1.25rem;
-    border: 2px solid hsl(var(--primary) / 0.5);
+    width: 8rem;
+    max-width: 70%;
+    height: 4px;
+    background: repeating-linear-gradient(90deg, hsl(var(--primary)) 0px, hsl(var(--primary)) 6px, transparent 6px, transparent 10px);
+    margin: 0 auto 1rem;
+    border: 1px solid hsl(var(--primary) / 0.5);
 }
 
 .hero-subtitle {
-    font-family: 'Press Start 2P', cursive;
-    font-size: 0.55rem;
+    font-size: clamp(0.5rem, 2.5vw, 0.65rem);
     color: hsl(var(--foreground) / 0.85);
-    margin-bottom: 2rem;
-    max-width: 24rem;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 0.875rem;
+    margin: 0 auto 1.5rem;
+    max-width: 100%;
+    padding: 0.75rem;
     border: 2px solid hsl(var(--primary) / 0.4);
     background: rgba(100, 60, 45, 0.15);
-    letter-spacing: 0.04em;
     line-height: 1.6;
 }
 
-/* =====================================================
-   SERVER SECTION - MOBILE OPTIMIZED SWIPE/STACK
-   ===================================================== */
+/* ====================================
+   4. SERVER CARDS SECTION (STRICT FIT)
+   ==================================== */
 .server-section {
     margin-bottom: 1.5rem;
     width: 100%;
-    padding: 0 0.5rem;
+    max-width: 100%;
+    padding: 0 0.75rem;
 }
 
 .server-cards-wrapper {
     width: 100%;
-    overflow: hidden;
+    max-width: 100%;
 }
 
 .server-cards {
     display: flex;
-    flex-direction: column; /* Stacked by default for mobile phone usability */
+    flex-direction: column;
     gap: 0.75rem;
+    width: 100%;
+    max-width: 100%;
     align-items: center;
-    padding: 0.25rem;
 }
 
 @media (min-width: 768px) {
     .server-cards {
         flex-direction: row;
         justify-content: center;
-        overflow-x: auto;
-        scroll-snap-type: x mandatory;
     }
 }
 
 .server-card {
     width: 100%;
-    max-width: 360px;
+    max-width: 100%;
+    min-width: 0;
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    padding: 0.875rem 1rem;
+    gap: 0.625rem;
+    padding: 0.75rem 0.875rem;
     background: linear-gradient(180deg, hsl(30 8% 16%) 0%, hsl(30 8% 10%) 100%);
     border: 3px solid hsl(30 15% 25%);
-    box-shadow: 
-        inset 0 1px 0 hsl(30 15% 35%),
-        inset 0 -2px 0 hsl(30 10% 6%),
-        0 4px 8px hsl(0 0% 0% / 0.5);
-    cursor: pointer;
+    box-shadow: inset 0 1px 0 hsl(30 15% 35%), inset 0 -2px 0 hsl(30 10% 6%), 0 4px 8px hsl(0 0% 0% / 0.5);
     position: relative;
     overflow: hidden;
 }
 
-.server-card:active {
-    transform: scale(0.98);
-}
-
 .server-card-icon {
     flex-shrink: 0;
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -410,30 +285,29 @@ body {
 }
 
 .server-card-icon svg {
-    width: 24px;
-    height: 24px;
+    width: 22px;
+    height: 22px;
 }
 
 .server-card-content {
     flex: 1;
+    min-width: 0; /* Important: prevents text from pushing card width */
     text-align: left;
-    min-width: 0;
 }
 
 .server-edition-label {
     display: block;
-    font-family: 'Press Start 2P', cursive;
     font-size: 6px;
     color: hsl(var(--muted-foreground));
-    letter-spacing: 0.1em;
-    margin-bottom: 0.25rem;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.2rem;
     text-transform: uppercase;
 }
 
 .server-ip {
     display: block;
     font-family: 'Inter', monospace;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 700;
     color: hsl(var(--primary));
     word-break: break-all;
@@ -452,7 +326,6 @@ body {
     margin-top: 0.15rem;
 }
 
-/* Copy Button - Mobile Friendly */
 .copy-btn {
     flex-shrink: 0;
     display: flex;
@@ -460,14 +333,13 @@ body {
     align-items: center;
     justify-content: center;
     gap: 2px;
-    padding: 0.5rem 0.75rem;
-    min-width: 50px;
+    padding: 0.5rem 0.625rem;
+    min-width: 48px;
     background: linear-gradient(180deg, hsl(30 12% 20%) 0%, hsl(30 10% 12%) 100%);
     border: 2px solid hsl(30 15% 25%);
-    box-shadow: inset 0 2px 0 hsl(30 15% 30%), inset 0 -2px 0 hsl(30 10% 8%);
+    box-shadow: inset 0 1px 0 hsl(30 15% 30%), inset 0 -1px 0 hsl(30 10% 8%);
     cursor: pointer;
     position: relative;
-    font-family: 'Press Start 2P', cursive;
 }
 
 .copy-btn:active {
@@ -481,10 +353,8 @@ body {
 }
 
 .copy-text {
-    font-family: 'Press Start 2P', cursive;
     font-size: 0.3rem;
     color: hsl(var(--muted-foreground));
-    letter-spacing: 0.1em;
     text-transform: uppercase;
 }
 
@@ -496,7 +366,6 @@ body {
     border: 2px solid hsl(100 60% 45%);
     align-items: center;
     justify-content: center;
-    font-family: 'Press Start 2P', cursive;
     font-size: 6px;
     color: hsl(101, 61%, 90%);
 }
@@ -510,11 +379,14 @@ body {
     display: none;
 }
 
-/* EMBEDDED IFRAME / RETRO TV FRAME */
+/* ====================================
+   5. EMBEDDED IFRAME (RESPONSIVE MAP/MEDIA)
+   ==================================== */
 .embed-section {
     margin: 1.5rem 0;
     width: 100%;
-    padding: 0 0.5rem;
+    max-width: 100%;
+    padding: 0 0.75rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -523,50 +395,54 @@ body {
 .iframe-container {
     position: relative;
     width: 100%;
-    max-width: 1000px;
-    aspect-ratio: 4 / 3; /* Taller aspect ratio for better mobile viewing */
+    max-width: 100%;
+    aspect-ratio: 4 / 3;
     overflow: hidden;
-    border-radius: 30px;
+    border-radius: 20px;
     background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
-    box-shadow: 
-        0 0 20px hsl(100 60% 45% / 0.3),
-        inset 0 0 15px rgba(0, 0, 0, 0.8),
-        0 10px 30px rgba(0, 0, 0, 0.6);
-    padding: 12px;
+    box-shadow: 0 0 15px hsl(100 60% 45% / 0.25), inset 0 0 10px rgba(0, 0, 0, 0.8);
+    padding: 8px;
 }
 
 @media (min-width: 768px) {
     .iframe-container {
         aspect-ratio: 16 / 9;
-        border-radius: 50px;
-        padding: 20px;
+        border-radius: 40px;
+        padding: 16px;
     }
 }
 
 .iframe-container iframe {
-    position: relative;
-    display: block;
     width: 100%;
     height: 100%;
     border: none;
-    border-radius: 16px;
+    border-radius: 12px;
+    display: block;
 }
 
-/* =====================================================
-   SOCIAL BUTTONS - PHONE OPTIMIZED GRID
-   ===================================================== */
+/* ====================================
+   6. SOCIAL BUTTONS GRID (MOBILE ADAPTIVE)
+   ==================================== */
 .social-buttons {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* 2 columns on phones for easy tapping */
-    gap: 0.625rem;
-    justify-content: center;
-    padding: 0 0.5rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+    width: 100%;
+    max-width: 100%;
+    padding: 0 0.75rem;
+}
+
+@media (max-width: 350px) {
+    .social-buttons {
+        grid-template-columns: 1fr; /* Single column on tiny screens */
+    }
 }
 
 @media (min-width: 640px) {
     .social-buttons {
         display: flex;
         flex-wrap: wrap;
+        justify-content: center;
     }
 }
 
@@ -574,35 +450,22 @@ body {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
-    font-weight: 700;
-    padding: 0.875rem 0.5rem;
-    border-radius: 0px;
-    text-decoration: none;
+    gap: 0.375rem;
+    padding: 0.75rem 0.375rem;
     background: linear-gradient(180deg, hsl(30 8% 14%) 0%, hsl(30 8% 10%) 100%);
     border: 2px solid hsl(30 15% 25%);
-    box-shadow: inset 0 2px 0 hsl(30 15% 30%), inset 0 -2px 0 hsl(30 10% 8%), 0 4px 8px hsl(0 0% 0% / 0.5);
+    box-shadow: inset 0 1px 0 hsl(30 15% 30%), inset 0 -1px 0 hsl(30 10% 8%), 0 3px 6px hsl(0 0% 0% / 0.5);
     width: 100%;
     min-width: 0;
-    position: relative;
-    overflow: hidden;
-    font-family: 'Press Start 2P', cursive;
-    font-size: 0.35rem;
-    letter-spacing: 0.05em;
+    font-size: clamp(0.3rem, 2.2vw, 0.4rem);
+    letter-spacing: 0.02em;
     text-transform: uppercase;
-    text-align: center;
-}
-
-@media (min-width: 640px) {
-    .social-card {
-        width: 11rem;
-        font-size: 0.4rem;
-        padding: 1rem 1.25rem;
-    }
+    text-decoration: none;
+    color: hsl(var(--foreground));
 }
 
 .social-card:active {
-    transform: scale(0.96);
+    transform: scale(0.97);
 }
 
 .social-card.discord { border-color: hsl(235 70% 55%); }
@@ -611,128 +474,109 @@ body {
 .social-card.web-map { border-color: hsl(100 60% 45%); }
 .social-card.vote-server { border-color: hsl(40 100% 50%); }
 
-/* =====================================================
-   RANKS & CRATES SECTIONS - MOBILE ACCORDION STYLE
-   ===================================================== */
+/* ====================================
+   7. RANKS & CRATES (FULL MOBILE ADAPTIVITY)
+   ==================================== */
 .rank-section,
 .crate-section {
-    padding: 3rem 0.75rem;
+    padding: 2.5rem 0.75rem;
+    width: 100%;
+    max-width: 100%;
 }
 
 .rank-divider,
 .crate-divider {
-    width: 7rem;
+    width: 6rem;
     height: 4px;
-    background: 
-        repeating-linear-gradient(90deg, 
-            hsl(var(--primary)) 0px,
-            hsl(var(--primary)) 4px,
-            transparent 4px,
-            transparent 8px
-        );
-    margin: 0.75rem auto 2rem;
-    border: 2px solid hsl(var(--primary) / 0.4);
+    background: repeating-linear-gradient(90deg, hsl(var(--primary)) 0px, hsl(var(--primary)) 4px, transparent 4px, transparent 8px);
+    margin: 0.5rem auto 1.5rem;
+    border: 1px solid hsl(var(--primary) / 0.4);
 }
 
 .rank-grid,
 .crate-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 1rem;
-    max-width: 80rem;
-    margin: 0 auto;
+    gap: 0.875rem;
+    width: 100%;
+    max-width: 100%;
 }
 
 @media (min-width: 640px) {
-    .rank-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    .crate-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
+    .rank-grid { grid-template-columns: repeat(2, 1fr); }
+    .crate-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
 @media (min-width: 1024px) {
-    .rank-grid {
-        grid-template-columns: repeat(4, 1fr);
-    }
+    .rank-grid { grid-template-columns: repeat(4, 1fr); }
 }
 
 .rank-card {
     position: relative;
-    padding: 1.25rem;
+    padding: 1rem;
     background: linear-gradient(180deg, hsl(30 8% 14%) 0%, hsl(30 8% 10%) 100%);
     border: 3px solid hsl(30 15% 25%);
-    box-shadow: inset 0 2px 0 hsl(30 15% 30%), inset 0 -2px 0 hsl(30 10% 8%), 0 4px 10px hsl(0 0% 0% / 0.5);
-    border-radius: 0px;
+    box-shadow: inset 0 1px 0 hsl(30 15% 30%), inset 0 -1px 0 hsl(30 10% 8%), 0 4px 8px hsl(0 0% 0% / 0.5);
     display: flex;
     flex-direction: column;
-    cursor: pointer;
-    overflow: hidden;
+    width: 100%;
+    min-width: 0;
 }
 
 .rank-card.popular {
     border-color: hsl(var(--primary));
-    background: linear-gradient(180deg, hsl(30 8% 16%) 0%, hsl(30 8% 12%) 100%);
 }
 
 .rank-card .popular-badge {
     position: absolute;
-    top: 0.4rem;
-    right: 0.4rem;
+    top: 0.35rem;
+    right: 0.35rem;
     background: hsl(var(--primary));
     color: hsl(var(--primary-foreground));
-    font-family: 'Press Start 2P', cursive;
-    font-size: 7px;
-    padding: 0.3rem 0.5rem;
-    border: 2px solid hsl(var(--primary-foreground));
+    font-size: 6px;
+    padding: 0.25rem 0.4rem;
+    border: 1px solid hsl(var(--primary-foreground));
 }
 
 .rank-card h3 {
-    font-family: 'Press Start 2P', cursive;
-    font-size: 0.6rem;
+    font-size: clamp(0.55rem, 3vw, 0.65rem);
     text-align: center;
-    margin-bottom: 0.5rem;
-    letter-spacing: 0.1em;
+    margin-bottom: 0.4rem;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
 }
 
 .rank-card .price {
-    font-size: 1.125rem;
+    font-size: 1rem;
     font-weight: 700;
     text-align: center;
     color: hsl(var(--foreground));
-    margin-bottom: 0.75rem;
-    font-family: 'Press Start 2P', cursive;
+    margin-bottom: 0.5rem;
 }
 
-/* Expandable feature list indicators for phones */
 .expand-indicator {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.4rem;
-    padding: 0.4rem;
-    margin-bottom: 0.5rem;
+    gap: 0.3rem;
+    padding: 0.35rem;
+    margin-bottom: 0.4rem;
     background: hsl(var(--muted));
     border-radius: 2px;
 }
 
 .expand-text {
-    font-family: 'Press Start 2P', cursive;
     font-size: 0.3rem;
     color: hsl(var(--muted-foreground));
-    letter-spacing: 0.05em;
     text-transform: uppercase;
 }
 
 .expand-arrow {
-    font-size: 9px;
+    font-size: 8px;
     color: hsl(var(--primary));
     transition: transform 0.3s ease;
 }
 
-/* Features hidden by default on mobile for compactness, expandable on click */
 .rank-card .features {
     max-height: 0;
     opacity: 0;
@@ -743,7 +587,7 @@ body {
 .rank-card.expanded .features {
     max-height: 400px;
     opacity: 1;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.5rem;
 }
 
 .rank-card.expanded .expand-arrow {
@@ -753,59 +597,51 @@ body {
 .rank-card .features li {
     display: flex;
     align-items: flex-start;
-    gap: 0.4rem;
-    font-size: 0.65rem;
+    gap: 0.35rem;
+    font-size: 0.625rem;
     color: hsl(var(--secondary-foreground));
-    margin-bottom: 0.3rem;
+    margin-bottom: 0.25rem;
     font-family: monospace;
 }
 
-/* Crate Cards */
 .crate-card {
-    padding: 1.5rem 1rem;
+    padding: 1.25rem 0.75rem;
     background: linear-gradient(180deg, hsl(30 8% 14%) 0%, hsl(30 8% 10%) 100%);
     border: 2px solid hsl(30 15% 25%);
-    box-shadow: inset 0 1px 0 hsl(30 15% 30%), inset 0 -1px 0 hsl(30 10% 8%), 0 4px 10px hsl(0 0% 0% / 0.4);
-    border-radius: 0.375rem;
+    box-shadow: inset 0 1px 0 hsl(30 15% 30%), inset 0 -1px 0 hsl(30 10% 8%), 0 4px 8px hsl(0 0% 0% / 0.4);
     text-align: center;
+    width: 100%;
+    min-width: 0;
 }
 
 .crate-card h3 {
-    font-family: 'Press Start 2P', cursive;
-    font-size: 0.65rem;
-    margin-bottom: 0.875rem;
-    letter-spacing: 0.08em;
+    font-size: 0.6rem;
+    margin-bottom: 0.75rem;
 }
 
 .crate-card p {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     font-weight: 700;
-    color: hsl(var(--foreground));
 }
 
-/* Footer */
+/* ====================================
+   8. FOOTER
+   ==================================== */
 .footer {
-    padding: 2rem 1rem;
+    padding: 1.5rem 0.75rem;
     text-align: center;
     border-top: 1px solid hsl(var(--border));
+    width: 100%;
 }
 
 .footer p:first-child {
-    font-family: 'Press Start 2P', cursive;
-    font-size: 8px;
+    font-size: 7px;
     color: hsl(var(--primary) / 0.6);
-    letter-spacing: 0.1em;
+    letter-spacing: 0.08em;
 }
 
 .footer p:last-child {
-    margin-top: 0.5rem;
+    margin-top: 0.35rem;
     color: hsl(var(--muted-foreground));
-    font-size: 0.65rem;
-}
-
-/* Utility layout tweaks for safety */
-.max-w-7xl, .max-w-4xl {
-    width: 100%;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
+    font-size: 0.6rem;
 }
