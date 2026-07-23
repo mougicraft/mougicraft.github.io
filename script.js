@@ -93,58 +93,65 @@ const ranks = [
 ];
 
 // Generate rank cards with retro animations
+const isDesktop = window.matchMedia('(pointer: fine)').matches;
 function generateRankCards() {
-    const rankGrid = document.querySelector('.rank-grid');
+    const rankGrid = document.querySelector('.rank-grid') || document.getElementById('rankGrid');
     if (!rankGrid) return;
 
-    ranks.forEach((rank, index) => {
-        const card = document.createElement('div');
-        card.className = `rank-card ${rank.popular ? 'popular' : ''} pixel-bounce-card`;
-        card.style.animationDelay = `${index * 0.1}s`;
+    // Bersihkan isi grid jika menggunakan JS rendering
+    if (typeof ranks !== 'undefined' && Array.isArray(ranks)) {
+        rankGrid.innerHTML = '';
         
-        let featuresHTML = '';
-        rank.features.forEach(feature => {
-            featuresHTML += `<li><span>◆</span><span>${feature}</span></li>`;
-        });
-
-        card.innerHTML = `
-            ${rank.popular ? '<span class="popular-badge pixel-bounce">⭐ POPULAR</span>' : ''}
-            <h3 class="${rank.nameColor} glitch-text-effect">${rank.name}</h3>
-            <div class="rank-divider-line"></div>
-            <p class="price">IDR <span class="${rank.nameColor}">${rank.price}</span></p>
-            <div class="expand-indicator">
-                <span class="expand-text">Click to see features</span>
-                <span class="expand-arrow">▼</span>
-            </div>
-            <ul class="features">
-                ${featuresHTML}
-            </ul>
-        `;
-        
-        // Add click event listener to toggle features with sound
-        card.addEventListener('click', function() {
-            this.classList.toggle('expanded');
-            // Play select sound on rank card click
-            if (typeof playSound === 'function') {
-                playSound('select');
+        ranks.forEach((rank, index) => {
+            const card = document.createElement('div');
+            card.className = `rank-card ${rank.popular ? 'popular' : ''}`;
+            
+            let featuresHTML = '';
+            if (rank.features) {
+                rank.features.forEach(feature => {
+                    featuresHTML += `<li><span>◆</span><span>${feature}</span></li>`;
+                });
             }
-        });
 
-        // Add hover sound effect
-        card.addEventListener('mouseenter', function() {
-            if (typeof playSound === 'function') {
-                playSound('beep');
-            }
-        });
+            card.innerHTML = `
+                ${rank.popular ? '<span class="popular-badge">⭐ POPULAR</span>' : ''}
+                <h3 style="color: ${rank.color || 'var(--primary)'}">${rank.name}</h3>
+                <p class="price">IDR <span>${rank.price}</span></p>
+                <button class="perk-toggle" type="button">Lihat Perks</button>
+                ${featuresHTML ? `<ul class="features">${featuresHTML}</ul>` : ''}
+            `;
         
-        rankGrid.appendChild(card);
-    });
+        // Toggle Expand / Modal
+            card.addEventListener('click', function(e) {
+                if (typeof openPerkPopup === 'function') {
+                    openPerkPopup(rank);
+                } else {
+                    this.classList.toggle('expanded');
+                }
+
+                if (typeof playSound === 'function') {
+                    playSound('select');
+                }
+            });
+
+        // Suara Hover HANYA aktif di Desktop (mencegah bug suara saat scroll di HP)
+            if (isDesktop) {
+                card.addEventListener('mouseenter', function() {
+                    if (typeof playSound === 'function') {
+                        playSound('beep');
+                    }
+                });
+            }
+
+            rankGrid.appendChild(card);
+        });
+    }
 }
 
-// Intersection Observer for scroll-triggered animations
+// 2. IntersectionObserver Ringan untuk HP
 const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
+    threshold: 0.05, // Threshold lebih kecil agar animasi terpicu lebih cepat di HP
+    rootMargin: '0px 0px -20px 0px'
 };
 
 const animationObserver = new IntersectionObserver((entries) => {
