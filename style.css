@@ -809,3 +809,114 @@ body {
     padding-left: 0.5rem;
     padding-right: 0.5rem;
 }
+/* =====================================================
+   MOBILE PERFORMANCE & TOUCH OPTIMIZATIONS
+   ===================================================== */
+
+/* 1. Reset Viewport & Touch Highlight */
+* {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation; /* Mencegah delay double-tap zoom di HP */
+}
+
+body {
+    min-height: 100dvh; /* Menggunakan Dynamic Viewport Height untuk HP */
+    text-rendering: optimizeLegibility;
+}
+
+/* 2. Optimisasi Efek Retro & Animasi Berat di Layar Sentuh */
+@media (max-width: 768px), (pointer: coarse) {
+    /* Hentikan animasi scanline bergerak untuk menghemat CPU & Baterai HP */
+    .scanlines, .scanline-overlay {
+        animation: none !important;
+        background-attachment: scroll;
+        opacity: 0.15 !important;
+    }
+
+    /* Redupkan & sederhanakan efek blur background (blobs) */
+    .blob {
+        animation: none !important;
+        filter: blur(25px) !important;
+        opacity: 0.15 !important;
+    }
+
+    /* Matikan efek flickering teks yang terlalu intens di layar kecil */
+    .retro-title {
+        animation: none !important;
+        text-shadow: 0 0 6px hsl(100 60% 45% / 0.8) !important;
+    }
+
+    /* Hilangkan hover transform agar tidak lag saat di-scroll */
+    .rank-card:hover, 
+    .server-card:hover, 
+    .social-btn:hover, 
+    .copy-btn:hover {
+        transform: none !important;
+        box-shadow: none !important;
+    }
+}
+
+/* 3. Penyesuaian Ukuran Font Pixel (Readability) */
+@media (max-width: 640px) {
+    .font-pixel, 
+    .hero-subtitle, 
+    .expand-text, 
+    .copy-text, 
+    .edition {
+        font-size: clamp(0.55rem, 2.5vw, 0.75rem) !important;
+        letter-spacing: 0.03em;
+    }
+
+    .hero-title {
+        font-size: clamp(1.4rem, 7vw, 2.2rem) !important;
+        line-height: 1.3;
+    }
+
+    .server-edition-label {
+        font-size: 8px !important;
+    }
+
+    .social-card {
+        font-size: 0.55rem !important;
+        padding: 0.75rem 0.5rem;
+    }
+}
+
+/* 4. Touch Target Minimum (Minimal 44px tinggi untuk jempol) */
+.copy-btn,
+.social-btn,
+.social-card,
+.perk-toggle,
+.crate-btn,
+.shuffle-btn {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 5. Gacha Wheel Optimization di Mobile */
+.spin-track {
+    will-change: transform; /* Hardware acceleration untuk animasi smooth */
+}
+
+@media (max-width: 480px) {
+    .spin-window {
+        border-radius: 12px;
+    }
+
+    .spin-slot {
+        min-width: 90px;
+        padding: 0.35rem;
+    }
+
+    .spin-slot-icon-wrap {
+        width: 44px;
+        height: 44px;
+    }
+
+    .spin-slot-icon-img {
+        width: 36px;
+        height: 36px;
+    }
+}
