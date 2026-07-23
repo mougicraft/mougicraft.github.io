@@ -235,112 +235,112 @@
     <canvas id="bgCanvas" class="fixed inset-0 z-0 pointer-events-none opacity-50"></canvas>
 
     <!-- Notification Toast Container -->
-    <div id="toastContainer" class="fixed top-20 right-4 z-50 flex flex-col gap-3 pointer-events-none"></div>
+    <div id="toastContainer" class="fixed top-16 sm:top-20 right-2 sm:right-4 left-2 sm:left-auto z-50 flex flex-col gap-2 sm:gap-3 pointer-events-none"></div>
 
     <!-- Navigation Header -->
-    <header class="sticky top-0 z-40 bg-retro-panel/95 border-b-4 border-black px-4 py-3 shadow-[0_4px_0_#000]">
+    <header class="sticky top-0 z-40 bg-retro-panel/95 border-b-4 border-black px-3 sm:px-4 py-2.5 sm:py-3 shadow-[0_4px_0_#000]">
         <div class="max-w-6xl mx-auto flex items-center justify-between">
-            <a href="#" class="flex items-center gap-3 group">
+            <a href="#" class="flex items-center gap-2.5 sm:gap-3 group">
                 <div class="p-1 bg-black border-2 border-retro-yellow">
-                    <img src="mougicraftlogos (1).webp" alt="MOUGICRAFT" class="w-8 h-8 object-contain" onerror="this.src='mougicraftlogos.webp'">
+                    <img src="mougicraftlogos (1).webp" alt="MOUGICRAFT" class="w-7 h-7 sm:w-8 sm:h-8 object-contain" onerror="this.src='mougicraftlogos.webp'">
                 </div>
                 <div>
-                    <span class="font-pixel text-base sm:text-lg text-retro-yellow tracking-wider block leading-none">MOUGICRAFT</span>
-                    <span class="font-mono text-xs text-retro-cyan font-bold tracking-widest uppercase block mt-1">★ SURVIVAL NETWORK ★</span>
+                    <span class="font-pixel text-sm sm:text-lg text-retro-yellow tracking-wider block leading-none">MOUGICRAFT</span>
+                    <span class="font-mono text-[10px] sm:text-xs text-retro-cyan font-bold tracking-widest uppercase block mt-0.5 sm:mt-1">★ SURVIVAL NETWORK ★</span>
                 </div>
             </a>
 
             <!-- Header Controls -->
-            <div class="flex items-center gap-3">
-                <button id="soundToggleBtn" type="button" onclick="toggleAudio()" class="retro-btn btn-retro-yellow px-3 py-1.5 text-[10px] flex items-center gap-2">
+            <div class="flex items-center gap-2 sm:gap-3">
+                <button id="soundToggleBtn" type="button" onclick="toggleAudio()" class="retro-btn btn-retro-yellow px-2.5 sm:px-3 py-1.5 text-[9px] sm:text-[10px] flex items-center gap-1.5 sm:gap-2">
                     <span id="soundIcon">🔊</span>
                     <span class="hidden sm:inline">SFX: ON</span>
                 </button>
 
-                <a href="https://discord.com/invite/AWJ6eTKskY" target="_blank" rel="noopener noreferrer" class="retro-btn btn-retro-pink px-3 py-1.5 text-[10px] hidden md:inline-flex items-center gap-2">
+                <a href="https://discord.com/invite/AWJ6eTKskY" target="_blank" rel="noopener noreferrer" class="retro-btn btn-retro-pink px-2.5 sm:px-3 py-1.5 text-[9px] sm:text-[10px] hidden md:inline-flex items-center gap-2">
                     <span>💬</span> DISCORD
                 </a>
             </div>
         </div>
     </header>
 
-    <main class="relative z-10 max-w-6xl mx-auto px-4 py-8 space-y-10">
+    <main class="relative z-10 max-w-6xl mx-auto px-3 sm:px-4 py-4 sm:py-8 space-y-6 sm:space-y-10">
 
         <!-- Hero Arcade Banner -->
-        <section class="retro-card hero-retro-bg p-6 md:p-10 text-center relative overflow-hidden">
-            <div class="relative z-10 max-w-3xl mx-auto space-y-6">
+        <section class="retro-card hero-retro-bg p-4 sm:p-6 md:p-10 text-center relative overflow-hidden">
+            <div class="relative z-10 max-w-3xl mx-auto space-y-4 sm:space-y-6">
                 <!-- Arcade Badge Tag -->
-                <div class="inline-block bg-black border-2 border-retro-green px-4 py-1 font-pixel text-[10px] text-retro-green tracking-widest uppercase">
+                <div class="inline-block bg-black border-2 border-retro-green px-3 py-1 font-pixel text-[8px] sm:text-[10px] text-retro-green tracking-widest uppercase">
                     ▶ MINECRAFT 1.21+ JAVA & BEDROCK ◀
                 </div>
 
                 <!-- Floating Island Pixel Logo & Arcade Title -->
-                <div class="space-y-4 pt-2">
+                <div class="space-y-3 sm:space-y-4 pt-1 sm:pt-2">
                     <div class="relative inline-block">
-                        <img src="mougicraftlogos (1).webp" alt="MOUGICRAFT Floating Logo" class="w-40 h-40 sm:w-52 sm:h-52 mx-auto object-contain animate-pixel-float cursor-pointer" onerror="this.src='mougicraftlogos.webp'">
+                        <img src="mougicraftlogos (1).webp" alt="MOUGICRAFT Floating Logo" class="w-32 h-32 sm:w-48 sm:h-48 mx-auto object-contain animate-pixel-float cursor-pointer" onerror="this.src='mougicraftlogos.webp'">
                     </div>
 
-                    <h1 class="font-pixel text-3xl sm:text-5xl md:text-6xl text-retro-yellow tracking-wider leading-tight drop-shadow-[4px_4px_0_#000]">
+                    <h1 class="font-pixel text-2xl sm:text-4xl md:text-6xl text-retro-yellow tracking-wider leading-tight drop-shadow-[3px_3px_0_#000] sm:drop-shadow-[4px_4px_0_#000]">
                         MOUGICRAFT
                     </h1>
-                    <p class="font-display text-lg sm:text-xl text-slate-200 font-bold leading-relaxed max-w-2xl mx-auto">
+                    <p class="font-display text-sm sm:text-xl text-slate-200 font-bold leading-snug sm:leading-relaxed max-w-2xl mx-auto">
                         PETUALANGAN SURVIVAL RETRO PALING SERU & HARMONIS! BANGUN IMPISANMU & JADI LEGENDA!
                     </p>
                 </div>
 
                 <!-- Retro RPG Dialogue Text Box -->
-                <div class="bg-black border-4 border-white p-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-left shadow-[6px_6px_0px_#000]">
-                    <div class="flex items-start gap-3">
-                        <span class="font-pixel text-retro-yellow text-lg animate-retro-blink">▶</span>
+                <div class="bg-black border-2 sm:border-4 border-white p-3 sm:p-4 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 text-left shadow-[4px_4px_0px_#000] sm:shadow-[6px_6px_0px_#000]">
+                    <div class="flex items-start gap-2.5 sm:gap-3 w-full sm:w-auto">
+                        <span class="font-pixel text-retro-yellow text-base sm:text-lg animate-retro-blink mt-0.5">▶</span>
                         <div>
-                            <span class="font-pixel text-[10px] text-retro-cyan block uppercase tracking-wider mb-1">MOUGICRAFT DIALOGUE:</span>
-                            <p id="heroPitchText" class="font-mono text-base sm:text-lg text-slate-100 font-bold leading-snug">
+                            <span class="font-pixel text-[8px] sm:text-[10px] text-retro-cyan block uppercase tracking-wider mb-0.5 sm:mb-1">MOUGICRAFT DIALOGUE:</span>
+                            <p id="heroPitchText" class="font-mono text-sm sm:text-lg text-slate-100 font-bold leading-snug">
                                 "Server survival ramah di mana ide gokilmu jadi bangunan legendaris!"
                             </p>
                         </div>
                     </div>
-                    <button type="button" onclick="shuffleMoodPitch()" class="retro-btn btn-retro-yellow px-3 py-2 text-[10px] uppercase whitespace-nowrap">
+                    <button type="button" onclick="shuffleMoodPitch()" class="retro-btn btn-retro-yellow px-2.5 sm:px-3 py-1.5 sm:py-2 text-[8px] sm:text-[10px] uppercase whitespace-nowrap self-end sm:self-center">
                         🎲 ACAK
                     </button>
                 </div>
 
                 <!-- Arcade Connection Player 1 / Player 2 Slots -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left pt-2">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 text-left pt-1 sm:pt-2">
                     <!-- Java Player 1 Slot -->
-                    <div class="bg-black border-4 border-retro-green p-5 flex flex-col justify-between gap-4 shadow-[6px_6px_0px_#000]">
+                    <div class="bg-black border-2 sm:border-4 border-retro-green p-3.5 sm:p-5 flex flex-col justify-between gap-3 sm:gap-4 shadow-[4px_4px_0px_#000] sm:shadow-[6px_6px_0px_#000]">
                         <div>
-                            <div class="flex items-center justify-between mb-2">
-                                <span class="font-pixel text-[10px] text-retro-green uppercase tracking-wider flex items-center gap-2">
+                            <div class="flex items-center justify-between mb-1.5 sm:mb-2">
+                                <span class="font-pixel text-[8px] sm:text-[10px] text-retro-green uppercase tracking-wider flex items-center gap-1.5">
                                     <span>💻</span> PLAYER 1 (JAVA)
                                 </span>
-                                <span class="font-pixel text-[8px] bg-retro-green text-black px-2 py-0.5">PC / MAC</span>
+                                <span class="font-pixel text-[7px] sm:text-[8px] bg-retro-green text-black px-1.5 sm:px-2 py-0.5">PC / MAC</span>
                             </div>
-                            <div class="font-pixel text-xs sm:text-sm text-white tracking-wider select-all my-2">
+                            <div class="font-pixel text-[10px] sm:text-xs md:text-sm text-white tracking-wider select-all my-1.5 sm:my-2 break-all">
                                 PLAY.MOUGICRAFT.MY.ID
                             </div>
                         </div>
-                        <button type="button" onclick="copyToClipboard('play.mougicraft.my.id', 'Java Server IP')" class="retro-btn btn-retro-green w-full py-3 text-[10px] uppercase flex items-center justify-center gap-2">
+                        <button type="button" onclick="copyToClipboard('play.mougicraft.my.id', 'Java Server IP')" class="retro-btn btn-retro-green w-full py-2.5 sm:py-3 text-[9px] sm:text-[10px] uppercase flex items-center justify-center gap-2">
                             <span>📋</span> SALIN IP JAVA
                         </button>
                     </div>
 
                     <!-- Bedrock Player 2 Slot -->
-                    <div class="bg-black border-4 border-retro-yellow p-5 flex flex-col justify-between gap-4 shadow-[6px_6px_0px_#000]">
+                    <div class="bg-black border-2 sm:border-4 border-retro-yellow p-3.5 sm:p-5 flex flex-col justify-between gap-3 sm:gap-4 shadow-[4px_4px_0px_#000] sm:shadow-[6px_6px_0px_#000]">
                         <div>
-                            <div class="flex items-center justify-between mb-2">
-                                <span class="font-pixel text-[10px] text-retro-yellow uppercase tracking-wider flex items-center gap-2">
+                            <div class="flex items-center justify-between mb-1.5 sm:mb-2">
+                                <span class="font-pixel text-[8px] sm:text-[10px] text-retro-yellow uppercase tracking-wider flex items-center gap-1.5">
                                     <span>📱</span> PLAYER 2 (BEDROCK)
                                 </span>
-                                <span class="font-pixel text-[8px] bg-retro-yellow text-black px-2 py-0.5">MOBILE / WIN10</span>
+                                <span class="font-pixel text-[7px] sm:text-[8px] bg-retro-yellow text-black px-1.5 sm:px-2 py-0.5">MOBILE / WIN10</span>
                             </div>
-                            <div class="font-pixel text-xs sm:text-sm text-white tracking-wider select-all my-1">
+                            <div class="font-pixel text-[10px] sm:text-xs md:text-sm text-white tracking-wider select-all my-1 break-all">
                                 MOUGICRAFT.MY.ID
                             </div>
-                            <div class="font-mono text-base font-bold text-slate-300">
-                                PORT: <span class="text-retro-yellow font-pixel text-xs">25308</span>
+                            <div class="font-mono text-sm sm:text-base font-bold text-slate-300">
+                                PORT: <span class="text-retro-yellow font-pixel text-[10px] sm:text-xs">25308</span>
                             </div>
                         </div>
-                        <button type="button" onclick="copyToClipboard('mougicraft.my.id', 'Bedrock Server IP')" class="retro-btn btn-retro-yellow w-full py-3 text-[10px] uppercase flex items-center justify-center gap-2">
+                        <button type="button" onclick="copyToClipboard('mougicraft.my.id', 'Bedrock Server IP')" class="retro-btn btn-retro-yellow w-full py-2.5 sm:py-3 text-[9px] sm:text-[10px] uppercase flex items-center justify-center gap-2">
                             <span>📱</span> SALIN IP BEDROCK
                         </button>
                     </div>
@@ -349,76 +349,78 @@
         </section>
 
         <!-- Retro Status Bar -->
-        <section class="retro-card p-5 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div class="flex items-center gap-4">
-                <div class="w-4 h-4 bg-retro-green border-2 border-black animate-retro-blink shadow-[0_0_8px_#39ff14]"></div>
-                <div>
-                    <div class="flex items-center gap-2">
-                        <span class="font-pixel text-[10px] text-slate-400">SERVER STATUS:</span>
-                        <span id="statusTextLabel" class="font-pixel text-[10px] text-retro-green uppercase">ONLINE</span>
+        <section class="retro-card p-3.5 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
+            <div class="flex items-center gap-3 sm:gap-4 w-full sm:w-auto justify-between sm:justify-start">
+                <div class="flex items-center gap-2.5 sm:gap-4">
+                    <div class="w-3.5 h-3.5 sm:w-4 sm:h-4 bg-retro-green border-2 border-black animate-retro-blink shadow-[0_0_8px_#39ff14]"></div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="font-pixel text-[8px] sm:text-[10px] text-slate-400">SERVER STATUS:</span>
+                            <span id="statusTextLabel" class="font-pixel text-[8px] sm:text-[10px] text-retro-green uppercase">ONLINE</span>
+                        </div>
+                        <p class="font-mono text-sm sm:text-lg text-slate-200 mt-0.5 sm:mt-1">
+                            Pemain Online: <strong id="onlinePlayerCount" class="text-retro-yellow font-pixel text-[10px] sm:text-xs">18</strong> / 100
+                        </p>
                     </div>
-                    <p class="font-mono text-lg text-slate-200 mt-1">
-                        Pemain Online: <strong id="onlinePlayerCount" class="text-retro-yellow font-pixel text-xs">18</strong> / 100
-                    </p>
                 </div>
             </div>
 
-            <div class="flex items-center gap-3 bg-black px-4 py-2 border-2 border-white">
-                <span class="font-pixel text-[10px] text-slate-400">PING:</span>
-                <span id="livePingMs" class="font-mono font-bold text-xl text-retro-green">24 ms</span>
-                <span class="font-pixel text-[8px] text-black bg-retro-green px-2 py-0.5">SMOOTH</span>
+            <div class="flex items-center justify-between sm:justify-start w-full sm:w-auto gap-3 bg-black px-3 sm:px-4 py-1.5 sm:py-2 border-2 border-white">
+                <span class="font-pixel text-[8px] sm:text-[10px] text-slate-400">PING:</span>
+                <span id="livePingMs" class="font-mono font-bold text-lg sm:text-xl text-retro-green">24 ms</span>
+                <span class="font-pixel text-[7px] sm:text-[8px] text-black bg-retro-green px-1.5 sm:px-2 py-0.5">SMOOTH</span>
             </div>
         </section>
 
         <!-- Key Features Section -->
-        <section class="retro-card p-6 md:p-8 space-y-6">
-            <div class="text-center max-w-xl mx-auto space-y-2">
-                <span class="font-pixel text-[10px] text-retro-cyan block uppercase">★ FITUR UNGGULAN ★</span>
-                <h2 class="font-pixel text-xl sm:text-2xl text-retro-yellow uppercase">
+        <section class="retro-card p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-6">
+            <div class="text-center max-w-xl mx-auto space-y-1 sm:space-y-2">
+                <span class="font-pixel text-[8px] sm:text-[10px] text-retro-cyan block uppercase">★ FITUR UNGGULAN ★</span>
+                <h2 class="font-pixel text-lg sm:text-2xl text-retro-yellow uppercase">
                     KENAPA MOUGICRAFT?
                 </h2>
-                <p class="font-display text-base text-slate-300 font-bold">
+                <p class="font-display text-sm sm:text-base text-slate-300 font-bold">
                     Nikmati fitur Survival lengkap yang dirancang khusus untuk kenyamanan bermain!
                 </p>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                <div class="bg-black border-2 border-retro-green p-5 space-y-3 shadow-[4px_4px_0_#000]">
-                    <div class="w-10 h-10 bg-retro-green/20 border-2 border-retro-green flex items-center justify-center text-xl">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
+                <div class="bg-black border-2 border-retro-green p-4 space-y-2.5 sm:space-y-3 shadow-[4px_4px_0_#000]">
+                    <div class="w-9 h-9 sm:w-10 sm:h-10 bg-retro-green/20 border-2 border-retro-green flex items-center justify-center text-lg sm:text-xl">
                         🏰
                     </div>
-                    <h3 class="font-pixel text-xs text-retro-green uppercase">Land Claiming</h3>
-                    <p class="font-mono text-base text-slate-300 leading-snug">
+                    <h3 class="font-pixel text-[10px] sm:text-xs text-retro-green uppercase">Land Claiming</h3>
+                    <p class="font-mono text-sm sm:text-base text-slate-300 leading-snug">
                         Amankan rumah & barang berharga kamu dari pemain nakal dengan proteksi klaim mudah.
                     </p>
                 </div>
 
-                <div class="bg-black border-2 border-retro-yellow p-5 space-y-3 shadow-[4px_4px_0_#000]">
-                    <div class="w-10 h-10 bg-retro-yellow/20 border-2 border-retro-yellow flex items-center justify-center text-xl">
+                <div class="bg-black border-2 border-retro-yellow p-4 space-y-2.5 sm:space-y-3 shadow-[4px_4px_0_#000]">
+                    <div class="w-9 h-9 sm:w-10 sm:h-10 bg-retro-yellow/20 border-2 border-retro-yellow flex items-center justify-center text-lg sm:text-xl">
                         💰
                     </div>
-                    <h3 class="font-pixel text-xs text-retro-yellow uppercase">Player Economy</h3>
-                    <p class="font-mono text-base text-slate-300 leading-snug">
+                    <h3 class="font-pixel text-[10px] sm:text-xs text-retro-yellow uppercase">Player Economy</h3>
+                    <p class="font-mono text-sm sm:text-base text-slate-300 leading-snug">
                         Buka toko di Player Market, lakukan jual-beli item, dan jadilah player terkaya!
                     </p>
                 </div>
 
-                <div class="bg-black border-2 border-retro-cyan p-5 space-y-3 shadow-[4px_4px_0_#000]">
-                    <div class="w-10 h-10 bg-retro-cyan/20 border-2 border-retro-cyan flex items-center justify-center text-xl">
+                <div class="bg-black border-2 border-retro-cyan p-4 space-y-2.5 sm:space-y-3 shadow-[4px_4px_0_#000]">
+                    <div class="w-9 h-9 sm:w-10 sm:h-10 bg-retro-cyan/20 border-2 border-retro-cyan flex items-center justify-center text-lg sm:text-xl">
                         🌐
                     </div>
-                    <h3 class="font-pixel text-xs text-retro-cyan uppercase">Cross-Play</h3>
-                    <p class="font-mono text-base text-slate-300 leading-snug">
+                    <h3 class="font-pixel text-[10px] sm:text-xs text-retro-cyan uppercase">Cross-Play</h3>
+                    <p class="font-mono text-sm sm:text-base text-slate-300 leading-snug">
                         Main bareng teman dari PC (Java) maupun HP, Tablet, & Console (Bedrock) dalam 1 server.
                     </p>
                 </div>
 
-                <div class="bg-black border-2 border-retro-pink p-5 space-y-3 shadow-[4px_4px_0_#000]">
-                    <div class="w-10 h-10 bg-retro-pink/20 border-2 border-retro-pink flex items-center justify-center text-xl">
+                <div class="bg-black border-2 border-retro-pink p-4 space-y-2.5 sm:space-y-3 shadow-[4px_4px_0_#000]">
+                    <div class="w-9 h-9 sm:w-10 sm:h-10 bg-retro-pink/20 border-2 border-retro-pink flex items-center justify-center text-lg sm:text-xl">
                         ⚡
                     </div>
-                    <h3 class="font-pixel text-xs text-retro-pink uppercase">Skills & Kits</h3>
-                    <p class="font-mono text-base text-slate-300 leading-snug">
+                    <h3 class="font-pixel text-[10px] sm:text-xs text-retro-pink uppercase">Skills & Kits</h3>
+                    <p class="font-mono text-sm sm:text-base text-slate-300 leading-snug">
                         Tingkatkan level skill pertambangan & bertarung kamu untuk membuka efek pasif berharga.
                     </p>
                 </div>
@@ -426,71 +428,71 @@
         </section>
 
         <!-- Rank Prices & Perks Section -->
-        <section class="retro-card p-6 md:p-8 space-y-6">
-            <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-b-4 border-black pb-5">
+        <section class="retro-card p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-6">
+            <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 sm:gap-4 border-b-2 sm:border-b-4 border-black pb-4 sm:pb-5">
                 <div>
-                    <span class="font-pixel text-[10px] text-retro-yellow uppercase block">UPGRADE YOUR GAME</span>
-                    <h2 class="font-pixel text-xl md:text-2xl text-retro-yellow uppercase mt-1">
+                    <span class="font-pixel text-[8px] sm:text-[10px] text-retro-yellow uppercase block">UPGRADE YOUR GAME</span>
+                    <h2 class="font-pixel text-lg sm:text-2xl text-retro-yellow uppercase mt-1">
                         RANK PRICES & PERKS
                     </h2>
-                    <p class="font-mono text-base text-slate-300 mt-1 font-bold">
+                    <p class="font-mono text-sm sm:text-base text-slate-300 mt-1 font-bold">
                         Dapatkan /fly, set home ekstra, batas klaim luas, dan tag pesan berwarna!
                     </p>
                 </div>
 
                 <!-- Filter Category Buttons -->
-                <div class="flex flex-wrap items-center gap-2">
-                    <button type="button" onclick="filterRanks('all', this)" class="retro-btn btn-retro-yellow px-3 py-1.5 text-[9px]">ALL</button>
-                    <button type="button" onclick="filterRanks('vip', this)" class="retro-btn px-3 py-1.5 text-[9px] bg-black text-white border-white">VIP</button>
-                    <button type="button" onclick="filterRanks('legend', this)" class="retro-btn px-3 py-1.5 text-[9px] bg-black text-white border-white">LEGEND</button>
-                    <button type="button" onclick="filterRanks('donator', this)" class="retro-btn px-3 py-1.5 text-[9px] bg-black text-white border-white">DONATOR</button>
+                <div class="flex flex-wrap items-center gap-1.5 sm:gap-2 w-full md:w-auto">
+                    <button type="button" onclick="filterRanks('all', this)" class="retro-btn btn-retro-yellow px-2.5 sm:px-3 py-1 sm:py-1.5 text-[8px] sm:text-[9px]">ALL</button>
+                    <button type="button" onclick="filterRanks('vip', this)" class="retro-btn px-2.5 sm:px-3 py-1 sm:py-1.5 text-[8px] sm:text-[9px] bg-black text-white border-white">VIP</button>
+                    <button type="button" onclick="filterRanks('legend', this)" class="retro-btn px-2.5 sm:px-3 py-1 sm:py-1.5 text-[8px] sm:text-[9px] bg-black text-white border-white">LEGEND</button>
+                    <button type="button" onclick="filterRanks('donator', this)" class="retro-btn px-2.5 sm:px-3 py-1 sm:py-1.5 text-[8px] sm:text-[9px] bg-black text-white border-white">DONATOR</button>
                 </div>
             </div>
 
-            <!-- Ranks Grid (10 Retro Cards) -->
-            <div id="ranksGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+            <!-- Ranks Grid (10 Retro Cards - 2 cols on Mobile) -->
+            <div id="ranksGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 sm:gap-4">
                 <!-- Injected via JavaScript -->
             </div>
         </section>
 
         <!-- Retro Gacha Arcade Spinner -->
-        <section class="retro-card p-6 md:p-8 space-y-6 text-center relative overflow-hidden">
-            <div class="space-y-2">
-                <span class="font-pixel text-[10px] text-retro-cyan uppercase block">★ GACHA SPINNER MACHINE ★</span>
-                <h2 class="font-pixel text-xl sm:text-2xl text-retro-yellow uppercase">
+        <section class="retro-card p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-6 text-center relative overflow-hidden">
+            <div class="space-y-1 sm:space-y-2">
+                <span class="font-pixel text-[8px] sm:text-[10px] text-retro-cyan uppercase block">★ GACHA SPINNER MACHINE ★</span>
+                <h2 class="font-pixel text-lg sm:text-2xl text-retro-yellow uppercase">
                     UJI KEBERUNTUNGANMU (CRATE)
                 </h2>
-                <p class="font-display text-base text-slate-300 font-bold max-w-xl mx-auto">
+                <p class="font-display text-sm sm:text-base text-slate-300 font-bold max-w-xl mx-auto">
                     Putar roda gacha untuk memenangkan item langka! Dapatkan Kunci Crate gratis lewat Vote Server!
                 </p>
             </div>
 
             <!-- Slot Cabinet Machine Viewport -->
-            <div class="relative max-w-2xl mx-auto bg-black border-4 border-retro-yellow p-3 shadow-[8px_8px_0_#000]">
+            <div class="relative max-w-2xl mx-auto bg-black border-2 sm:border-4 border-retro-yellow p-2 sm:p-3 shadow-[6px_6px_0_#000] sm:shadow-[8px_8px_0_#000]">
                 <!-- Winning Pointer -->
                 <div class="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-1 bg-retro-yellow z-20 shadow-[0_0_10px_#ffcc00]"></div>
-                <div class="absolute top-1 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 text-retro-yellow font-pixel text-xs">▼</div>
-                <div class="absolute bottom-1 left-1/2 -translate-x-1/2 translate-y-1/2 z-30 text-retro-yellow font-pixel text-xs">▲</div>
+                <div class="absolute top-1 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 text-retro-yellow font-pixel text-[10px] sm:text-xs">▼</div>
+                <div class="absolute bottom-1 left-1/2 -translate-x-1/2 translate-y-1/2 z-30 text-retro-yellow font-pixel text-[10px] sm:text-xs">▲</div>
 
-                <div class="overflow-hidden py-3 bg-retro-panelLight border-2 border-white">
-                    <div id="crateSlotTrack" class="slot-track flex gap-3">
+                <div class="overflow-hidden py-2 sm:py-3 bg-retro-panelLight border-2 border-white">
+                    <div id="crateSlotTrack" class="slot-track flex gap-2 sm:gap-3">
                         <!-- Slots injected dynamically -->
                     </div>
                 </div>
             </div>
 
             <!-- Controls & Key Balance -->
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <div class="bg-black px-4 py-2 border-2 border-retro-yellow font-pixel text-[10px] text-retro-yellow flex items-center gap-2">
-                    <span class="text-base">🔑</span> KUNCI: <strong id="crateKeyCount" class="font-pixel text-base text-white">3</strong>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
+                <div class="bg-black px-3.5 sm:px-4 py-2 border-2 border-retro-yellow font-pixel text-[9px] sm:text-[10px] text-retro-yellow flex items-center gap-2">
+                    <span class="text-sm sm:text-base">🔑</span> KUNCI: <strong id="crateKeyCount" class="font-pixel text-sm sm:text-base text-white">3</strong>
                 </div>
 
-                <button id="spinCrateBtn" type="button" onclick="spinGachaCrate()" class="retro-btn btn-retro-yellow px-6 py-3 text-[10px] uppercase flex items-center gap-2">
+                <button id="spinCrateBtn" type="button" onclick="spinGachaCrate()" class="retro-btn btn-retro-yellow w-full sm:w-auto px-5 sm:px-6 py-2.5 sm:py-3 text-[9px] sm:text-[10px] uppercase flex items-center justify-center gap-2">
                     <span>🎰</span> PUTAR CRATE (1 KUNCI)
                 </button>
             </div>
 
-            <div id="crateWinningMsg" class="font-display text-lg text-slate-100 font-bold min-h-[2.5rem] flex items-center justify-center">
+            <div id="crateWinningMsg" class="font-display text-sm sm:text-lg text-slate-100 font-bold min-h-[2rem] sm:min-h-[2.5rem] flex items-center justify-center px-2">
                 Tekan PUTAR CRATE untuk membawa pulang hadiah!
             </div>
             
@@ -498,150 +500,150 @@
         </section>
 
         <!-- Step-by-Step Join Guide -->
-        <section class="retro-card p-6 md:p-8 space-y-6">
-            <h3 class="font-pixel text-sm sm:text-base text-retro-green uppercase">
+        <section class="retro-card p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-6">
+            <h3 class="font-pixel text-xs sm:text-base text-retro-green uppercase">
                 CARA BERGABUNG KE MOUGICRAFT
             </h3>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-                <div class="bg-black border-2 border-white p-5 space-y-2 shadow-[4px_4px_0_#000]">
-                    <span class="font-pixel text-[10px] text-retro-yellow block">STEP 01</span>
-                    <h4 class="font-pixel text-xs text-white">Buka Minecraft</h4>
-                    <p class="font-mono text-base text-slate-300">Jalankan Java / Bedrock di PC, Android, iOS, atau Console.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5 sm:gap-5">
+                <div class="bg-black border-2 border-white p-4 space-y-1.5 sm:space-y-2 shadow-[4px_4px_0_#000]">
+                    <span class="font-pixel text-[8px] sm:text-[10px] text-retro-yellow block">STEP 01</span>
+                    <h4 class="font-pixel text-[10px] sm:text-xs text-white">Buka Minecraft</h4>
+                    <p class="font-mono text-sm sm:text-base text-slate-300">Jalankan Java / Bedrock di PC, Android, iOS, atau Console.</p>
                 </div>
 
-                <div class="bg-black border-2 border-white p-5 space-y-2 shadow-[4px_4px_0_#000]">
-                    <span class="font-pixel text-[10px] text-retro-yellow block">STEP 02</span>
-                    <h4 class="font-pixel text-xs text-white">Masukkan IP Server</h4>
-                    <p class="font-mono text-base text-slate-300">
+                <div class="bg-black border-2 border-white p-4 space-y-1.5 sm:space-y-2 shadow-[4px_4px_0_#000]">
+                    <span class="font-pixel text-[8px] sm:text-[10px] text-retro-yellow block">STEP 02</span>
+                    <h4 class="font-pixel text-[10px] sm:text-xs text-white">Masukkan IP Server</h4>
+                    <p class="font-mono text-sm sm:text-base text-slate-300">
                         Java: <code class="text-retro-green bg-slate-900 px-1 font-bold">play.mougicraft.my.id</code><br>
                         Bedrock: <code class="text-retro-yellow bg-slate-900 px-1 font-bold">mougicraft.my.id</code> (25308)
                     </p>
                 </div>
 
-                <div class="bg-black border-2 border-white p-5 space-y-2 shadow-[4px_4px_0_#000]">
-                    <span class="font-pixel text-[10px] text-retro-yellow block">STEP 03</span>
-                    <h4 class="font-pixel text-xs text-white">Mulai Petualangan</h4>
-                    <p class="font-mono text-base text-slate-300">Masuk ke server, klaim rumahmu dengan <code class="text-retro-green bg-slate-900 px-1 font-bold">/claim</code>!</p>
+                <div class="bg-black border-2 border-white p-4 space-y-1.5 sm:space-y-2 shadow-[4px_4px_0_#000]">
+                    <span class="font-pixel text-[8px] sm:text-[10px] text-retro-yellow block">STEP 03</span>
+                    <h4 class="font-pixel text-[10px] sm:text-xs text-white">Mulai Petualangan</h4>
+                    <p class="font-mono text-sm sm:text-base text-slate-300">Masuk ke server, klaim rumahmu dengan <code class="text-retro-green bg-slate-900 px-1 font-bold">/rp claim</code>!</p>
                 </div>
             </div>
         </section>
 
         <!-- FAQ Accordion Section -->
-        <section class="retro-card p-6 md:p-8 space-y-6">
+        <section class="retro-card p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-6">
             <div class="space-y-1">
-                <span class="font-pixel text-[10px] text-retro-cyan uppercase block">★ BANTUAN & INFORMASI ★</span>
-                <h3 class="font-pixel text-base sm:text-lg text-retro-cyan uppercase">
+                <span class="font-pixel text-[8px] sm:text-[10px] text-retro-cyan uppercase block">★ BANTUAN & INFORMASI ★</span>
+                <h3 class="font-pixel text-sm sm:text-lg text-retro-cyan uppercase">
                     PERTANYAAN FREKUEN (FAQ)
                 </h3>
             </div>
 
-            <div class="space-y-3 font-mono">
+            <div class="space-y-2.5 sm:space-y-3 font-mono">
                 <div class="border-2 border-white bg-black">
-                    <button type="button" onclick="toggleFaq(this)" class="w-full p-4 text-left flex justify-between items-center font-bold text-lg text-white hover:text-retro-cyan">
+                    <button type="button" onclick="toggleFaq(this)" class="w-full p-3 sm:p-4 text-left flex justify-between items-center font-bold text-sm sm:text-lg text-white hover:text-retro-cyan gap-2">
                         <span>❓ Apakah server ini mendukung Minecraft Bedrock / HP?</span>
-                        <span class="font-pixel text-xs text-retro-cyan">▼</span>
+                        <span class="font-pixel text-[10px] sm:text-xs text-retro-cyan">▼</span>
                     </button>
-                    <div class="px-4 pb-4 hidden text-slate-300 text-base border-t border-white/20 pt-3 leading-relaxed">
+                    <div class="px-3 sm:px-4 pb-3 sm:pb-4 hidden text-slate-300 text-xs sm:text-base border-t border-white/20 pt-2.5 sm:pt-3 leading-relaxed">
                         Ya! Pemain Minecraft Bedrock (Android, iOS, Win10, Console) bisa bergabung memakai IP: <code class="text-retro-yellow bg-slate-900 px-1">mougicraft.my.id</code> dan Port: <code class="text-retro-yellow bg-slate-900 px-1">25308</code>.
                     </div>
                 </div>
 
                 <div class="border-2 border-white bg-black">
-                    <button type="button" onclick="toggleFaq(this)" class="w-full p-4 text-left flex justify-between items-center font-bold text-lg text-white hover:text-retro-cyan">
+                    <button type="button" onclick="toggleFaq(this)" class="w-full p-3 sm:p-4 text-left flex justify-between items-center font-bold text-sm sm:text-lg text-white hover:text-retro-cyan gap-2">
                         <span>❓ Bagaimana cara mengamankan tanah agar tidak di-griefing?</span>
-                        <span class="font-pixel text-xs text-retro-cyan">▼</span>
+                        <span class="font-pixel text-[10px] sm:text-xs text-retro-cyan">▼</span>
                     </button>
-                    <div class="px-4 pb-4 hidden text-slate-300 text-base border-t border-white/20 pt-3 leading-relaxed">
-                        Kamu bisa menggunakan Golden Shovel / Sekop Emas lalu klik dua sudut area rumahmu lalu ketik command /rp claim <code class="text-retro-green bg-slate-900 px-1">/claim</code> di dalam game.
+                    <div class="px-3 sm:px-4 pb-3 sm:pb-4 hidden text-slate-300 text-xs sm:text-base border-t border-white/20 pt-2.5 sm:pt-3 leading-relaxed">
+                        Kamu bisa menggunakan Golden Shovel / Sekop Emas lalu klik dua Sudut Area rumahmu lalu ketik command <code class="text-retro-green bg-slate-900 px-1">/rp claim</code>.
                     </div>
                 </div>
 
                 <div class="border-2 border-white bg-black">
-                    <button type="button" onclick="toggleFaq(this)" class="w-full p-4 text-left flex justify-between items-center font-bold text-lg text-white hover:text-retro-cyan">
+                    <button type="button" onclick="toggleFaq(this)" class="w-full p-3 sm:p-4 text-left flex justify-between items-center font-bold text-sm sm:text-lg text-white hover:text-retro-cyan gap-2">
                         <span>❓ Bagaimana cara melakukan donasi & membeli Rank?</span>
-                        <span class="font-pixel text-xs text-retro-cyan">▼</span>
+                        <span class="font-pixel text-[10px] sm:text-xs text-retro-cyan">▼</span>
                     </button>
-                    <div class="px-4 pb-4 hidden text-slate-300 text-base border-t border-white/20 pt-3 leading-relaxed">
-                        Pilih rank yang kamu inginkan di section <strong>RANK PRICES</strong> di atas, klik <strong>SHOW PERKS</strong>, lalu hubungi admin via Discord atau WhatsApp Group MOUGICRAFT.
+                    <div class="px-3 sm:px-4 pb-3 sm:pb-4 hidden text-slate-300 text-xs sm:text-base border-t border-white/20 pt-2.5 sm:pt-3 leading-relaxed">
+                        Pilih rank yang kamu inginkan di section <strong>RANK PRICES</strong> di atas, klik <strong>PERKS</strong>, lalu tekan tombol <strong>HUBUNGI ADMIN</strong>.
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Server Rules Section -->
-        <section class="retro-card p-6 md:p-8 space-y-4">
+        <section class="retro-card p-4 sm:p-6 md:p-8 space-y-3 sm:space-y-4">
             <h3 class="font-pixel text-xs sm:text-sm text-retro-pink uppercase">
                 📜 ATURAN DASAR SERVER (RULES)
             </h3>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 font-mono text-base text-slate-200">
-                <div class="bg-black border-2 border-retro-pink p-4 flex items-start gap-3">
-                    <span class="text-retro-pink font-pixel text-xs">1.</span>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 font-mono text-sm sm:text-base text-slate-200">
+                <div class="bg-black border-2 border-retro-pink p-3 sm:p-4 flex items-start gap-2.5 sm:gap-3">
+                    <span class="text-retro-pink font-pixel text-[10px] sm:text-xs">1.</span>
                     <p>Dilarang menggunakan Cheat, X-Ray, Hacked Client, atau Exploit bug.</p>
                 </div>
-                <div class="bg-black border-2 border-retro-pink p-4 flex items-start gap-3">
-                    <span class="text-retro-pink font-pixel text-xs">2.</span>
+                <div class="bg-black border-2 border-retro-pink p-3 sm:p-4 flex items-start gap-2.5 sm:gap-3">
+                    <span class="text-retro-pink font-pixel text-[10px] sm:text-xs">2.</span>
                     <p>Dilarang melakukan Griefing / Merusak bangunan di area claim pemain lain.</p>
                 </div>
-                <div class="bg-black border-2 border-retro-pink p-4 flex items-start gap-3">
-                    <span class="text-retro-pink font-pixel text-xs">3.</span>
+                <div class="bg-black border-2 border-retro-pink p-3 sm:p-4 flex items-start gap-2.5 sm:gap-3">
+                    <span class="text-retro-pink font-pixel text-[10px] sm:text-xs">3.</span>
                     <p>Jaga kesopanan dalam chat. Dilarang SARA, Spam, toxic berlebihan, dan Promosi server lain.</p>
                 </div>
-                <div class="bg-black border-2 border-retro-pink p-4 flex items-start gap-3">
-                    <span class="text-retro-pink font-pixel text-xs">4.</span>
+                <div class="bg-black border-2 border-retro-pink p-3 sm:p-4 flex items-start gap-2.5 sm:gap-3">
+                    <span class="text-retro-pink font-pixel text-[10px] sm:text-xs">4.</span>
                     <p>Hormati sesama pemain dan keputusan Staff MOUGICRAFT.</p>
                 </div>
             </div>
         </section>
 
         <!-- Socials Grid -->
-        <section class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            <a href="https://www.tiktok.com/@mougiii_" target="_blank" rel="noopener noreferrer" class="retro-card p-4 text-center font-pixel text-[9px] text-white hover:text-retro-cyan flex items-center justify-center gap-2">
+        <section class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-4">
+            <a href="https://www.tiktok.com/@mougiii_" target="_blank" rel="noopener noreferrer" class="retro-card p-3 sm:p-4 text-center font-pixel text-[8px] sm:text-[9px] text-white hover:text-retro-cyan flex items-center justify-center gap-1.5 sm:gap-2">
                 <span>🎵</span> TIKTOK @MOUGIII_
             </a>
-            <a href="https://www.tiktok.com/@imougi1" target="_blank" rel="noopener noreferrer" class="retro-card p-4 text-center font-pixel text-[9px] text-white hover:text-retro-cyan flex items-center justify-center gap-2">
-                <span>🎵</span> TIKTOK MOUGICRAFT
+            <a href="https://www.tiktok.com/@imougi1" target="_blank" rel="noopener noreferrer" class="retro-card p-3 sm:p-4 text-center font-pixel text-[8px] sm:text-[9px] text-white hover:text-retro-cyan flex items-center justify-center gap-1.5 sm:gap-2">
+                <span>🎵</span> TIKTOK @IMOUGI1
             </a>
-            <a href="https://minecraft-mp.com/server/350180/vote/" target="_blank" rel="noopener noreferrer" class="retro-card p-4 text-center font-pixel text-[9px] text-retro-yellow flex items-center justify-center gap-2">
+            <a href="https://minecraft-mp.com/server/350180/vote/" target="_blank" rel="noopener noreferrer" class="retro-card p-3 sm:p-4 text-center font-pixel text-[8px] sm:text-[9px] text-retro-yellow flex items-center justify-center gap-1.5 sm:gap-2">
                 <span>⭐</span> VOTE SERVER
             </a>
-            <a href="https://chat.whatsapp.com/CjEZL6rm9bgE6xIXqshlBK" target="_blank" rel="noopener noreferrer" class="retro-card p-4 text-center font-pixel text-[9px] text-retro-green flex items-center justify-center gap-2">
+            <a href="https://chat.whatsapp.com/CjEZL6rm9bgE6xIXqshlBK" target="_blank" rel="noopener noreferrer" class="retro-card p-3 sm:p-4 text-center font-pixel text-[8px] sm:text-[9px] text-retro-green flex items-center justify-center gap-1.5 sm:gap-2">
                 <span>💬</span> WHATSAPP
             </a>
         </section>
 
         <!-- Footer -->
-        <footer class="text-center font-mono text-sm text-slate-400 py-8 space-y-2 border-t-4 border-black">
-            <p><strong class="text-retro-yellow font-pixel text-xs">MOUGICRAFT</strong> &copy; 2026 - ALL RIGHTS RESERVED.</p>
-            <p class="text-xs text-slate-500">Not an official Minecraft product. Not approved by or associated with Mojang or Microsoft.</p>
+        <footer class="text-center font-mono text-xs sm:text-sm text-slate-400 py-6 sm:py-8 space-y-2 border-t-4 border-black">
+            <p><strong class="text-retro-yellow font-pixel text-[10px] sm:text-xs">MOUGICRAFT</strong> &copy; 2026 - ALL RIGHTS RESERVED.</p>
+            <p class="text-[10px] sm:text-xs text-slate-500">Not an official Minecraft product. Not approved by or associated with Mojang or Microsoft.</p>
         </footer>
     </main>
 
     <!-- Rank Perk Detail Modal -->
-    <div id="perkModalOverlay" class="fixed inset-0 z-50 bg-black/80 hidden items-center justify-center p-4">
-        <div id="perkModalBox" class="retro-card max-w-lg w-full p-6 md:p-8 space-y-5 relative border-4 border-retro-yellow shadow-[8px_8px_0_#000]">
-            <button type="button" onclick="closePerkModal()" class="absolute top-4 right-4 w-8 h-8 bg-black border-2 border-white font-pixel text-xs text-slate-200 hover:text-white flex items-center justify-center">
+    <div id="perkModalOverlay" class="fixed inset-0 z-50 bg-black/80 hidden items-center justify-center p-3 sm:p-4 overflow-y-auto">
+        <div id="perkModalBox" class="retro-card max-w-lg w-full p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-5 relative border-2 sm:border-4 border-retro-yellow shadow-[6px_6px_0_#000] sm:shadow-[8px_8px_0_#000] max-h-[90vh] flex flex-col">
+            <button type="button" onclick="closePerkModal()" class="absolute top-3 right-3 sm:top-4 sm:right-4 w-7 h-7 sm:w-8 sm:h-8 bg-black border-2 border-white font-pixel text-[10px] sm:text-xs text-slate-200 hover:text-white flex items-center justify-center">
                 ✕
             </button>
 
             <div>
-                <span id="modalCategoryBadge" class="font-pixel text-[9px] text-retro-yellow block uppercase tracking-widest">RANK PERKS</span>
-                <h3 id="modalRankName" class="font-pixel text-xl sm:text-2xl uppercase mt-2">RANK NAME</h3>
-                <p id="modalRankPrice" class="font-pixel text-lg text-retro-yellow mt-2">IDR 0</p>
+                <span id="modalCategoryBadge" class="font-pixel text-[8px] sm:text-[9px] text-retro-yellow block uppercase tracking-widest">RANK PERKS</span>
+                <h3 id="modalRankName" class="font-pixel text-lg sm:text-2xl uppercase mt-1 sm:mt-2">RANK NAME</h3>
+                <p id="modalRankPrice" class="font-pixel text-base sm:text-lg text-retro-yellow mt-1 sm:mt-2">IDR 0</p>
             </div>
 
-            <div class="border-t-2 border-b-2 border-white/20 py-4 my-2 max-h-60 overflow-y-auto space-y-2">
-                <p class="font-pixel text-[10px] text-slate-400 uppercase">Fasilitas & Perks:</p>
-                <ul id="modalPerksList" class="font-mono text-base text-slate-200 space-y-2 list-disc list-inside leading-relaxed">
+            <div class="border-t-2 border-b-2 border-white/20 py-3 sm:py-4 my-1 sm:my-2 overflow-y-auto space-y-2 flex-1 min-h-0">
+                <p class="font-pixel text-[9px] sm:text-[10px] text-slate-400 uppercase">Fasilitas & Perks:</p>
+                <ul id="modalPerksList" class="font-mono text-sm sm:text-base text-slate-200 space-y-1.5 sm:space-y-2 list-disc list-inside leading-relaxed">
                     <!-- Dynamic List -->
                 </ul>
             </div>
 
-            <div class="flex items-center gap-3">
-                <button type="button" onclick="simulatedBuyRank()" class="retro-btn btn-retro-yellow w-full py-3 text-[10px] uppercase">
+            <div class="flex items-center gap-2 sm:gap-3 pt-1">
+                <button type="button" onclick="simulatedBuyRank()" class="retro-btn btn-retro-yellow w-full py-2.5 sm:py-3 text-[8px] sm:text-[10px] uppercase">
                     💬 HUBUNGI ADMIN
                 </button>
-                <button type="button" onclick="closePerkModal()" class="retro-btn bg-black text-white border-white px-5 py-3 text-[10px]">
+                <button type="button" onclick="closePerkModal()" class="retro-btn bg-black text-white border-white px-4 sm:px-5 py-2.5 sm:py-3 text-[8px] sm:text-[10px]">
                     TUTUP
                 </button>
             </div>
@@ -856,17 +858,17 @@
 
             items.forEach(rank => {
                 const card = document.createElement('div');
-                card.className = 'retro-card p-4 flex flex-col justify-between gap-3 text-left relative cursor-pointer hover:-translate-y-1';
+                card.className = 'retro-card p-2.5 sm:p-4 flex flex-col justify-between gap-2 sm:gap-3 text-left relative cursor-pointer hover:-translate-y-1';
                 card.onclick = () => openPerkModal(rank.id);
 
                 card.innerHTML = `
-                    ${rank.popular ? '<span class="absolute top-2 right-2 bg-retro-yellow text-black font-pixel text-[7px] px-1.5 py-0.5 border border-black">HOT</span>' : ''}
+                    ${rank.popular ? '<span class="absolute top-1.5 right-1.5 bg-retro-yellow text-black font-pixel text-[6px] sm:text-[7px] px-1 sm:px-1.5 py-0.5 border border-black">HOT</span>' : ''}
                     <div>
-                        <span class="font-pixel text-[8px] text-slate-400 uppercase">${rank.category} RANK</span>
-                        <h4 class="font-pixel text-sm uppercase mt-1" style="color: ${rank.color}">${rank.name}</h4>
-                        <p class="font-mono text-lg font-bold text-white mt-1">IDR ${rank.price.replace(' IDR', '')}</p>
+                        <span class="font-pixel text-[7px] sm:text-[8px] text-slate-400 uppercase">${rank.category} RANK</span>
+                        <h4 class="font-pixel text-xs sm:text-sm uppercase mt-0.5 sm:mt-1 truncate" style="color: ${rank.color}">${rank.name}</h4>
+                        <p class="font-mono text-sm sm:text-lg font-bold text-white mt-0.5 sm:mt-1">IDR ${rank.price.replace(' IDR', '')}</p>
                     </div>
-                    <button type="button" class="retro-btn btn-retro-cyan w-full py-2 text-[8px] uppercase">
+                    <button type="button" class="retro-btn btn-retro-cyan w-full py-1.5 sm:py-2 text-[7px] sm:text-[8px] uppercase">
                         PERKS
                     </button>
                 `;
